@@ -12,7 +12,9 @@
     "type": "git",
     "url": "git+https://github.com/BobFrankston/lzlan.git"
   },
-  "keywords": [lifx],
+  "keywords": [
+    "lifx"
+  ],
   "author": "Bob Frankston <npm@bob.ma> (https://Frankston.com)",
   "license": "ISC",
   "bugs": {
@@ -27,6 +29,10 @@
   "directories": {
     "lib": "lib"
   },
-  "devDependencies": {},
-  "files": ["lib/**/*"]
+  "devDependencies": {
+    "typescript": "^3.2.1"
+  },
+  "files": [
+    "lib/**/*"
+  ]
 }
