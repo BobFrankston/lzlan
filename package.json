@@ -1,0 +1,32 @@
+{
+  "name": "@bobfankston/lzlan",
+  "version": "1.0.1",
+  "description": "",
+  "main": "./lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BobFrankston/lzlan.git"
+  },
+  "keywords": [lifx],
+  "author": "Bob Frankston <npm@bob.ma> (https://Frankston.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BobFrankston/lzlan/issues"
+  },
+  "homepage": "https://github.com/BobFrankston/lzlan#readme",
+  "dependencies": {
+    "@types/node": "^10.11.4",
+    "json-stringify-pretty-compact": "^1.2.0",
+    "node": "^10.11.0"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {},
+  "files": ["lib/**/*"]
+}

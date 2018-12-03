@@ -1,0 +1,1942 @@
+[
+  {
+    "mac": "D0:73:D5:23:5C:D2",
+    "ip": "192.55.226.132",
+    "deviceInfo": {
+      "label": "B2g_wall 235cd2",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 27,
+      "productName": "LIFX A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-09-15T16:54:21.960Z"
+      },
+      "group": {
+        "guid": "b2085fc77d1da89b7414b0f8c902ab59",
+        "label": "Guest2",
+        "updated": "2018-09-15T16:54:21.958Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:29:25:DF",
+    "ip": "192.55.226.117",
+    "deviceInfo": {
+      "label": "B2mbeam 2925df",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 38,
+      "productName": "LIFX Beam",
+      "hwVersion": 512,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": true,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-09-30T01:40:14.326Z"
+      },
+      "group": {
+        "guid": "d968d91f15c3166355b7caf436d9f464",
+        "label": "BrMain",
+        "updated": "2018-09-30T01:40:14.328Z"
+      },
+      "multizone": {"count": 71},
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:23:55:07",
+    "ip": "192.55.226.195",
+    "deviceInfo": {
+      "label": "Br2closet 235507",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 27,
+      "productName": "LIFX A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.422Z"
+      },
+      "group": {
+        "guid": "d968d91f15c3166355b7caf436d9f464",
+        "label": "BrMain",
+        "updated": "2018-09-15T16:55:28.682Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:23:8E:D7",
+    "ip": "192.55.226.174",
+    "deviceInfo": {
+      "label": "Br2m_lamp 238ed7",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 27,
+      "productName": "LIFX A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.427Z"
+      },
+      "group": {
+        "guid": "d968d91f15c3166355b7caf436d9f464",
+        "label": "BrMain",
+        "updated": "2017-12-04T20:03:11.578Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:12:73:AD",
+    "ip": "192.55.226.186",
+    "deviceInfo": {
+      "label": "Br2mWall 1273ad",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 22,
+      "productName": "Color 1000",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.409Z"
+      },
+      "group": {
+        "guid": "d968d91f15c3166355b7caf436d9f464",
+        "label": "BrMain",
+        "updated": "2017-12-04T20:02:21.112Z"
+      },
+      "firmwareVersion": 65558
+    },
+    "extras": {"firmware": "10016"}
+  },
+  {
+    "mac": "D0:73:D5:28:34:B2",
+    "ip": "192.55.226.242",
+    "deviceInfo": {
+      "label": "Brmf1 2834b2",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 27,
+      "productName": "LIFX A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home",
+        "updated": "2018-05-31T18:06:51.339Z"
+      },
+      "group": {
+        "guid": "edfde15accdc323dd213b5a7c33f2580",
+        "label": "Brmf",
+        "updated": "2018-05-31T18:18:46.342Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:28:5F:C7",
+    "ip": "192.55.226.237",
+    "deviceInfo": {
+      "label": "Brmf2 285FC7",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 43,
+      "productName": "LIFX A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.406Z"
+      },
+      "group": {
+        "guid": "edfde15accdc323dd213b5a7c33f2580",
+        "label": "Brmf",
+        "updated": "2018-05-31T18:18:59.931Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:27:E9:2F",
+    "ip": "192.55.226.231",
+    "deviceInfo": {
+      "label": "Brmf3 27E92F",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 27,
+      "productName": "LIFX A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.431Z"
+      },
+      "error": "Timeout"
+    },
+    "extras": {"firmware": null}
+  },
+  {
+    "mac": "D0:73:D5:00:92:BD",
+    "ip": "192.55.226.123",
+    "deviceInfo": {
+      "label": "BRRmfClosetLamp 0092bd",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 1,
+      "productName": "Original 1000",
+      "hwVersion": 6,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.413Z"
+      },
+      "group": {
+        "guid": "d034abfb2e2f4d012df11995222112c5",
+        "label": "RMF Bedroom",
+        "updated": "1970-01-01T00:00:00.000Z"
+      },
+      "firmwareVersion": 131073
+    },
+    "extras": {"firmware": "20001"}
+  },
+  {
+    "mac": "D0:73:D5:27:31:A0",
+    "ip": "192.55.226.125",
+    "deviceInfo": {
+      "label": "BRRmfWall 2731A0",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 27,
+      "productName": "LIFX A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.400Z"
+      },
+      "group": {
+        "guid": "d034abfb2e2f4d012df11995222112c5",
+        "label": "RMF Bedroom",
+        "updated": "2018-03-09T17:26:43.104Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:25:EE:C4",
+    "ip": "192.55.226.78",
+    "deviceInfo": {
+      "label": "Bsb1 25EEC4",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-09T01:06:12.097Z"
+      },
+      "group": {
+        "guid": "ea2ff814d0865190afca9b8b4c567405",
+        "label": "BsBedroom",
+        "updated": "2018-06-09T01:06:12.098Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:25:F2:34",
+    "ip": "192.55.226.94",
+    "deviceInfo": {
+      "label": "Bsb2 25F234",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-09T00:43:48.891Z"
+      },
+      "group": {
+        "guid": "ea2ff814d0865190afca9b8b4c567405",
+        "label": "BsBedroom",
+        "updated": "2018-06-09T00:43:48.892Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:26:34:D1",
+    "ip": "192.55.226.86",
+    "deviceInfo": {
+      "label": "Bsb3 2634D1",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-09T00:37:59.601Z"
+      },
+      "group": {
+        "guid": "ea2ff814d0865190afca9b8b4c567405",
+        "label": "BsBedroom",
+        "updated": "2018-06-09T00:37:59.602Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:26:1F:8F",
+    "ip": "192.55.226.69",
+    "deviceInfo": {
+      "label": "Bsh1 261F8F",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.482Z"
+      },
+      "group": {
+        "guid": "5acfddb7496fbe59c1e631a897bfe9a9",
+        "label": "BsHall",
+        "updated": "2017-12-02T06:28:43.619Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:25:EC:93",
+    "ip": "192.55.226.70",
+    "deviceInfo": {
+      "label": "Bsh2 25EC93",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.402Z"
+      },
+      "group": {
+        "guid": "5acfddb7496fbe59c1e631a897bfe9a9",
+        "label": "BsHall",
+        "updated": "2017-12-06T06:13:03.741Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:26:24:D1",
+    "ip": "192.55.226.119",
+    "deviceInfo": {
+      "label": "Bsh3 2624D1",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.444Z"
+      },
+      "group": {
+        "guid": "5acfddb7496fbe59c1e631a897bfe9a9",
+        "label": "BsHall",
+        "updated": "2017-12-02T06:31:13.342Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:22:8A:DC",
+    "ip": "192.55.226.85",
+    "deviceInfo": {
+      "label": "BslInner 228adc",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.408Z"
+      },
+      "group": {
+        "guid": "9b3ab6df9b6fef580371c4b599a1f1ab",
+        "label": "Bslaundry",
+        "updated": "2017-12-02T01:29:03.985Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:23:CD:D3",
+    "ip": "192.55.226.68",
+    "deviceInfo": {
+      "label": "BslOuter 23CDD3",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.483Z"
+      },
+      "group": {
+        "guid": "9b3ab6df9b6fef580371c4b599a1f1ab",
+        "label": "Bslaundry",
+        "updated": "2018-03-03T23:28:58.571Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:23:78:3D",
+    "ip": "192.55.226.98",
+    "deviceInfo": {
+      "label": "BsmbA1 23783d",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.416Z"
+      },
+      "group": {
+        "guid": "e51babaf68f07b34a28af4cc8e12dc67",
+        "label": "BsMain",
+        "updated": "2017-12-02T01:48:32.979Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:23:72:51",
+    "ip": "192.55.226.60",
+    "deviceInfo": {
+      "label": "BsmbA2 237251",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.442Z"
+      },
+      "group": {
+        "guid": "e51babaf68f07b34a28af4cc8e12dc67",
+        "label": "BsMain",
+        "updated": "2018-09-22T20:49:49.733Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:23:D2:17",
+    "ip": "192.55.226.191",
+    "deviceInfo": {
+      "label": "BsmbB1 23D217",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.480Z"
+      },
+      "group": {
+        "guid": "e51babaf68f07b34a28af4cc8e12dc67",
+        "label": "BsMain",
+        "updated": "2017-12-02T05:49:17.815Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:26:1A:3F",
+    "ip": "192.55.226.90",
+    "deviceInfo": {
+      "label": "BsmbB2 261a3f",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.468Z"
+      },
+      "group": {
+        "guid": "e51babaf68f07b34a28af4cc8e12dc67",
+        "label": "BsMain",
+        "updated": "2017-12-02T02:07:52.870Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:22:CA:E2",
+    "ip": "192.55.226.88",
+    "deviceInfo": {
+      "label": "BsmbB3 22cae2",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.470Z"
+      },
+      "group": {
+        "guid": "e51babaf68f07b34a28af4cc8e12dc67",
+        "label": "BsMain",
+        "updated": "2017-12-02T02:03:58.940Z"
+      },
+      "error": "Timeout"
+    },
+    "extras": {"firmware": null}
+  },
+  {
+    "mac": "D0:73:D5:27:9E:65",
+    "ip": "192.55.226.15",
+    "deviceInfo": {
+      "label": "BsmbC1 279e65",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-09-22T20:33:09.806Z"
+      },
+      "group": {
+        "guid": "e51babaf68f07b34a28af4cc8e12dc67",
+        "label": "BsMain",
+        "updated": "2018-09-22T20:33:09.807Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:22:A2:0E",
+    "ip": "192.55.226.190",
+    "deviceInfo": {
+      "label": "BsmbC2 22a20e",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.466Z"
+      },
+      "group": {
+        "guid": "e51babaf68f07b34a28af4cc8e12dc67",
+        "label": "BsMain",
+        "updated": "2017-12-02T02:11:48.238Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:22:70:9C",
+    "ip": "192.55.226.112",
+    "deviceInfo": {
+      "label": "BsmbD1 22709c",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.419Z"
+      },
+      "group": {
+        "guid": "e51babaf68f07b34a28af4cc8e12dc67",
+        "label": "BsMain",
+        "updated": "2017-12-02T02:15:22.141Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:25:F3:07",
+    "ip": "192.55.226.115",
+    "deviceInfo": {
+      "label": "BsmbD2 25f307",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.478Z"
+      },
+      "group": {
+        "guid": "e51babaf68f07b34a28af4cc8e12dc67",
+        "label": "BsMain",
+        "updated": "2017-12-02T02:56:49.022Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:22:27:C2",
+    "ip": "192.55.226.121",
+    "deviceInfo": {
+      "label": "BsmbE2 2227c2",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.471Z"
+      },
+      "group": {
+        "guid": "e51babaf68f07b34a28af4cc8e12dc67",
+        "label": "BsMain",
+        "updated": "2017-12-02T02:17:10.602Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:12:6F:21",
+    "ip": "192.55.226.196",
+    "deviceInfo": {
+      "label": "Bstairs 126f21",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 22,
+      "productName": "Color 1000",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.464Z"
+      },
+      "group": {
+        "guid": "5acfddb7496fbe59c1e631a897bfe9a9",
+        "label": "BsHall",
+        "updated": "2018-06-28T00:53:14.188Z"
+      },
+      "firmwareVersion": 65558
+    },
+    "extras": {"firmware": "10016"}
+  },
+  {
+    "mac": "D0:73:D5:03:B1:38",
+    "ip": "192.55.226.157",
+    "deviceInfo": {
+      "label": "Bt2ceiling 03b138",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 1,
+      "productName": "Original 1000",
+      "hwVersion": 6,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.448Z"
+      },
+      "group": {
+        "guid": "9fd4243e4d3e750b27c7694935e6fc3c",
+        "label": "Bath2",
+        "updated": "2018-01-19T20:32:26.068Z"
+      },
+      "firmwareVersion": 131073
+    },
+    "extras": {"firmware": "20001"}
+  },
+  {
+    "mac": "D0:73:D5:30:B4:DA",
+    "ip": "192.55.226.198",
+    "deviceInfo": {
+      "label": "Bt2left 30b4da",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 50,
+      "productName": "LIFX Mini Day and Dusk",
+      "hwVersion": 0,
+      "features": {
+        "color": false,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home",
+        "updated": "2018-01-19T04:36:43.222Z"
+      },
+      "group": {
+        "guid": "9fd4243e4d3e750b27c7694935e6fc3c",
+        "label": "Bath2",
+        "updated": "2018-01-19T04:36:43.216Z"
+      },
+      "firmwareVersion": 196649
+    },
+    "extras": {"firmware": "30029"}
+  },
+  {
+    "mac": "D0:73:D5:30:6F:94",
+    "ip": "192.55.226.197",
+    "deviceInfo": {
+      "label": "Bt2right 306f94",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 49,
+      "productName": "LIFX Mini",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.433Z"
+      },
+      "group": {
+        "guid": "9fd4243e4d3e750b27c7694935e6fc3c",
+        "label": "Bath2",
+        "updated": "2018-04-02T13:15:25.876Z"
+      },
+      "firmwareVersion": 196649
+    },
+    "extras": {"firmware": "30029"}
+  },
+  {
+    "mac": "D0:73:D5:11:C4:2A",
+    "ip": "192.55.226.176",
+    "deviceInfo": {
+      "label": "Bt3left 11c42a",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 22,
+      "productName": "Color 1000",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.485Z"
+      },
+      "group": {
+        "guid": "b00635b3c811111c45da45ddb19605b4",
+        "label": "B3bath",
+        "updated": "2018-08-21T13:53:50.819Z"
+      },
+      "firmwareVersion": 65558
+    },
+    "extras": {"firmware": "10016"}
+  },
+  {
+    "mac": "D0:73:D5:27:2D:EB",
+    "ip": "192.55.226.143",
+    "deviceInfo": {
+      "label": "Bt3right 272deb",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 27,
+      "productName": "LIFX A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.462Z"
+      },
+      "group": {
+        "guid": "b00635b3c811111c45da45ddb19605b4",
+        "label": "B3bath",
+        "updated": "2018-04-02T13:34:48.717Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:14:9B:6C",
+    "ip": "192.55.226.105",
+    "deviceInfo": {
+      "label": "Bt3strip 149b6c",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 31,
+      "productName": "LIFX Z",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": true,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.438Z"
+      },
+      "group": {
+        "guid": "2e9f7938c071624a744cfb7fca0324fd",
+        "label": "OfficeLights",
+        "updated": "2017-11-01T02:46:07.479Z"
+      },
+      "multizone": {"count": 16},
+      "firmwareVersion": 65558
+    },
+    "extras": {"firmware": "10016"}
+  },
+  {
+    "mac": "D0:73:D5:11:6F:50",
+    "ip": "192.55.226.147",
+    "deviceInfo": {
+      "label": "KDeskLamp 116f50",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 18,
+      "productName": "White 900 BR30 (Low Voltage)",
+      "hwVersion": 0,
+      "features": {
+        "color": false,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home",
+        "updated": "1970-01-01T00:00:00.000Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen",
+        "updated": "2017-09-04T02:30:51.511Z"
+      },
+      "firmwareVersion": 65558
+    },
+    "extras": {"firmware": "10016"}
+  },
+  {
+    "mac": "D0:73:D5:23:91:8A",
+    "ip": "192.55.226.72",
+    "deviceInfo": {
+      "label": "KdeskWall 23918a",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.429Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen",
+        "updated": "2017-11-12T04:12:15.861Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:22:79:6D",
+    "ip": "192.55.226.101",
+    "deviceInfo": {
+      "label": "KitchenStairs 22796d",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 27,
+      "productName": "LIFX A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.436Z"
+      },
+      "group": {
+        "guid": "3089998c667b5ce601d850fe3f04caba",
+        "label": "floor2",
+        "updated": "2017-09-07T17:39:07.394Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:12:5A:4C",
+    "ip": "192.55.226.185",
+    "deviceInfo": {
+      "label": "Kmid1 125a4c",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 20,
+      "productName": "Color 1000 BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.404Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen1",
+        "updated": "2017-08-15T22:17:20.004Z"
+      },
+      "firmwareVersion": 65558
+    },
+    "extras": {"firmware": "10016"}
+  },
+  {
+    "mac": "D0:73:D5:23:CC:67",
+    "ip": "192.55.226.76",
+    "deviceInfo": {
+      "label": "Kmid2 23cc67",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.396Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen",
+        "updated": "2017-12-07T06:06:49.509Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:24:EC:6F",
+    "ip": "192.55.226.92",
+    "deviceInfo": {
+      "label": "Kmid3 24EC6F",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.415Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen",
+        "updated": "2018-09-16T19:32:27.348Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:12:72:91",
+    "ip": "192.55.226.89",
+    "deviceInfo": {
+      "label": "Ksink1 127291",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 20,
+      "productName": "Color 1000 BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.455Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen",
+        "updated": "2017-09-04T02:30:51.532Z"
+      },
+      "firmwareVersion": 65558
+    },
+    "extras": {"firmware": "10016"}
+  },
+  {
+    "mac": "D0:73:D5:24:DA:6C",
+    "ip": "192.55.226.95",
+    "deviceInfo": {
+      "label": "Ksink2 24da6c",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.398Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen",
+        "updated": "2018-03-01T20:41:51.196Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:27:9A:29",
+    "ip": "192.55.226.245",
+    "deviceInfo": {
+      "label": "Ksink3 279A29",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.450Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen",
+        "updated": "2018-05-04T00:53:15.517Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:25:ED:E0",
+    "ip": "192.55.226.77",
+    "deviceInfo": {
+      "label": "Ksink4 25EDE0",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.493Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen",
+        "updated": "2018-03-05T01:07:48.474Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:13:42:22",
+    "ip": "192.55.226.221",
+    "deviceInfo": {
+      "label": "Ksink5 134222",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 20,
+      "productName": "Color 1000 BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.460Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen",
+        "updated": "2017-09-04T02:30:51.616Z"
+      },
+      "firmwareVersion": 65558
+    },
+    "extras": {"firmware": "10016"}
+  },
+  {
+    "mac": "D0:73:D5:27:9E:2B",
+    "ip": "192.55.226.251",
+    "deviceInfo": {
+      "label": "Ksink6 279E2B",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.494Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen",
+        "updated": "2018-05-04T00:48:03.497Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:13:8C:E8",
+    "ip": "192.55.226.180",
+    "deviceInfo": {
+      "label": "Kwall1 138ce8",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 20,
+      "productName": "Color 1000 BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.479Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen1",
+        "updated": "2016-11-01T19:54:08.014Z"
+      },
+      "firmwareVersion": 65558
+    },
+    "extras": {"firmware": "10016"}
+  },
+  {
+    "mac": "D0:73:D5:22:24:15",
+    "ip": "192.55.226.82",
+    "deviceInfo": {
+      "label": "Kwall2 222415",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.417Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen",
+        "updated": "2017-09-04T02:30:51.594Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:27:99:98",
+    "ip": "192.55.226.62",
+    "deviceInfo": {
+      "label": "Kwall3 279998",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 28,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-09-19T14:40:22.533Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen",
+        "updated": "2018-09-19T14:40:22.534Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:28:B7:E3",
+    "ip": "192.55.226.49",
+    "deviceInfo": {
+      "label": "Kwall4 28b7e3",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 44,
+      "productName": "LIFX BR30",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-09-15T19:10:53.262Z"
+      },
+      "group": {
+        "guid": "a825ab784193e8d9cce0d88af0e8bfcf",
+        "label": "Kitchen",
+        "updated": "2018-09-15T19:11:11.712Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:23:65:FC",
+    "ip": "192.55.226.150",
+    "deviceInfo": {
+      "label": "LandingLight 2365fc",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 27,
+      "productName": "LIFX A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.446Z"
+      },
+      "group": {
+        "guid": "3089998c667b5ce601d850fe3f04caba",
+        "label": "floor2",
+        "updated": "1970-01-01T00:00:00.000Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:14:F4:3C",
+    "ip": "192.55.226.137",
+    "deviceInfo": {
+      "label": "light strip ethan",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 31,
+      "productName": "LIFX Z",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": true,
+        "chain": false
+      },
+      "location": {
+        "guid": "c06b0bda24f881563fc3848a737bb0c1",
+        "label": "My Home",
+        "updated": "2018-04-03T06:44:21.355Z"
+      },
+      "group": {
+        "guid": "5e53d2750469df66361dc489ef263eec",
+        "label": "Room 1",
+        "updated": "2018-04-03T06:44:21.359Z"
+      },
+      "multizone": {"count": 16},
+      "firmwareVersion": 65558
+    },
+    "extras": {"firmware": "10016"}
+  },
+  {
+    "mac": "D0:73:D5:23:0D:11",
+    "ip": "192.55.226.170",
+    "deviceInfo": {
+      "label": "LvLampBot 230d11",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 27,
+      "productName": "LIFX A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.453Z"
+      },
+      "group": {
+        "guid": "24bb169a8feb5e307750ef7d1daddb79",
+        "label": "Living Room",
+        "updated": "2017-11-21T22:40:10.847Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:23:95:F1",
+    "ip": "192.55.226.66",
+    "deviceInfo": {
+      "label": "LvLampMid 2395f1",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 27,
+      "productName": "LIFX A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "error": "Timeout"
+    },
+    "extras": {"firmware": null}
+  },
+  {
+    "mac": "D0:73:D5:22:EF:3F",
+    "ip": "192.55.226.99",
+    "deviceInfo": {
+      "label": "LvLampTop 22EF3F",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 27,
+      "productName": "LIFX A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.492Z"
+      },
+      "group": {
+        "guid": "24bb169a8feb5e307750ef7d1daddb79",
+        "label": "Living Room",
+        "updated": "2017-12-05T03:16:46.127Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:23:A6:3C",
+    "ip": "192.55.226.192",
+    "deviceInfo": {
+      "label": "LvSmall 23a63c",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 27,
+      "productName": "LIFX A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home",
+        "updated": "2017-11-21T22:38:37.208Z"
+      },
+      "group": {
+        "guid": "1d339e27ea584fa1c0ac0090a7789c9b",
+        "label": "Tester",
+        "updated": "2017-11-21T22:38:37.206Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:03:B2:40",
+    "ip": "192.55.226.226",
+    "deviceInfo": {
+      "label": "OfficeClosetLamp 03b240",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 1,
+      "productName": "Original 1000",
+      "hwVersion": 6,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.490Z"
+      },
+      "group": {
+        "guid": "2e9f7938c071624a744cfb7fca0324fd",
+        "label": "OfficeLights",
+        "updated": "1970-01-01T00:00:00.000Z"
+      },
+      "firmwareVersion": 131073
+    },
+    "extras": {"firmware": "20001"}
+  },
+  {
+    "mac": "D0:73:D5:31:A3:0C",
+    "ip": "192.55.226.28",
+    "deviceInfo": {
+      "label": "OfficeTrack1 31a30c",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 49,
+      "productName": "LIFX Mini",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-28T01:30:59.843Z"
+      },
+      "group": {
+        "guid": "d8fb6b95320538928378323c6135fc20",
+        "label": "OfficeTrack",
+        "updated": "2018-09-25T02:53:02.679Z"
+      },
+      "firmwareVersion": 196649
+    },
+    "extras": {"firmware": "30029"}
+  },
+  {
+    "mac": "D0:73:D5:31:D1:52",
+    "ip": "192.55.226.138",
+    "deviceInfo": {
+      "label": "OfficeTrack2 31d152",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 49,
+      "productName": "LIFX Mini",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.488Z"
+      },
+      "group": {
+        "guid": "d8fb6b95320538928378323c6135fc20",
+        "label": "OfficeTrack",
+        "updated": "1970-01-01T00:00:00.000Z"
+      },
+      "firmwareVersion": 196649
+    },
+    "extras": {"firmware": "30029"}
+  },
+  {
+    "mac": "D0:73:D5:30:4C:7C",
+    "ip": "192.55.226.61",
+    "deviceInfo": {
+      "label": "OfficeTrack3 304c7c",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 49,
+      "productName": "LIFX Mini",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.388Z"
+      },
+      "group": {
+        "guid": "d8fb6b95320538928378323c6135fc20",
+        "label": "OfficeTrack",
+        "updated": "1970-01-01T00:00:00.000Z"
+      },
+      "firmwareVersion": 196649
+    },
+    "extras": {"firmware": "30029"}
+  },
+  {
+    "mac": "D0:73:D5:25:25:9A",
+    "ip": "192.55.226.104",
+    "deviceInfo": {
+      "label": "Porch 25259a",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 29,
+      "productName": "LIFX+ A19",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": true,
+        "multizone": false,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.474Z"
+      },
+      "group": {
+        "guid": "0c7a0b11fefad0c373387a00c6263686",
+        "label": "Porch Front",
+        "updated": "2018-09-19T13:38:15.944Z"
+      },
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:2A:B0:56",
+    "ip": "192.55.226.45",
+    "deviceInfo": {
+      "label": "Strip3 2ab05",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 32,
+      "productName": "LIFX Z 2",
+      "hwVersion": 512,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": true,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-10-19T19:17:10.029Z"
+      },
+      "group": {
+        "guid": "5acfddb7496fbe59c1e631a897bfe9a9",
+        "label": "BsHall",
+        "updated": "2018-10-19T19:17:10.030Z"
+      },
+      "multizone": {"count": 16},
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:29:3A:34",
+    "ip": "192.55.226.21",
+    "deviceInfo": {
+      "label": "Testbeam 293a34",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 38,
+      "productName": "LIFX Beam",
+      "hwVersion": 512,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": true,
+        "chain": false
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-09-30T23:28:36.917Z"
+      },
+      "group": {
+        "guid": "1d339e27ea584fa1c0ac0090a7789c9b",
+        "label": "Tester",
+        "updated": "2018-09-30T23:28:36.918Z"
+      },
+      "multizone": {"count": 51},
+      "firmwareVersion": 131148
+    },
+    "extras": {"firmware": "2004c"}
+  },
+  {
+    "mac": "D0:73:D5:39:3C:8E",
+    "ip": "192.55.226.50",
+    "deviceInfo": {
+      "label": "Tiles 393c8e",
+      "vendorId": 1,
+      "vendorName": "LIFX",
+      "productId": 55,
+      "productName": "LIFX Tile",
+      "hwVersion": 0,
+      "features": {
+        "color": true,
+        "infrared": false,
+        "multizone": false,
+        "chain": true
+      },
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-10-04T23:06:59.807Z"
+      },
+      "group": {
+        "guid": "f0173d2a82cd7e06b3559caa95d3f653",
+        "label": "Tile1",
+        "updated": "2018-10-04T23:06:59.809Z"
+      },
+      "firmwareVersion": 196653
+    },
+    "extras": {"firmware": "3002d"}
+  }
+]
