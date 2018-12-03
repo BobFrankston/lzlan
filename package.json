@@ -1,8 +1,8 @@
 {
-  "name": "@bobfankston/lzlan",
-  "version": "1.0.1",
-  "description": "",
-  "main": "./lib/index.js",
+  "name": "@bobfrankston/lzlan",
+  "version": "1.0.2",
+  "description": "LIFX Lan Support for LIFX",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
