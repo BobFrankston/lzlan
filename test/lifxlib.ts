@@ -91,11 +91,12 @@ async function getMoreDevices() {
             if (addDevice(mdevice)) added++;
         });
         devices.sort((a, b) => {
-            if (!a.deviceInfo) {
+            if (!a.deviceInfo || !a.deviceInfo.label) {
                 return b.deviceInfo ? 1 : 0;
             }
             else
-                if (!b.deviceInfo) return 1;
+                if (!b.deviceInfo || !.deviceInfo.label) return 1;
+
             const na = a.deviceInfo.label.toLowerCase();
             const nb = b.deviceInfo.label.toLowerCase();
             if (na == nb) return 0;

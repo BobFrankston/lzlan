@@ -1,6 +1,6 @@
 import * as lxlib from './lifxlib';
 import { msg, err, delaySeconds, createDevice, findDevice, assureDevices } from './lifxlib';
-import Lifx from '../src/lants';
+import * as Lifx from '../src/lants';
 import { LifxDevice } from '../src/lants-device';
 
 async function candy(name: string) {

@@ -14,6 +14,8 @@ import { mLifxUdp, udpParsed } from './lants-udp';
 import { LifxLanColor } from "./lants-color";
 import { cursorTo } from "readline";
 
+// export LifxLanDevice;
+
 export const delayms = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 /* ------------------------------------------------------------------

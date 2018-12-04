@@ -231,9 +231,14 @@
         "label": "My Home1",
         "updated": "2018-06-01T04:00:57.431Z"
       },
-      "error": "Timeout"
+      "group": {
+        "guid": "edfde15accdc323dd213b5a7c33f2580",
+        "label": "Brmf",
+        "updated": "2018-05-31T18:17:13.825Z"
+      },
+      "firmwareVersion": 131148
     },
-    "extras": {"firmware": null}
+    "extras": {"firmware": "2004c"}
   },
   {
     "mac": "D0:73:D5:00:92:BD",
@@ -681,9 +686,9 @@
         "label": "BsMain",
         "updated": "2017-12-02T02:03:58.940Z"
       },
-      "error": "Timeout"
+      "firmwareVersion": 131148
     },
-    "extras": {"firmware": null}
+    "extras": {"firmware": "2004c"}
   },
   {
     "mac": "D0:73:D5:27:9E:65",
@@ -1633,9 +1638,19 @@
         "multizone": false,
         "chain": false
       },
-      "error": "Timeout"
+      "location": {
+        "guid": "18633eabd9ac96984b79c4f6a17a4872",
+        "label": "My Home1",
+        "updated": "2018-06-01T04:00:57.423Z"
+      },
+      "group": {
+        "guid": "24bb169a8feb5e307750ef7d1daddb79",
+        "label": "Living Room",
+        "updated": "2018-11-01T13:34:02.564Z"
+      },
+      "firmwareVersion": 131148
     },
-    "extras": {"firmware": null}
+    "extras": {"firmware": "2004c"}
   },
   {
     "mac": "D0:73:D5:22:EF:3F",
@@ -1851,7 +1866,7 @@
     "mac": "D0:73:D5:2A:B0:56",
     "ip": "192.55.226.45",
     "deviceInfo": {
-      "label": "Strip3 2ab05",
+      "label": "Strip3 2ab056",
       "vendorId": 1,
       "vendorName": "LIFX",
       "productId": 32,
@@ -1866,14 +1881,14 @@
       "location": {
         "guid": "18633eabd9ac96984b79c4f6a17a4872",
         "label": "My Home1",
-        "updated": "2018-10-19T19:17:10.029Z"
+        "updated": "2018-11-21T18:10:40.901Z"
       },
       "group": {
-        "guid": "5acfddb7496fbe59c1e631a897bfe9a9",
-        "label": "BsHall",
-        "updated": "2018-10-19T19:17:10.030Z"
+        "guid": "a573fbbfdd7323bbd77d9aa59f1d5b7b",
+        "label": "",
+        "updated": "2018-11-21T18:10:40.901Z"
       },
-      "multizone": {"count": 16},
+      "multizone": {"count": 8},
       "firmwareVersion": 131148
     },
     "extras": {"firmware": "2004c"}

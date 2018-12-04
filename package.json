@@ -2,8 +2,8 @@
   "name": "@bobfrankston/lzlan",
   "version": "1.0.2",
   "description": "LIFX Lan Support for LIFX",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/lants.js",
+  "types": "lib/lants.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
