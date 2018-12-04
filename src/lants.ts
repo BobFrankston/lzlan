@@ -12,7 +12,6 @@ import { mLifxLanColor } from "./lants-color";
 
 import { mLifxUdp, udpParsed } from './lants-udp';
 import { LifxLanColor } from "./lants-color";
-import { cursorTo } from "readline";
 
 // export LifxLanDevice;
 

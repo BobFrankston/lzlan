@@ -23,7 +23,6 @@
   "homepage": "https://github.com/BobFrankston/lzlan#readme",
   "dependencies": {
     "@types/node": "^10.11.4",
-    "json-stringify-pretty-compact": "^1.2.0",
     "node": "^10.11.0"
   },
   "directories": {
