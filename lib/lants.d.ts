@@ -29,6 +29,5 @@ export declare class LifxLan {
     }): Promise<void>;
     destroy(): Promise<void>;
 }
-declare const newLifxLan: LifxLan;
-export default newLifxLan;
+export declare const Lifx: LifxLan;
 //# sourceMappingURL=lants.d.ts.map

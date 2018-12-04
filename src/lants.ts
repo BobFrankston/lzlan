@@ -133,5 +133,7 @@ export class LifxLan {
 	};
 }
 
-const newLifxLan = new LifxLan();
-export default newLifxLan;
+export const Lifx = new LifxLan();
+
+// const newLifxLan = new LifxLan();
+// export default newLifxLan;
