@@ -95,7 +95,7 @@ async function getMoreDevices() {
                 return b.deviceInfo ? 1 : 0;
             }
             else
-                if (!b.deviceInfo || !.deviceInfo.label) return 1;
+                if (!b.deviceInfo || !b.deviceInfo.label) return 1;
 
             const na = a.deviceInfo.label.toLowerCase();
             const nb = b.deviceInfo.label.toLowerCase();
