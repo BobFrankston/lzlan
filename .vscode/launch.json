@@ -2,13 +2,16 @@
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
+
+    // This is a library - use the test app
+
+    "version": "0.2.1",
     "configurations": [
         {
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}\\lib\\test\\index.js",
+            "program": "${workspaceFolder}/lib\\test\\index.js",
             "outFiles": [
                 "${workspaceFolder}/**/lib/*.js"
             ]

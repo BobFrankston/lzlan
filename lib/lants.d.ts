@@ -1,4 +1,6 @@
+import * as lantsDevice from "./lants-device";
 import { LifxLanDevice, Integer, Duration } from "./lants-device";
+export { LifxLanDevice };
 import { LifxLanColor } from "./lants-color";
 export declare const delayms: (ms: number) => Promise<{}>;
 export declare class LifxLan {
@@ -10,12 +12,12 @@ export declare class LifxLan {
     private _wait;
     discover(params?: {
         wait?: Integer;
-    }): Promise<LifxLanDevice[]>;
+    }): Promise<lantsDevice.LifxLanDevice[]>;
     private _discoverGetDeviceInfo;
     createDevice(params: {
         ip: string;
         mac: string;
-    }): Promise<LifxLanDevice>;
+    }): Promise<lantsDevice.LifxLanDevice>;
     turnOnBroadcast(params?: {
         color?: LifxLanColor;
         duration?: Duration;

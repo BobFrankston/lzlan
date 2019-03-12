@@ -1,6 +1,9 @@
+import * as lantsDevice from "./lants-device";
 import { LifxLanDevice, Integer, Duration, passure } from "./lants-device";
 import { lifxMsgType } from "./lants-parser";
 import { mLifxLanColor } from "./lants-color";
+
+export {LifxLanDevice};
 
 /* ------------------------------------------------------------------
  * node-lifx-lan - lifx-lan.js
