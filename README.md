@@ -1,13 +1,15 @@
 LIFX LAN Interface
 ===============
 
-This is based on  [node-lifx-lan link] https://www.npmjs.com/package/node-lifx-lan. The major changes have been in converting to TypeScript and async and relying on the compile time typechecks more than runtime checking.
+**This is a work-in-progress** with only limited support considered it as-is and not fully tested.
 
-See [link]https://www.npmjs.com/package/node-lifx-lan for the existing documentat
+This is based on  [node-lifx-lan] https://www.npmjs.com/package/node-lifx-lan. The major changes has been in converting to TypeScript and async and relying on the compile time type checks rather than runtime checks.
 
-## Variations
+See https://www.npmjs.com/package/node-lifx-lan for the existing documentation. You can use intellisense in Visual Studio Code to see the parameters. Support for groups and filtering has been removed since they don't provide any advantages for the LAN API
 
-* Use of typescript. Thus 
+## Moving from JavaScript promises to TypeScript and async
+
+Thus 
 
 ```JavaScript
 // Create a LifxLan object
