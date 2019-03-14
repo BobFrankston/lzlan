@@ -1,6 +1,6 @@
 {
   "name": "@bobfrankston/lzlan",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "LIFX Lan Support for LIFX",
   "main": "lib/lants.js",
   "types": "lib/lants.d.ts",
