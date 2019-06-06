@@ -37,10 +37,10 @@ export class LifxLan {
 		this._initialized = true;
 	}
 
-	private async _request(type: lifxMsgType, payload?: {}) {
-		await this.init();
-		return await mLifxUdp.request({ type: type, payload: payload || null, broadcast: true });
-	};
+	// private async _request(type: lifxMsgType, payload?: {}) {
+	// 	await this.init();
+	// 	return await mLifxUdp.request({ type: type, payload: payload || null, broadcast: true });
+	// };
 
 	private _wait(msec?: number) { return new Promise(resolve => setTimeout(resolve, msec || 50)); };
 
@@ -96,36 +96,46 @@ export class LifxLan {
 		return [...dev_list];	// Why a copy?
 	};
 
+	/**
+      * Create a new device object
+      * @param ip IP Address
+	  * @param MAC Mac address
+      */
+
 	async createDevice(params: { ip: string, mac: string }) {
+		// TODO, see if we already have this and use existing object?
+		// Also check for changing the address of the existing endpoint
 		await this.init();
 		const device = new LifxLanDevice({ ip: params.ip, mac: params.mac, udp: mLifxUdp });
 		return device;
 	};
 
-	async turnOnBroadcast(params?: { color?: LifxLanColor, duration?: Duration }) {
-		params = passure(params);
-		if (params.color) await this.setColorBroadcast(params);
-		await this._wait();
-		const p: { level: 1, duration?: Duration } = { level: 1 };
-		if ('duration' in params) p.duration = params.duration;
-		await this._request(lifxMsgType.SetLightPower, p);
-	}
+	// Note - am considering remove all such broadcast requests becuase the message should just be send to explicit end points.
 
-	// async _turnOnBroadcastSetColor(params: { color?: LifxLanColor, duration?: Duration }) {
-	// 	if (params.color) this.setColorBroadcast(params);
-	// };
+	// async turnOnBroadcast(params?: { color?: LifxLanColor, duration?: Duration }) {
+	// 	params = passure(params);
+	// 	if (params.color) await this.setColorBroadcast(params);
+	// 	await this._wait();
+	// 	const p: { level: 1, duration?: Duration } = { level: 1 };
+	// 	if ('duration' in params) p.duration = params.duration;
+	// 	await this._request(lifxMsgType.SetLightPower, p);
+	// }
 
-	async setColorBroadcast(params?: { color?: LifxLanColor, duration?: Duration }) {
-		params = params || {};
-		params.color = mLifxLanColor.anyToHsb(params.color);
-		await this._request(lifxMsgType.SetColor, params);
-	}
+	// // async _turnOnBroadcastSetColor(params: { color?: LifxLanColor, duration?: Duration }) {
+	// // 	if (params.color) this.setColorBroadcast(params);
+	// // };
 
-	async turnOffBroadcast(params: { duration?: Duration }) {
-		const p: { level: 0, duration?: Duration } = { level: 0 };
-		if ('duration' in params) p.duration = params.duration;
-		await this._request(lifxMsgType.SetLightPower, params);
-	}
+	// async setColorBroadcast(params?: { color?: LifxLanColor, duration?: Duration }) {
+	// 	params = params || {};
+	// 	params.color = mLifxLanColor.anyToHsb(params.color);
+	// 	await this._request(lifxMsgType.SetColor, params);
+	// }
+
+	// async turnOffBroadcast(params: { duration?: Duration }) {
+	// 	const p: { level: 0, duration?: Duration } = { level: 0 };
+	// 	if ('duration' in params) p.duration = params.duration;
+	// 	await this._request(lifxMsgType.SetLightPower, params);
+	// }
 
 	async destroy() {
 		await mLifxUdp.destroy();
