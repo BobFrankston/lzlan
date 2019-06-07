@@ -16,35 +16,31 @@ See https://www.npmjs.com/package/node-lifx-lan for the existing documentation. 
 
 Thus 
 
-```JavaScript
-// Create a LifxLan object
+**JavaScript**
+```
 const Lifx  = require('node-lifx-lan');
-
-// Turn on all LIFX bulbs in the local network
-Lifx.turnOnBroadcast({
-  color: {css: 'green'}
-}).then(() => {
-  console.log('Done!');
-}).catch((error) => {
-  console.error(error);
-});
 ```
 
-becomes
-
-```JavaScript
-// Create a LifxLan object
-import * as lz from "lzlan";
-
-// Turn on all LIFX bulbs in the local network
-async function TurnOnAll() {
-    try {
-        lz.turnOnBroadcast({color: {css: 'green'});
-        console.log('Done!');
-    }
-    catch(e) {
-        console.error(`Error: ${e.message}`);
-    }
-}
-TurnOnAll();
+**TypeScript**
 ```
+import { Lifx } from "../lib/lants";
+```
+
+```
+
+const cdev = await Lifx.createDevice({ ip: "192.168.1.100", mac: "00:11:22:33:44:EE" });
+await cdev.turnOn({color: {css: 'green'});
+console.log('Done!');
+
+```
+
+To discovery and turn all bulbs.
+
+**Note** Discovery is not perfect so you'll want wrapper code to keep rediscovering. Better to keep a local database of recent discoveries
+
+```
+const devs = await Lifx.discover(
+devs.forEach(dev => dev.turnOn());
+
+```
+
