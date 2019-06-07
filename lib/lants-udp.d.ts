@@ -1,6 +1,7 @@
 /// <reference types="node" />
 import { lifxMsgType, LifxLanHeader } from "./lants-parser";
 import { LifxLanDevice } from "./lants-device";
+export declare type UDPHandler = (rinfo: udpRinfo, pased: udpParsed) => void;
 export interface udpParams {
     address?: string;
     type: lifxMsgType;
@@ -9,6 +10,12 @@ export interface udpParams {
     res_required?: boolean;
     target?: string;
     broadcast?: boolean;
+}
+export interface udpRinfo {
+    address: string;
+    family: string;
+    port: number;
+    size: number;
 }
 export interface udpDiscover {
     seq: number;
@@ -41,6 +48,7 @@ export declare class LifxLanUdp {
     request(params: udpParams): Promise<void | {}>;
     private _requestUnicast;
     private _requestBroadcast;
+    UDPHandlers: UDPHandler[];
     private _receivePacket;
     device_list_hack: {
         [ip: string]: LifxLanDevice;

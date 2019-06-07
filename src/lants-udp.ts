@@ -20,6 +20,9 @@ const mComposer = new Composer.LifxLanComposer();
 import * as la from './lants-address';
 import { LifxLanDevice, passure } from "./lants-device";
 import { promises } from "fs";
+
+export type UDPHandler = (rinfo: udpRinfo, pased: udpParsed) => void;
+
 const mAddress = new la.LifxLanAddress();
 
 export interface udpParams {
@@ -32,7 +35,7 @@ export interface udpParams {
 	broadcast?: boolean;     // The default is `false`.
 };
 
-interface udpRinfo {
+export interface udpRinfo {
 	address: string;    // The sender address.
 	family: string;     // 'IPv4' or 'IPv6'
 	port: number;		// Sender port
@@ -232,10 +235,14 @@ export class LifxLanUdp {
 		await this._sendBroadcast(req_list);
 	};
 
+	UDPHandlers: UDPHandler[] = [];
+
 	private _receivePacket(buf: Buffer, rinfo: udpRinfo) {
-		if (this._isNetworkInterfaceAddress(rinfo.address)) return;
+		if (this._isNetworkInterfaceAddress(rinfo.address))
+			return;		// Ignore echoes from myself
 		let parsed = mParser.parse(buf);
-		if (!parsed) return;
+		if (!parsed)
+			return;
 		parsed.address = rinfo.address;
 		let seq = parsed.header.sequence;
 		let callback = this._requests[seq];
@@ -252,6 +259,11 @@ export class LifxLanUdp {
 					else
 						name = parsed.address;
 				}
+				if (this.UDPHandlers.length) {
+					this.UDPHandlers.forEach(uh => uh && uh(rinfo, parsed));	// Allow use of a null entry to suppress default
+					return;
+				}
+
 				name = name.split(' ')[0];
 				// Hack
 				if (name == "My") name += ' ' + parsed.address;
@@ -269,15 +281,13 @@ export class LifxLanUdp {
 	device_list_hack: { [ip: string]: LifxLanDevice };	// So we can report heard
 
 	private _isNetworkInterfaceAddress(addr: string) {
-		let flag = false;
-		for (let i = 0; i < this._netif_list.length; i++) {
-			let netif = this._netif_list[i];
-			if (netif.address === addr) {
-				flag = true;
-				break;
-			}
-		}
-		return flag;
+		return this._netif_list.some(netif => netif.address == addr);
+		// 	for (let i = 0; i < this._netif_list.length; i++) {
+		// 		let netif = this._netif_list[i];
+		// 		if (netif.address === addr)
+		// 			return true;
+		// 	}
+		// 	return false;
 	};
 
 	async discover(params: { wait?: number }) {

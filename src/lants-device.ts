@@ -173,9 +173,10 @@ export class LifxLanDevice {
         return new Promise(resolve => setTimeout(resolve, msec || 50));
     };
 
-    /* ==================================================================
-    * High level methods
-    * ================================================================ */
+    /**
+      * Set color and duration and set power to 1
+      * @param {color?: LifxLanColor, duration?: Duration}
+    */
 
     async turnOn(params?: ColorDuration) {
         params = passure(params, { duration: 0 });
@@ -190,6 +191,11 @@ export class LifxLanDevice {
         if (params && params.color)
             await this.setColor(params);
     };
+    
+    /**
+      * Set color and duration
+      * @param {color?: LifxLanColor, duration?: Duration}
+    */
 
     async setColor(params?: ColorDuration) {
         params = passure(params);
@@ -199,6 +205,12 @@ export class LifxLanDevice {
         if (res.power && !isUndefined(params.duration)) req.duration = params.duration
         return this.lightSetColor(req);
     };
+
+    
+    /**
+      * Turn off
+      * @param {duration?: Duration}
+    */
 
     async turnOff(params?: { duration?: Duration }) {
         params = passure(params, { level: 0, duration: 0 });

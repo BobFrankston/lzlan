@@ -2,8 +2,10 @@ import * as lantsDevice from "./lants-device";
 import { LifxLanDevice, Integer, Duration, passure } from "./lants-device";
 import { lifxMsgType } from "./lants-parser";
 import { mLifxLanColor, _LifxLanColor } from "./lants-color";
+import { UDPHandler } from './lants-udp';
 
 export { LifxLanDevice };
+export { UDPHandler };
 
 /* ------------------------------------------------------------------
  * node-lifx-lan - lifx-lan.js
@@ -20,10 +22,10 @@ import { mLifxUdp, udpParsed } from './lants-udp';
 
 export const delayms = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-	/**
-      * Global object
-      * Use the Lifx value and do not create a clone
-      */
+/**
+  * Global object
+  * Use the Lifx value and do not create a clone
+  */
 
 export class LifxLan {
 	constructor() {
@@ -45,6 +47,10 @@ export class LifxLan {
 		if (this._initialized) return;
 		await mLifxUdp.init();
 		this._initialized = true;
+	}
+
+	AddUDPHandler(updh: UDPHandler) {
+		mLifxUdp.UDPHandlers.push(updh);	// For now
 	}
 
 	// private async _request(type: lifxMsgType, payload?: {}) {
@@ -154,6 +160,5 @@ export class LifxLan {
 }
 
 export const Lifx = new LifxLan();
-
 // const newLifxLan = new LifxLan();
 // export default newLifxLan;

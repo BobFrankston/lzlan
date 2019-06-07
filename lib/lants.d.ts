@@ -1,6 +1,8 @@
 import * as lantsDevice from "./lants-device";
 import { LifxLanDevice, Integer } from "./lants-device";
+import { UDPHandler } from './lants-udp';
 export { LifxLanDevice };
+export { UDPHandler };
 export declare const delayms: (ms: number) => Promise<{}>;
 /**
   * Global object
@@ -13,6 +15,7 @@ export declare class LifxLan {
     private _initialized;
     private _device_list;
     init(): Promise<void>;
+    AddUDPHandler(updh: UDPHandler): void;
     private _wait;
     discover(params?: {
         wait?: Integer;

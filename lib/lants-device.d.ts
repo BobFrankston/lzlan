@@ -102,9 +102,21 @@ export declare class LifxLanDevice {
     private _lifxLanUdp;
     private _request;
     private _wait;
+    /**
+      * Set color and duration and set power to 1
+      * @param {color?: LifxLanColor, duration?: Duration}
+    */
     turnOn(params?: ColorDuration): Promise<void>;
     private _turnOnSetColor;
+    /**
+      * Set color and duration
+      * @param {color?: LifxLanColor, duration?: Duration}
+    */
     setColor(params?: ColorDuration): Promise<any>;
+    /**
+      * Turn off
+      * @param {duration?: Duration}
+    */
     turnOff(params?: {
         duration?: Duration;
     }): Promise<void>;

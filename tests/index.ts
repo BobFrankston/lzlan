@@ -8,57 +8,70 @@ import { lifxMsgType } from "../lib/lants-parser";
 
 var xdev: lz.LifxLanDevice;
 var wait = 250; // Ms
-function msg(text:string) {
+function msg(text: string) {
     console.log(`${new Date().toLocaleTimeString()} ${text}`)
-}
-
-async function ToggleDev(dname: string) {
-    try {
-        // const Lifx = new LifxLan();
-        var devs = await Lifx.discover();   // var for debugging
-        var dev = devs.filter(d => d.deviceInfo && d.deviceInfo.label && d.deviceInfo.label.toLowerCase().startsWith(dname))[0];    // Assume success
-        xdev = dev;
-        if (dev == null) {
-            console.error(`Did not find ${dname}`);
-            return;
-        }
-        for (let attempt = 0; attempt < 2; attempt++) {
-            await dev.turnOn();
-            await lz.delayms(wait);
-            await dev.turnOff();
-            await lz.delayms(wait);
-        }
-        // await TryDev(devices.devices["officeclosetlamp"])
-    }
-    catch (e) {
-        console.error(`Turning on ${dname}: ${e.message}`)
-        console.dir(e);
-        debugger;
-    }
 }
 
 const devpath = "y:\\x\\Home Control\\Data\\Devices.json";
 
 class laux { IP4: string; MAC: string };
-async function TryDev(dev: devices.DevInfo) {
+let devs: lz.LifxLanDevice[] = null;
+async function TryDev(di: devices.DevInfo | string) {
     try {
-        msg(`TryDev(${dev.Name})`);
-        const aux = <laux>dev.Adr.Aux;
-        msg(`${dev.Name} creating device`);
+        if (typeof di == "string") {
+            if (!devs)
+                devs = await Lifx.discover();   // var for debugging
+            let dname = di.toLowerCase();
+            var dev = devs.filter(d => d.deviceInfo && d.deviceInfo.label && d.deviceInfo.label.toLowerCase().startsWith(dname))[0];    // Assume success
+            if (!dev) {
+                console.error(`Did not find ${di}`);
+                debugger;
+                return;
+            }
+            ToggleDev(dev, di);
+            return;
+        }
+        msg(`TryDev(${di.Name})`);
+        const aux = <laux>di.Adr.Aux;
+        msg(`${di.Name} creating device`);
         const cdev = await Lifx.createDevice({ ip: aux.IP4, mac: aux.MAC.toUpperCase() });
-        msg(`${dev.Name} created  device`);
-        for (let attempt = 0; attempt < 100; attempt++) {
+        msg(`${di.Name} created  device`);
+        ToggleDev(cdev, di.Name);
+    }
+    catch (e) {
+        debugger;
+    }
+}
+
+async function Turner(dev: lz.LifxLanDevice, name: string, level: number) {
+    try {
+        await dev.lightSetPower({ level: level });
+    }
+    catch (e) {
+        if (e.message != "Timeout")
+            throw e;
+        await lz.delayms(250);  // Breather?
+        await dev.lightSetPower({ level: level });
+    }
+    await lz.delayms(250);
+    let result = await dev.lightGetPower();
+    if (result.level != level) {
+        msg(`${name} Asked for level ${level} but got ${result.level}`);
+    }
+}
+
+async function ToggleDev(dev: lz.LifxLanDevice, name: string) {
+    try {
+        for (let attempt = 0; attempt < 20; attempt++) {
             try {
-                msg(`${dev.Name} Turning on`);
-                await cdev.turnOn();
-                msg(`${dev.Name} ON`);
+                msg(`${name} Attempt# ${attempt}`);
+                await Turner(dev, name, 1);
                 await lz.delayms(wait);
-                await cdev.turnOff();
-                msg(`${dev.Name} OFF`);
+                await Turner(dev, name, 0);
                 await lz.delayms(wait);
             }
             catch (e) {
-                console.error(`${dev.Name} ${aux.IP4} ${e.message}`);
+                console.error(`${name} ${e.message}`);
             }
         }
     }
@@ -68,11 +81,16 @@ async function TryDev(dev: devices.DevInfo) {
 }
 
 async function tests() {
-    await ToggleDev("testbeam");
-    // await TryDev(devices.devices["officeclosetlamp"]);
+    let ucount = 0;
+    lz.Lifx.AddUDPHandler((a, p) => {
+        if (++ucount > 10) return;
+        msg(`#${ucount} [${a.address}:${a.port}] ${JSON.stringify(p.payload)}`);
+    })
+    // TryDev("testbeam");
+    TryDev(devices.devices["officeclosetlamp"]);
     TryDev(devices.devices["tiles"]);
     await lz.delayms(250);
-    TryDev(devices.devices["testbeam"])
+    // TryDev(devices.devices["testbeam"])
 }
 
 tests();
