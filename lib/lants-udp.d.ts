@@ -22,6 +22,8 @@ export interface udpParsed {
     mac?: string;
 }
 export declare class LifxLanUdp {
+    constructor();
+    static created: boolean;
     private _UDP_PORT;
     private _udp;
     private _requests;
@@ -30,7 +32,12 @@ export declare class LifxLanUdp {
     private _source_id;
     private _netif_list;
     destroy(): Promise<void>;
-    init(): Promise<{}>;
+    private initPromise;
+    private initialized;
+    /**
+      * Initialize instance. Should only be called once
+      */
+    init(): Promise<any>;
     request(params: udpParams): Promise<void | {}>;
     private _requestUnicast;
     private _requestBroadcast;

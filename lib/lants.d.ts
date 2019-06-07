@@ -2,7 +2,13 @@ import * as lantsDevice from "./lants-device";
 import { LifxLanDevice, Integer } from "./lants-device";
 export { LifxLanDevice };
 export declare const delayms: (ms: number) => Promise<{}>;
+/**
+  * Global object
+  * Use the Lifx value and do not create a clone
+  */
 export declare class LifxLan {
+    constructor();
+    static _LifxLanCount: number;
     private _is_scanning;
     private _initialized;
     private _device_list;

@@ -6,7 +6,7 @@
   "types": "lib/lants.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node tests/test1.js"
   },
   "repository": {
     "type": "git",

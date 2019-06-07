@@ -19,6 +19,7 @@ import * as Composer from './lants-composer';
 const mComposer = new Composer.LifxLanComposer();
 import * as la from './lants-address';
 import { LifxLanDevice, passure } from "./lants-device";
+import { promises } from "fs";
 const mAddress = new la.LifxLanAddress();
 
 export interface udpParams {
@@ -52,6 +53,12 @@ export interface udpParsed {
 }          // {"service:1,"port:56700}}"
 
 export class LifxLanUdp {
+	constructor() {
+		if (LifxLanUdp.created)
+			throw new Error("Attempting to create second LifxLanUDP");
+		LifxLanUdp.created = true
+	}
+	static created = false;
 	// Private
 	private _UDP_PORT = 56700;
 	private _udp: mDgram.Socket = null;
@@ -70,11 +77,26 @@ export class LifxLanUdp {
 		this._udp = null;
 	};
 
-	/* ------------------------------------------------------------------
-	* Method: init()
-	* ---------------------------------------------------------------- */
-	init() {
-		let promise = new Promise((resolve, reject) => {
+	private initPromise: Promise<any> = null;
+	private initialized: boolean = false;
+
+	/**
+      * Initialize instance. Should only be called once
+      */
+
+	async init() {
+		// debugger;
+
+		if (this.initPromise) {
+			await this.initPromise;
+			return;
+		}
+		if (this.initialized)
+			return; 	// No need to wait
+
+		this.initPromise = new Promise((resolve, reject) => {
+			if (this._udp)
+				debugger;	// Should never get here
 			this._source_id = Math.floor(Math.random() * 0xffffffff);
 			let netif_list = mAddress.getNetworkInterfaces();
 			if (!netif_list || netif_list.length === 0) {
@@ -84,12 +106,19 @@ export class LifxLanUdp {
 			this._netif_list = netif_list;
 			// Set up a UDP tranceiver
 			this._udp = mDgram.createSocket('udp4');
-			this._udp.on('error', (error: Error) => { reject(error); });
-			this._udp.on('listening', () => { resolve(); });
+			this._udp.on('error', (error: Error) => {
+				this.initPromise = null;
+				reject(error);
+			});
+			this._udp.on('listening', () => {
+				this.initPromise = null;
+				this.initialized = true;
+				resolve();
+			});
 			this._udp.on('message', (buf: Buffer, rinfo: udpRinfo) => { this._receivePacket(buf, rinfo); });
 			this._udp.bind({ port: this._UDP_PORT });
 		});
-		return promise;
+		return this.initPromise;
 	};
 
 	async request(params: udpParams) {
@@ -231,7 +260,7 @@ export class LifxLanUdp {
 				// https://community.lifx.com/t/why-are-some-bulbs-chatty/4777/3
 			}
 			catch (e) {
-				console.error(`Hearing ${e}`);
+				console.error(`_receivePacket ${e}`);
 			}
 		}
 	};

@@ -1,9 +1,9 @@
 import * as lantsDevice from "./lants-device";
 import { LifxLanDevice, Integer, Duration, passure } from "./lants-device";
 import { lifxMsgType } from "./lants-parser";
-import { mLifxLanColor } from "./lants-color";
+import { mLifxLanColor, _LifxLanColor } from "./lants-color";
 
-export {LifxLanDevice};
+export { LifxLanDevice };
 
 /* ------------------------------------------------------------------
  * node-lifx-lan - lifx-lan.js
@@ -14,16 +14,26 @@ export {LifxLanDevice};
  * ---------------------------------------------------------------- */
 
 import { mLifxUdp, udpParsed } from './lants-udp';
-import { LifxLanColor } from "./lants-color";
+// import { LifxLanColor } from "./lants-color";
 
 // export LifxLanDevice;
 
 export const delayms = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-/* ------------------------------------------------------------------
- * Constructor: LifxLan()
- * ---------------------------------------------------------------- */
+	/**
+      * Global object
+      * Use the Lifx value and do not create a clone
+      */
+
 export class LifxLan {
+	constructor() {
+		// Bug catcher
+		if (LifxLan._LifxLanCount++ > 0) {
+			debugger;
+			// throw new Error(`Creating second LifxLan`);
+		}
+	}
+	static _LifxLanCount = 0;	// Debugging
 	private _is_scanning = false;
 	private _initialized = false;
 	private _device_list: LifxLanDevice[] = null;
@@ -103,8 +113,6 @@ export class LifxLan {
       */
 
 	async createDevice(params: { ip: string, mac: string }) {
-		// TODO, see if we already have this and use existing object?
-		// Also check for changing the address of the existing endpoint
 		await this.init();
 		const device = new LifxLanDevice({ ip: params.ip, mac: params.mac, udp: mLifxUdp });
 		return device;
