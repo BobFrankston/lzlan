@@ -13,7 +13,7 @@ const lants_1 = require("../lib/lants");
 const lz = __importStar(require("../lib/lants"));
 const devices = __importStar(require("y:/x/Home Control/Data/Devices"));
 var xdev;
-var wait = 500; // Ms
+var wait = 250; // Ms
 function msg(text) {
     console.log(`${new Date().toLocaleTimeString()} ${text}`);
 }
@@ -21,7 +21,7 @@ async function ToggleDev(dname) {
     try {
         // const Lifx = new LifxLan();
         var devs = await lants_1.Lifx.discover(); // var for debugging
-        var dev = devs.filter(d => d.deviceInfo && d.deviceInfo.label.toLowerCase().startsWith(dname))[0]; // Assume success
+        var dev = devs.filter(d => d.deviceInfo && d.deviceInfo.label && d.deviceInfo.label.toLowerCase().startsWith(dname))[0]; // Assume success
         xdev = dev;
         if (dev == null) {
             console.error(`Did not find ${dname}`);
@@ -36,7 +36,7 @@ async function ToggleDev(dname) {
         // await TryDev(devices.devices["officeclosetlamp"])
     }
     catch (e) {
-        console.error(`Turning on ${dname}`);
+        console.error(`Turning on ${dname}: ${e.message}`);
         console.dir(e);
         debugger;
     }

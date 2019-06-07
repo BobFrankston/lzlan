@@ -88,8 +88,9 @@ export class LifxLanUdp {
 		// debugger;
 
 		if (this.initPromise) {
-			await this.initPromise;
-			return;
+			// await this.initPromise;
+			// return;
+			return this.initPromise;
 		}
 		if (this.initialized)
 			return; 	// No need to wait

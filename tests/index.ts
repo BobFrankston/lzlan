@@ -7,7 +7,7 @@ import * as fs from 'fs';
 import { lifxMsgType } from "../lib/lants-parser";
 
 var xdev: lz.LifxLanDevice;
-var wait = 500; // Ms
+var wait = 250; // Ms
 function msg(text:string) {
     console.log(`${new Date().toLocaleTimeString()} ${text}`)
 }
@@ -16,7 +16,7 @@ async function ToggleDev(dname: string) {
     try {
         // const Lifx = new LifxLan();
         var devs = await Lifx.discover();   // var for debugging
-        var dev = devs.filter(d => d.deviceInfo && d.deviceInfo.label.toLowerCase().startsWith(dname))[0];    // Assume success
+        var dev = devs.filter(d => d.deviceInfo && d.deviceInfo.label && d.deviceInfo.label.toLowerCase().startsWith(dname))[0];    // Assume success
         xdev = dev;
         if (dev == null) {
             console.error(`Did not find ${dname}`);
@@ -31,7 +31,7 @@ async function ToggleDev(dname: string) {
         // await TryDev(devices.devices["officeclosetlamp"])
     }
     catch (e) {
-        console.error(`Turning on ${dname}`)
+        console.error(`Turning on ${dname}: ${e.message}`)
         console.dir(e);
         debugger;
     }
