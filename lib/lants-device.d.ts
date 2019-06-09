@@ -245,7 +245,7 @@ export declare class LifxLanDevice {
         duration?: Duration;
     }): Promise<any>;
     lightGetInfrared(): Promise<{
-        brightness: Integer;
+        brightness: Brightness0To1;
     }>;
     lightSetInfrared(params: {
         brightness: Brightness0To1;

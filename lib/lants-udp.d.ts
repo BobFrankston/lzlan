@@ -41,6 +41,7 @@ export declare class LifxLanUdp {
     destroy(): Promise<void>;
     private initPromise;
     private initialized;
+    private initializing;
     /**
       * Initialize instance. Should only be called once
       */

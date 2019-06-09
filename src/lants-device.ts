@@ -328,7 +328,7 @@ export class LifxLanDevice {
     };
     lightGetPower(): Promise<{ level: Integer }> { return this._request(lifxMsgType.GetPower /*116*/); };
     lightSetPower(params: { level: Integer; duration?: Duration }) { return this._request(lifxMsgType.SetPower /*117*/, params); };
-    lightGetInfrared(): Promise<{ brightness: Integer }> { return this._request(lifxMsgType.GetInfrared /*120*/); };
+    lightGetInfrared(): Promise<{ brightness: Brightness0To1 }> { return this._request(lifxMsgType.GetInfrared /*120*/); };
     lightSetInfrared(params: { brightness: Brightness0To1 }) { return this._request(lifxMsgType.SetInfrared /*122*/, params); };
     async multiZoneSetColorZones(params: { start: Integer255, end: Integer255, color: LifxLanColor, duration?: Duration, apply?: LifxApply }) {
         const res = await this.multiZoneGetColorZones({ start: params.start, end: params.start });

@@ -82,6 +82,7 @@ export class LifxLanUdp {
 
 	private initPromise: Promise<any> = null;
 	private initialized: boolean = false;
+	private initializing: boolean = false;	// Attempt to deal with an edge case
 
 	/**
       * Initialize instance. Should only be called once
@@ -97,6 +98,13 @@ export class LifxLanUdp {
 		}
 		if (this.initialized)
 			return; 	// No need to wait
+
+		if (this.initializing) {	// Attempt to deal with an edge case that should never occure
+			console.error(`How did we get to initializing ${new Error().stack}`);
+			debugger;
+			return;
+		}
+		this.initializing = true;
 
 		this.initPromise = new Promise((resolve, reject) => {
 			if (this._udp)
@@ -122,6 +130,7 @@ export class LifxLanUdp {
 			this._udp.on('message', (buf: Buffer, rinfo: udpRinfo) => { this._receivePacket(buf, rinfo); });
 			this._udp.bind({ port: this._UDP_PORT });
 		});
+		this.initializing = false;	// We now have the promise object
 		return this.initPromise;
 	};
 
