@@ -138,11 +138,11 @@ async function tests() {
             if (++ucount > 1) return;
             msg(`#${ucount} [${a.address}:${a.port}] ${JSON.stringify(p.payload)}`);
         })
-        // TryDev("testbeam");
+        TryDev("testbeam");
         // TryDev(devices.devices["officeclosetlamp"]);
         // TryDev(devices.devices["tiles"]);
-        Leveler(await GetDev(devices.devices["OfficeTrack1"]));
-        await lz.delayms(250);
+        // Leveler(await GetDev(devices.devices["OfficeTrack1"]));
+        // await lz.delayms(250);
         // TryDev(devices.devices["testbeam"])
     }
 

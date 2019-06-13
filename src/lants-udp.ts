@@ -55,6 +55,9 @@ export interface udpParsed {
 	mac?: string;
 }          // {"service:1,"port:56700}}"
 
+// Need to update for 
+// 
+
 export class LifxLanUdp {
 	constructor() {
 		if (LifxLanUdp.created)
@@ -117,12 +120,13 @@ export class LifxLanUdp {
 			}
 			this._netif_list = netif_list;
 			// Set up a UDP tranceiver
-			this._udp = mDgram.createSocket('udp4');
+			// this._udp = mDgram.createSocket({ type: 'udp4', reuseAddr: true });
+			this._udp = mDgram.createSocket({ type: 'udp4'});	// Reuse isn't working well - messages go to the "wrong" listenr
 			this._udp.on('error', (error: Error) => {
 				this.initPromise = null;
 				reject(error);
 			});
-			this._udp.on('listening', () => {
+			this._udp.once('listening', () => {
 				this.initPromise = null;
 				this.initialized = true;
 				resolve();
@@ -309,7 +313,7 @@ export class LifxLanUdp {
 			this._sequence = seq;
 			// Create a request packet
 			const packet = mComposer.compose({
-				type: 2,
+				type: lifxMsgType.GetService,
 				payload: null,
 				sequence: seq,
 				ack_required: false,
@@ -318,8 +322,9 @@ export class LifxLanUdp {
 				source: this._source_id,
 				tagged: true
 			});
-			this._requests[seq] = (res: udpParsed) => {	// When we get a response add/update teh address
+			this._requests[seq] = (res: udpParsed) => {	// When we get a response add/update the address
 				let ip = res.address;
+				// console.log(`${res.header.type} ${res.address}:${(<any>res.payload).port}`);
 				if (!devices[ip]) devices[ip] = res;
 			};
 			const req = { seq: seq, address: (<any>netif)['broadcast'], buffer: packet }
@@ -328,7 +333,7 @@ export class LifxLanUdp {
 		});
 
 		await this._sendBroadcast(req_list);
-		await delayms(wait);		// Wait to see that the cats drag in?
+		await delayms(wait*4);		// Wait to see that the cats drag in?
 		const deviceArray: udpParsed[] = [];
 		for (let ip in devices) deviceArray.push(devices[ip]);
 		return deviceArray;
