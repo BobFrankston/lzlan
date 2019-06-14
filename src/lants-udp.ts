@@ -141,7 +141,7 @@ export class LifxLanUdp {
 				resolve();
 			});
 			this._udp.on('message', (buf: Buffer, rinfo: udpRinfo) => { this._receivePacket(buf, rinfo); });
-			// this._udp.bind({ port: this._UDP_PORT });
+			this._udp.bind({ port: this._UDP_PORT });
 		});
 		this.initializing = false;	// We now have the promise object
 		return this.initPromise;
