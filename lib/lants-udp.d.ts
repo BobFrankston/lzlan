@@ -1,7 +1,10 @@
 /// <reference types="node" />
 import { lifxMsgType, LifxLanHeader } from "./lants-parser";
 import { LifxLanDevice } from "./lants-device";
-export declare type UDPHandler = (rinfo: udpRinfo, pased: udpParsed) => void;
+/**
+ * Handle incoming message that is not otherwise handled
+ */
+export declare type UDPHandler = (rinfo: udpRinfo, parsed: udpParsed) => void;
 export interface udpParams {
     address?: string;
     type: lifxMsgType;
@@ -11,6 +14,9 @@ export interface udpParams {
     target?: string;
     broadcast?: boolean;
 }
+/**
+ * Address info for incoming packet
+ */
 export interface udpRinfo {
     address: string;
     family: string;
@@ -22,6 +28,9 @@ export interface udpDiscover {
     address: string;
     buffer: Buffer;
 }
+/**
+ * Parsed message including header and payload
+ */
 export interface udpParsed {
     header: LifxLanHeader;
     payload: {};

@@ -49,6 +49,11 @@ export class LifxLan {
 		this._initialized = true;
 	}
 
+	/**
+	 * Add event handler for messages. Null is allowed.
+	 * If there is no handler (null or otherwise) then display a message on the console
+	 * @param updh Add event handler for messages (udpRinfo, udpParsed))
+	 */
 	AddUDPHandler(updh: UDPHandler) {
 		mLifxUdp.UDPHandlers.push(updh);	// For now
 	}
@@ -62,6 +67,13 @@ export class LifxLan {
 
 	// Note this could should use only the MAC address as the stable identifer
 	//      the IP address can change and should be updated when we "lose" a device
+
+	/**
+	 * Discover current devices.
+	 * Note that this is not reliable
+	 * @param [optional]  params {wait: Millseconds}
+	 * @returns {LifxLanDevice[]} Table of devices
+	 */
 
 	async discover(params?: { wait?: Integer }) {
 		params = passure(params);
@@ -114,8 +126,7 @@ export class LifxLan {
 
 	/**
       * Create a new device object
-      * @param ip IP Address
-	  * @param MAC Mac address
+	  * @param params {ip IP Address, MAC Mac address}
       */
 
 	async createDevice(params: { ip: string, mac: string }) {
@@ -158,6 +169,10 @@ export class LifxLan {
 		this._device_list = null;
 	};
 }
+
+/**
+ * Singleton Lifx object
+ */
 
 export const Lifx = new LifxLan();
 // const newLifxLan = new LifxLan();

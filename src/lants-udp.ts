@@ -21,7 +21,10 @@ import * as la from './lants-address';
 import { LifxLanDevice, passure } from "./lants-device";
 import { promises } from "fs";
 
-export type UDPHandler = (rinfo: udpRinfo, pased: udpParsed) => void;
+/**
+ * Handle incoming message that is not otherwise handled
+ */
+export type UDPHandler = (rinfo: udpRinfo, parsed: udpParsed) => void;
 
 const mAddress = new la.LifxLanAddress();
 
@@ -35,6 +38,9 @@ export interface udpParams {
 	broadcast?: boolean;     // The default is `false`.
 };
 
+/**
+ * Address info for incoming packet
+ */
 export interface udpRinfo {
 	address: string;    // The sender address.
 	family: string;     // 'IPv4' or 'IPv6'
@@ -48,6 +54,9 @@ export interface udpDiscover {
 	buffer: Buffer,
 }
 
+/**
+ * Parsed message including header and payload
+ */
 export interface udpParsed {
 	header: LifxLanHeader;
 	payload: {}
@@ -162,20 +171,6 @@ export class LifxLanUdp {
 
 	// private _requestUnicast(p: { [key: string]: UdpParams}) {
 	private async _requestUnicast(p: udpParams) {
-		// let seq = (this._sequence + 1) % 255;
-		// this._sequence = seq;
-
-		// let packet = mComposer.compose({
-		// 	type: p.type,
-		// 	payload: p.payload,
-		// 	sequence: seq,
-		// 	ack_required: p.ack_required,
-		// 	res_required: p.res_required,
-		// 	target: p.target,
-		// 	source: this._source_id,
-		// 	tagged: false
-		// });
-
 		let promise = new Promise((resolve, reject) => {
 			// message sequence number
 			let seq = (this._sequence + 1) % 255;
