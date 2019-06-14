@@ -8,7 +8,7 @@ LIFX LAN Interface
 Changes:
 * Removed broadcast calls because it doesn't make sense to broadcast to all devices since there isn't a single "scene" and fast enough to send explicitly.
 
-This is based on [node-lifx-lan] https://www.npmjs.com/package/node-lifx-lan. The major changes has been in converting to TypeScript and async and relying on the compile time type checks rather than runtime checks.
+This is based on [node-lifx-lan] https://www.npmjs.com/package/node-lifx-lan. The major changes have been in converting to TypeScript and async and relying on the compile time type checks rather than runtime checks.
 
 See https://www.npmjs.com/package/node-lifx-lan for the existing documentation. You can use intellisense in Visual Studio Code to see the parameters. Support for groups and filtering has been removed since they don't provide any advantages for the LAN API
 
@@ -43,4 +43,3 @@ const devs = await Lifx.discover(
 devs.forEach(dev => dev.turnOn());
 
 ```
-

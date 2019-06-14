@@ -11,6 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import { LifxLan } from "../lib/lants";
 const lants_1 = require("../lib/lants");
 const lz = __importStar(require("../lib/lants"));
+const devices = __importStar(require("y:/x/Home Control/Data/Devices"));
 var xdev;
 var wait = 250; // Ms
 function msg(text) {
@@ -140,11 +141,11 @@ async function tests() {
             msg(`#${ucount} [${a.address}:${a.port}] ${JSON.stringify(p.payload)}`);
         });
         TryDev("testbeam");
-        // TryDev(devices.devices["officeclosetlamp"]);
-        // TryDev(devices.devices["tiles"]);
+        //TryDev(devices.devices["officeclosetlamp"]);
+        TryDev(devices.devices["tiles"]);
         // Leveler(await GetDev(devices.devices["OfficeTrack1"]));
         // await lz.delayms(250);
-        // TryDev(devices.devices["testbeam"])
+        TryDev(devices.devices["testbeam"]);
     }
     catch (e) {
         console.error(`${e.message}`);

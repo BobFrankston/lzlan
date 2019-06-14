@@ -139,11 +139,11 @@ async function tests() {
             msg(`#${ucount} [${a.address}:${a.port}] ${JSON.stringify(p.payload)}`);
         })
         TryDev("testbeam");
-        // TryDev(devices.devices["officeclosetlamp"]);
-        // TryDev(devices.devices["tiles"]);
+        //TryDev(devices.devices["officeclosetlamp"]);
+        TryDev(devices.devices["tiles"]);
         // Leveler(await GetDev(devices.devices["OfficeTrack1"]));
         // await lz.delayms(250);
-        // TryDev(devices.devices["testbeam"])
+        TryDev(devices.devices["testbeam"])
     }
 
     catch (e) {

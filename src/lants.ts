@@ -125,7 +125,7 @@ export class LifxLan {
 	};
 
 	/**
-      * Create a new device object
+      * Create a new device object. This can be used in place of or in addition to discovery
 	  * @param params {ip IP Address, MAC Mac address}
       */
 
