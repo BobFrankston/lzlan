@@ -20,7 +20,6 @@ export declare class LifxLan {
      * If there is no handler (null or otherwise) then display a message on the console
      * @param updh Add event handler for messages (udpRinfo, udpParsed))
      */
-    AddUDPHandler(updh: UDPHandler): void;
     private _wait;
     /**
      * Discover current devices.

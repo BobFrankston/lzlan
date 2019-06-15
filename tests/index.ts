@@ -178,11 +178,11 @@ async function Leveler(dev: lz.LifxLanDevice) {
 
 async function tests() {
     try {
-        let ucount = 0;
-        lz.Lifx.AddUDPHandler((a, p) => {
-            if (++ucount > 1) return;
-            msg(`#${ucount} [${a.address}:${a.port}] ${JSON.stringify(p.payload)}`);
-        })
+        // let ucount = 0;
+        // lz.Lifx.AddUDPHandler((a, p) => {
+        //     if (++ucount > 1) return;
+        //     msg(`#${ucount} [${a.address}:${a.port}] ${JSON.stringify(p.payload)}`);
+        // })
         TryDev("testbeam");
         //TryDev(devices.devices["officeclosetlamp"]);
         TryDev(devices.devices["tiles"]);
