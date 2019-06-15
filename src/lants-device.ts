@@ -143,25 +143,20 @@ interface LifxGuidLabel {
 * ---------------------------------------------------------------- */
 
 export class LifxLanDevice {
-    // constructor(params: { mac: string, ip: string, udp: LifxLanUdp }) {
     constructor(params: { mac: string, ip: string }) {
         this.mac = params.mac;
         this.ip = params.ip;
-
-        // Private
-        // this._lifxLanUdp = params.udp;
     };
 
     mac: string;
     ip: string;
     deviceInfo: LifxDeviceInfo;
-    // private _lifxLanUdp: any;   // For now
 
     private async _request(type: lifxMsgType, payload?: any): Promise<any> {
         // const res = await this._lifxLanUdp.request({
-        const _lifxLanUdp = await LifxLanUdp.GetUDP();
+        const UDP = await LifxLanUdp.GetUDP();
         try {
-            const res = <udpParsed>await _lifxLanUdp.request({
+            const res = <udpParsed>await UDP.request({
                 address: this.ip,
                 type: type,
                 payload: payload || null,
@@ -172,7 +167,7 @@ export class LifxLanDevice {
             return res.payload || null; // Vs. undefined?
         }
         finally {
-            _lifxLanUdp.destroy();
+            UDP.destroy();
         }
     };
 
@@ -213,7 +208,6 @@ export class LifxLanDevice {
         return this.lightSetColor(req);
     };
 
-
     /**
       * Turn off
       * @param {duration?: Duration}
@@ -226,9 +220,10 @@ export class LifxLanDevice {
         await this.lightSetPower(p);
     }
 
-    /* ------------------------------------------------------------------
-    * Method: getDeviceInfo()
-    * ---------------------------------------------------------------- */
+   /**
+    * Update device info for this device by calling querying the bulb
+    * Normally done once on creating the device
+    */
     async getDeviceInfo() {
         let info: LifxDeviceInfo = <any>{};
         try {

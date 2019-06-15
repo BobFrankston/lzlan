@@ -117,6 +117,10 @@ export declare class LifxLanDevice {
     turnOff(params?: {
         duration?: Duration;
     }): Promise<void>;
+    /**
+     * Update device info for this device by calling querying the bulb
+     * Normally done once on creating the device
+     */
     getDeviceInfo(): Promise<{
         label: string;
         vendorId: number;

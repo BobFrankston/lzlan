@@ -20,168 +20,78 @@ import { LifxLanUdp, udpParsed } from './lants-udp';
 
 // export LifxLanDevice;
 
-export const delayms = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+// export const delayms = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+export const delayms = (msec?: number) => { return new Promise(resolve => setTimeout(resolve, msec || 50)); };
 
 /**
-  * Global object
-  * Use the Lifx value and do not create a clone
-  */
-
-export class LifxLan {
-	constructor() {
-		// Bug catcher
-		if (LifxLan._LifxLanCount++ > 0) {
-			debugger;
-			// throw new Error(`Creating second LifxLan`);
-		}
-	}
-	static _LifxLanCount = 0;	// Debugging
-	private _is_scanning = false;
-	private _initialized = false;
-	private _device_list: LifxLanDevice[] = null;
-
-	/* ------------------------------------------------------------------
-	 * Method: init()
-	 * ---------------------------------------------------------------- */
-	async init() {
-		if (this._initialized) return;
-		// // await mLifxUdp.init();
-		this._initialized = true;
-	}
-
-	/**
-	 * Add event handler for messages. Null is allowed.
-	 * If there is no handler (null or otherwise) then display a message on the console
-	 * @param updh Add event handler for messages (udpRinfo, udpParsed))
-	 */
-	// AddUDPHandler(updh: UDPHandler) {
-	// 	// mLifxUdp.UDPHandlers.push(updh);	// For now
-	// 	// No generic listener until we have a new facility
-	// }
-
-	// private async _request(type: lifxMsgType, payload?: {}) {
-	// 	await this.init();
-	// 	return await mLifxUdp.request({ type: type, payload: payload || null, broadcast: true });
-	// };
-
-	private _wait(msec?: number) { return new Promise(resolve => setTimeout(resolve, msec || 50)); };
-
-	// Note this could should use only the MAC address as the stable identifer
-	//      the IP address can change and should be updated when we "lose" a device
-
-	/**
-	 * Discover current devices.
-	 * Note that this is not reliable
-	 * @param [optional]  params {wait: Millseconds}
-	 * @returns {LifxLanDevice[]} Table of devices
-	 */
-
-	async discover(params?: { wait?: Integer }) {
-		params = passure(params);
-		await this.init();
-		const mLifxUdp = await LifxLanUdp.GetUDP();
-		try {
-			const found_list = await mLifxUdp.discover(params);
-			let devices: { [ipmac: string]: LifxLanDevice } = {};
-			if (this._device_list) {
-				this._device_list.forEach((dev) => {
-					let k = dev['ip'] + ' ' + dev['mac'];
-					devices[k] = dev;
-				});
-			}
-			let device_list: LifxLanDevice[] = []; // { [ipmac: string]: LifxLanDevice } = {};
-			found_list.forEach((res: udpParsed) => {
-				let ip = res.address;
-				let mac_parts = res.header.target.split(':');
-				let mac = mac_parts.slice(0, 6).join(':');
-				let k = ip + ' ' + mac;
-				if (devices[k]) {
-					device_list.push(devices[k]);
-				} else {
-					let lifxdev = new LifxLanDevice({
-						mac: mac,
-						ip: ip,
-						// udp: mLifxUdp
-					});
-					device_list.push(lifxdev);
-				}
-			});
-			this._device_list = await this._discoverGetDeviceInfo(device_list);
-			// Quick hack
-			mLifxUdp.device_list_hack = {};
-			this._device_list.forEach(dev => mLifxUdp.device_list_hack[dev.ip] = dev);
-			return [...this._device_list];
-		}
-		finally {
-			mLifxUdp.destroy();
-		}
-	};
-
-	private async _discoverGetDeviceInfo(dev_list: LifxLanDevice[]) {
-		try {
-			await Promise.all(dev_list.map(dev => dev.getDeviceInfo()));
-		}
-		catch (e) {
-			const full = dev_list.length;
-			dev_list = dev_list.filter(dev => dev.deviceInfo);	// Keep only those that succeeded
-			const count = dev_list.reduce((prev, cur) => prev += cur.deviceInfo ? 1 : 0, 0);
-			console.error(`_discoverGetDeviceInfo Found ${count} of ${full} devices\n${e}`);
-			throw e;
-		}
-		return [...dev_list];	// Why a copy?
-	};
-
-	/**
-	  * Create a new device object. This can be used in place of or in addition to discovery
-	  * @param params {ip IP Address, MAC Mac address}
-	  */
-
-	async createDevice(params: { ip: string, mac: string }) {
-		await this.init();
-		const device = new LifxLanDevice({ ip: params.ip, mac: params.mac }); //, udp: mLifxUdp });
-		return device;
-	};
-
-	// Note - am considering remove all such broadcast requests becuase the message should just be send to explicit end points.
-
-	// async turnOnBroadcast(params?: { color?: LifxLanColor, duration?: Duration }) {
-	// 	params = passure(params);
-	// 	if (params.color) await this.setColorBroadcast(params);
-	// 	await this._wait();
-	// 	const p: { level: 1, duration?: Duration } = { level: 1 };
-	// 	if ('duration' in params) p.duration = params.duration;
-	// 	await this._request(lifxMsgType.SetLightPower, p);
-	// }
-
-	// // async _turnOnBroadcastSetColor(params: { color?: LifxLanColor, duration?: Duration }) {
-	// // 	if (params.color) this.setColorBroadcast(params);
-	// // };
-
-	// async setColorBroadcast(params?: { color?: LifxLanColor, duration?: Duration }) {
-	// 	params = params || {};
-	// 	params.color = mLifxLanColor.anyToHsb(params.color);
-	// 	await this._request(lifxMsgType.SetColor, params);
-	// }
-
-	// async turnOffBroadcast(params: { duration?: Duration }) {
-	// 	const p: { level: 0, duration?: Duration } = { level: 0 };
-	// 	if ('duration' in params) p.duration = params.duration;
-	// 	await this._request(lifxMsgType.SetLightPower, params);
-	// }
-
-	async destroy() {
-		// Clean this up later
-		// await mLifxUdp.destroy();
-		this._is_scanning = false;
-		this._initialized = false;
-		this._device_list = null;
-	};
-}
-
-/**
- * Singleton Lifx object
+ * Discover current devices.
+ * Note that this is not reliable
+ * @param [optional]  params {wait: Millseconds}
+ * @returns {LifxLanDevice[]} Table of devices
  */
 
-export const Lifx = new LifxLan();
-// const newLifxLan = new LifxLan();
-// export default newLifxLan;
+export async function discover(params?: { wait?: Integer }) {
+	params = passure(params);
+	// await this.init();
+	const UDP = await LifxLanUdp.GetUDP();
+	try {
+		const found_list = await UDP.discover(params);
+		let devices: { [ipmac: string]: LifxLanDevice } = {};
+		// if (this._device_list) {
+		// 	this._device_list.forEach((dev) => {
+		// 		let k = dev['ip'] + ' ' + dev['mac'];
+		// 		devices[k] = dev;
+		// 	});
+		// }
+		let device_list: LifxLanDevice[] = []; // { [ipmac: string]: LifxLanDevice } = {};
+		found_list.forEach((res: udpParsed) => {
+			let ip = res.address;
+			let mac_parts = res.header.target.split(':');
+			let mac = mac_parts.slice(0, 6).join(':');
+			let k = ip + ' ' + mac;
+			if (devices[k]) {
+				device_list.push(devices[k]);
+			} else {
+				let lifxdev = new LifxLanDevice({
+					mac: mac,
+					ip: ip,
+					// udp: mLifxUdp
+				});
+				device_list.push(lifxdev);
+			}
+		});
+		const _device_list = await _discoverGetDeviceInfo(device_list);
+		// Quick hack
+		// UDP.device_list_hack = {};
+		// this._device_list.forEach(dev => UDP.device_list_hack[dev.ip] = dev);
+		return [..._device_list];
+	}
+	finally {
+		UDP.destroy();
+	}
+};
+
+async function _discoverGetDeviceInfo(dev_list: LifxLanDevice[]) {
+	try {
+		await Promise.all(dev_list.map(dev => dev.getDeviceInfo()));
+	}
+	catch (e) {
+		const full = dev_list.length;
+		dev_list = dev_list.filter(dev => dev.deviceInfo);	// Keep only those that succeeded
+		const count = dev_list.reduce((prev, cur) => prev += cur.deviceInfo ? 1 : 0, 0);
+		console.error(`_discoverGetDeviceInfo Found ${count} of ${full} devices\n${e}`);
+		throw e;
+	}
+	return [...dev_list];	// Why a copy?
+};
+
+// TODO consider caching the device info to avoid repeating GetDeviceInfo
+
+/**
+  * Create a new device object. This can be used in place of or in addition to discovery
+  * @param {ip, MAC} params {ip IP Address, MAC Mac address}
+  */
+
+export async function createDevice(params: { ip: string, mac: string }) {
+	return new LifxLanDevice({ ip: params.ip, mac: params.mac });;
+};

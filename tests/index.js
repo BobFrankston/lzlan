@@ -9,7 +9,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // import * as lz from "@bobfrankston/lzlan"
 // import { LifxLan } from "../lib/lants";
-const lants_1 = require("../lib/lants");
+const Lifx = __importStar(require("../lib/lants"));
 const lz = __importStar(require("../lib/lants"));
 const devices = __importStar(require("y:/x/Home Control/Data/Devices"));
 const fs = __importStar(require("fs"));
@@ -70,9 +70,10 @@ async function GetDev(di) {
                 if (dev = devsByName[dname])
                     break; // Have
                 msg(`Searching for devices try ${tri}`);
-                addDevs(await lants_1.Lifx.discover()); // var for debugging
+                addDevs(await Lifx.discover()); // var for debugging
                 msg(`Searched  for devices try ${tri}`);
             }
+            // dev = devsByName[dname];
             if (!dev) {
                 msg(`Did not find ${di}`);
                 debugger;
@@ -80,7 +81,7 @@ async function GetDev(di) {
             return dev;
         }
         const aux = di.Adr.Aux;
-        return await lants_1.Lifx.createDevice({ ip: aux.IP4, mac: aux.MAC.toUpperCase() });
+        return await Lifx.createDevice({ ip: aux.IP4, mac: aux.MAC.toUpperCase() });
     }
     catch (e) {
         debugger;

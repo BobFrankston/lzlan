@@ -1,5 +1,5 @@
+/// <reference types="node" />
 import { lifxMsgType, LifxLanHeader } from "./lants-parser";
-import { LifxLanDevice } from "./lants-device";
 /**
  * Handle incoming message that is not otherwise handled
  */
@@ -58,9 +58,6 @@ export declare class LifxLanUdp {
     private _requestUnicast;
     private _requestBroadcast;
     private _receivePacket;
-    device_list_hack: {
-        [ip: string]: LifxLanDevice;
-    };
     private _isNetworkInterfaceAddress;
     discover(params: {
         wait?: number;

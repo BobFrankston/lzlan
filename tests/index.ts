@@ -1,6 +1,6 @@
 // import * as lz from "@bobfrankston/lzlan"
 // import { LifxLan } from "../lib/lants";
-import { Lifx } from "../lib/lants";
+import * as Lifx from "../lib/lants";
 import * as lz from "../lib/lants";
 import * as devices from "y:/x/Home Control/Data/Devices";
 import * as ubnt from "y:/x/Home Control/Data/ubnt";
@@ -48,7 +48,7 @@ function addDevs(devs: lz.LifxLanDevice[]) {
             for (var dn in devices.devices) {
                 const dev = devices.devices[dn];
                 if (!dev || !dev.Adr || !dev.Adr.Aux) continue;
-                if ((<any>dev.Adr.Aux).IP4 != dv.ip) continue;                
+                if ((<any>dev.Adr.Aux).IP4 != dv.ip) continue;
                 console.log(`Found ${dv.ip} but not it's label (${dev.Name})`);
                 return;
             }
@@ -72,6 +72,7 @@ async function GetDev(di: devices.DevInfo | string) {
                 addDevs(await Lifx.discover());   // var for debugging
                 msg(`Searched  for devices try ${tri}`)
             }
+            // dev = devsByName[dname];
             if (!dev) {
                 msg(`Did not find ${di}`);
                 debugger;
