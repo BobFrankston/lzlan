@@ -3,7 +3,6 @@ import { lifxMsgType, LifxLanHeader } from "./lants-parser";
 /**
  * Handle incoming message that is not otherwise handled
  */
-export declare type UDPHandler = (rinfo: udpRinfo, parsed: udpParsed) => void;
 export interface udpParams {
     address?: string;
     type: lifxMsgType;

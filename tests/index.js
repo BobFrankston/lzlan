@@ -185,7 +185,7 @@ async function tests() {
         // })
         TryDev("testbeam");
         //TryDev(devices.devices["officeclosetlamp"]);
-        TryDev(devices.devices["tiles"]);
+        // TryDev(devices.devices["tiles"]);
         // Leveler(await GetDev(devices.devices["OfficeTrack1"]));
         // await lz.delayms(250);
         // TryDev(devices.devices["testbeam"])

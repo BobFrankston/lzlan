@@ -1,8 +1,9 @@
 import * as lantsDevice from "./lants-device";
 import { LifxLanDevice, Integer } from "./lants-device";
-import { UDPHandler } from './lants-udp';
+import * as LifxLanColor from './lants-color';
+import { LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb } from "./lants-color";
 export { LifxLanDevice };
-export { UDPHandler };
+export { LifxLanColor, LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb };
 export declare const delayms: (msec?: number) => Promise<unknown>;
 /**
  * Discover current devices.
@@ -16,6 +17,7 @@ export declare function discover(params?: {
 /**
   * Create a new device object. This can be used in place of or in addition to discovery
   * @param {ip, MAC} params {ip IP Address, MAC Mac address}
+  * @returns LifxLanDevice object
   */
 export declare function createDevice(params: {
     ip: string;

@@ -69,7 +69,7 @@ export interface LifxLanColorCSS {
     kelvin?: number,          // Color temperature (°) in the range of 1500 to 9000.
 }
 
-export type LifxLanColor = LifxLanColorCSS | LifxLanColorHSB | LifxLanColorRGB | LifxLanColorXyb;
+export type LifxLanColorAny = LifxLanColorCSS | LifxLanColorHSB | LifxLanColorRGB | LifxLanColorXyb;
 
 const _CSS_COLOR_KEYWORDS: { [key: string]: number[] } = {
     'aliceblue': [240, 248, 255],
@@ -228,332 +228,333 @@ const _CSS_COLOR_KEYWORDS: { [key: string]: number[] } = {
 *   - css        | String | Required | "red", "#ff0000", "rgb(255, 0, 0)".
 *   - brightness | Float | Optional | Brightness. 0.0 - 1.0
 * ---------------------------------------------------------------- */
-export class _LifxLanColor {
-    cssToHsb(p: LifxLanColorCSS) {
-        // Check the parameters
-        if (typeof p.css != "string") throw new Error('The `css` is required.');
-        let css = p.css.toLowerCase();
+// export class _LifxLanColor {
+export function cssToHsb(p: LifxLanColorCSS) {
+    // Check the parameters
+    if (typeof p.css != "string") throw new Error('The `css` is required.');
+    let css = p.css.toLowerCase();
 
-        let rgb: LifxLanColorRGB = {};
-        let cm = css.match(/^\#([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})$/);
-        if (cm) {
-            rgb = {
-                red: parseInt(cm[1], 16) / 255,
-                green: parseInt(cm[2], 16) / 255,
-                blue: parseInt(cm[3], 16) / 255
-            };
-        } else if (css.match(/^rgb\(\s*(\d{1,3})\,\s*(\d{1,3})\,\s*(\d{1,3})\s*\)$/)) {
-            rgb = {
-                red: parseInt(RegExp.$1, 10) / 255,
-                green: parseInt(RegExp.$2, 10) / 255,
-                blue: parseInt(RegExp.$3, 10) / 255
-            };
-        } else if (_CSS_COLOR_KEYWORDS[css]) {
-            let c = _CSS_COLOR_KEYWORDS[css];
-            rgb = {
-                red: c[0] / 255,
-                green: c[1] / 255,
-                blue: c[2] / 255
-            };
-        } else {
-            throw new Error('The `css` is invalid as a CSS color string.');
+    let rgb: LifxLanColorRGB = {};
+    let cm: RegExpMatchArray;
+    if (cm = css.match(/^\#([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})$/)) {
+        // if (cm) {
+        rgb = {
+            red: parseInt(cm[1], 16) / 255,
+            green: parseInt(cm[2], 16) / 255,
+            blue: parseInt(cm[3], 16) / 255
+        };
+    } else if (cm = css.match(/^rgb\(\s*(\d{1,3})\,\s*(\d{1,3})\,\s*(\d{1,3})\s*\)$/)) {
+        rgb = {
+            red: parseInt(cm[1], 10) / 255,
+            green: parseInt(cm[2], 10) / 255,
+            blue: parseInt(cm[3], 10) / 255
+        };
+    } else if (_CSS_COLOR_KEYWORDS[css]) {
+        let c = _CSS_COLOR_KEYWORDS[css];
+        rgb = {
+            red: c[0] / 255,
+            green: c[1] / 255,
+            blue: c[2] / 255
+        };
+    } else {
+        throw new Error('The `css` is invalid as a CSS color string.');
+    }
+
+    if ('brightness' in p) {
+        let v = p['brightness'];
+        if (typeof (v) === 'number' && v >= 0.0 && v < 1.0) {
+            rgb['brightness'] = v;
         }
+    }
+    return rgbToHsb(rgb);
+};
 
-        if ('brightness' in p) {
-            let v = p['brightness'];
-            if (typeof (v) === 'number' && v >= 0.0 && v < 1.0) {
-                rgb['brightness'] = v;
-            }
+/* ------------------------------------------------------------------
+* Method: rgbToHsb(params)
+* - params:
+*   - red        | Float | Required | R component. 0.0 - 1.0.
+*   - green      | Float | Required | G component. 0.0 - 1.0.
+*   - blue       | Float | Required | B component. 0.0 - 1.0.
+*   - brightness | Float | Optional | Brightness. 0.0 - 1.0
+* ---------------------------------------------------------------- */
+export function rgbToHsb(p: LifxLanColorRGB): LifxLanColorHSB {
+    // Check the parameters
+    let error = null;
+    ['red', 'green', 'blue'].forEach((c) => {
+        if (isUndefined(p[c])) p[c] = 0;
+        let v = p[c];
+        if (typeof (v) !== 'number' || v < 0 || v > 1) {
+            throw new Error('The `' + c + '` must be a float between 0.0 and 1.0.');
         }
-        return this.rgbToHsb(rgb);
-    };
+    });
+    let r = p.red * 255;
+    let g = p.green * 255;
+    let b = p.blue * 255;
+    // Determine the max and min value in RGB
+    let max = Math.max(r, g, b);
+    let min = Math.min(r, g, b);
+    // Hue
+    let hue = 0;
+    if (r === max && g === max && b === max) {
+        hue = 0;
+    } else if (r === max) {
+        hue = 60 * ((g - b) / (max - min));
+    } else if (g === max) {
+        hue = 60 * ((b - r) / (max - min)) + 120;
+    } else {
+        hue = 60 * ((r - g) / (max - min)) + 240;
+    }
+    if (hue < 0) {
+        hue += 360;
+    }
+    hue = hue / 360;
+    // Saturation
+    let sat = 0;
+    if (max > 0) {
+        sat = (max - min) / max;
+    }
+    // Brightness
+    let bri = max / 255;
+    if ('brightness' in p) {
+        let v = p['brightness'];
+        if (typeof (v) === 'number' && v >= 0.0 && v < 1.0) {
+            bri = v;
+        }
+    }
+    return { hue: hue, saturation: sat, brightness: bri };
+    // hsb: {
+    //  hue: hue,
+    //  saturation: sat,
+    //  brightness: bri
+    // }
+    // };
+};
 
-    /* ------------------------------------------------------------------
-    * Method: rgbToHsb(params)
-    * - params:
-    *   - red        | Float | Required | R component. 0.0 - 1.0.
-    *   - green      | Float | Required | G component. 0.0 - 1.0.
-    *   - blue       | Float | Required | B component. 0.0 - 1.0.
-    *   - brightness | Float | Optional | Brightness. 0.0 - 1.0
-    * ---------------------------------------------------------------- */
-    rgbToHsb(p: LifxLanColorRGB): LifxLanColorHSB {
-        // Check the parameters
-        let error = null;
-        ['red', 'green', 'blue'].forEach((c) => {
-            if (isUndefined(p[c])) p[c] = 0;
+/* ------------------------------------------------------------------
+* Method: hsbToRgb(params)
+* - params:
+*   - hue        | Float | Required | Hue. 0.0 - 1.0.
+*   - saturation | Float | Required | Saturation. 0.0 - 1.0.
+*   - brightness | Float | Required | Brightness. 0.0 - 1.0.
+* ---------------------------------------------------------------- */
+export function hsbToRgb(p: LifxLanColorHSB): LifxLanColorRGB {
+    // Check the parameters
+    ['hue', 'saturation', 'brightness'].forEach((c) => {
+        if (c in p) {
             let v = p[c];
             if (typeof (v) !== 'number' || v < 0 || v > 1) {
                 throw new Error('The `' + c + '` must be a float between 0.0 and 1.0.');
             }
-        });
-        let r = p.red * 255;
-        let g = p.green * 255;
-        let b = p.blue * 255;
-        // Determine the max and min value in RGB
-        let max = Math.max(r, g, b);
-        let min = Math.min(r, g, b);
-        // Hue
-        let hue = 0;
-        if (r === max && g === max && b === max) {
-            hue = 0;
-        } else if (r === max) {
-            hue = 60 * ((g - b) / (max - min));
-        } else if (g === max) {
-            hue = 60 * ((b - r) / (max - min)) + 120;
-        } else {
-            hue = 60 * ((r - g) / (max - min)) + 240;
-        }
-        if (hue < 0) {
-            hue += 360;
-        }
-        hue = hue / 360;
-        // Saturation
-        let sat = 0;
-        if (max > 0) {
-            sat = (max - min) / max;
-        }
-        // Brightness
-        let bri = max / 255;
-        if ('brightness' in p) {
-            let v = p['brightness'];
-            if (typeof (v) === 'number' && v >= 0.0 && v < 1.0) {
-                bri = v;
-            }
-        }
-        return { hue: hue, saturation: sat, brightness: bri };
-        // hsb: {
-        //  hue: hue,
-        //  saturation: sat,
-        //  brightness: bri
-        // }
-        // };
-    };
+        } else
+            throw new Error(`'The ${c} is required.`);
+    });
 
-    /* ------------------------------------------------------------------
-    * Method: hsbToRgb(params)
-    * - params:
-    *   - hue        | Float | Required | Hue. 0.0 - 1.0.
-    *   - saturation | Float | Required | Saturation. 0.0 - 1.0.
-    *   - brightness | Float | Required | Brightness. 0.0 - 1.0.
-    * ---------------------------------------------------------------- */
-    hsbToRgb(p: LifxLanColorHSB): LifxLanColorRGB {
-        // Check the parameters
-        ['hue', 'saturation', 'brightness'].forEach((c) => {
-            if (c in p) {
-                let v = p[c];
-                if (typeof (v) !== 'number' || v < 0 || v > 1) {
-                    throw new Error('The `' + c + '` must be a float between 0.0 and 1.0.');
-                }
-            } else
-                throw new Error(`'The ${c} is required.`);
-        });
-
-        let hue = p['hue'] * 360;
-        let sat = p['saturation'] * 255;
-        let bri = p['brightness'] * 255;
-        // Determine the max and min value in HSB
-        let max = bri;
-        let min = max - ((sat / 255) * max);
-        //
-        let r = 0;
-        let g = 0;
-        let b = 0;
-        if (hue <= 60) {
-            r = max;
-            g = (hue / 60) * (max - min) + min;
-            b = min;
-        } else if (hue <= 120) {
-            r = ((120 - hue) / 60) * (max - min) + min;
-            g = max;
-            b = min;
-        } else if (hue <= 180) {
-            r = min;
-            g = max;
-            b = ((hue - 120) / 60) * (max - min) + min;
-        } else if (hue <= 240) {
-            r = min;
-            g = ((240 - hue) / 60) * (max - min) + min;
-            b = max;
-        } else if (hue <= 300) {
-            r = ((hue - 240) / 60) * (max - min) + min;
-            g = min;
-            b = max;
-        } else {
-            r = max;
-            g = min;
-            b = ((360 - hue) / 60) * (max - min) + min;
-        }
-        return {
-            red: r / 255,
-            green: g / 255,
-            blue: b / 255
-        };
-    };
-
-    /* ------------------------------------------------------------------
-    * Method: rgbToXyb(params)
-    * - params:
-    *   - red   | Float | Required | R component. 0.0 - 1.0.
-    *   - green | Float | Required | G component. 0.0 - 1.0.
-    *   - blue  | Float | Required | B component. 0.0 - 1.0.
-    *
-    * https://www.developers.meethue.com/documentation/color-conversions-rgb-xy
-    * ---------------------------------------------------------------- */
-    rgbToXyb(p: LifxLanColorRGB): LifxLanColorXyb {
-        // Check the parameters
-        let error = null;
-        ['red', 'green', 'blue'].forEach((c) => {
-            if (c in p) {
-                let v = p[c];
-                if (typeof (v) !== 'number' || v < 0 || v > 1) {
-                    error = new Error('The `' + c + '` must be a float between 0.0 and 1.0.');
-                }
-            } else {
-                error = new Error('The `' + c + '` is required.');
-            }
-        });
-
-        let r = p.red || 0;
-        let g = p.green || 0;
-        let b = p.blue || 0;
-        // Apply a gamma correction to the RGB values
-        r = (r > 0.04045) ? Math.pow((r + 0.055) / (1.0 + 0.055), 2.4) : (r / 12.92);
-        g = (g > 0.04045) ? Math.pow((g + 0.055) / (1.0 + 0.055), 2.4) : (g / 12.92);
-        b = (b > 0.04045) ? Math.pow((b + 0.055) / (1.0 + 0.055), 2.4) : (b / 12.92);
-        // Convert the RGB values to XYZ using the Wide RGB D65 conversion formula
-        let X = r * 0.664511 + g * 0.154324 + b * 0.162028;
-        let Y = r * 0.283881 + g * 0.668433 + b * 0.047685;
-        let Z = r * 0.000088 + g * 0.072310 + b * 0.986039;
-        // Calculate the xy values from the XYZ values
-        let x = X / (X + Y + Z);
-        let y = Y / (X + Y + Z);
-        let bri = Y;
-        return {
-            x: x,
-            y: y,
-            brightness: bri
-        };
-    };
-
-    /* ------------------------------------------------------------------
-    * Method: xybToRgb(params)
-    * - params:
-    *   - x          | Float | Required | x value. 0.0 - 1.0.
-    *   - y          | Float | Required | y value. 0.0 - 1.0.
-    *   - brightness | Float | Required | Brightness. 0.0 - 1.0.
-    *
-    * https://www.developers.meethue.com/documentation/color-conversions-rgb-xy
-    * ---------------------------------------------------------------- */
-    xybToRgb(p: LifxLanColorXyb): LifxLanColorRGB {
-        // Check the parameters
-
-        let x = p['x'];
-        let y = p['y'];
-        let bri = p['brightness'];
-        // Calculate XYZ values
-        let z = 1.0 - x - y;
-        let Y = bri;
-        let X = (Y / y) * x;
-        let Z = (Y / y) * z;
-        // Convert to RGB using Wide RGB D65 conversion
-        let r = X * 1.656492 - Y * 0.354851 - Z * 0.255038;
-        let g = -X * 0.707196 + Y * 1.655397 + Z * 0.036152;
-        let b = X * 0.051713 - Y * 0.121364 + Z * 1.011530;
-        // Apply reverse gamma correction
-        let rgb: LifxLanColorRGB = {
-            red: (r <= 0.0031308) ? 12.92 * r : (1.0 + 0.055) * Math.pow(r, (1.0 / 2.4)) - 0.055,
-            green: (g <= 0.0031308) ? 12.92 * g : (1.0 + 0.055) * Math.pow(g, (1.0 / 2.4)) - 0.055,
-            blue: (b <= 0.0031308) ? 12.92 * b : (1.0 + 0.055) * Math.pow(b, (1.0 / 2.4)) - 0.055
-        };
-        Object.keys(rgb).forEach((k) => {
-            let v = rgb[k];
-            if (v < 0.0) {
-                v = 0.0;
-            }
-            if (v > 1.0) {
-                v = 1.0;
-            }
-            rgb[k] = v;
-        });
-        return rgb;
-    };
-
-    /* ------------------------------------------------------------------
-    * Method: hsbToXyb(params)
-    * - params:
-    *   - hue        | Float | Required | Hue. 0.0 - 1.0.
-    *   - saturation | Float | Required | Saturation. 0.0 - 1.0.
-    *   - brightness | Float | Required | Brightness. 0.0 - 1.0.
-    * ---------------------------------------------------------------- */
-    hsbToXyb(p: LifxLanColorHSB): LifxLanColorXyb {
-        return this.rgbToXyb(this.hsbToRgb(p));
-    };
-
-    /* ------------------------------------------------------------------
-    * Method: xybToHsb(params)
-    * - params:
-    *   - x          | Float | Required | x value. 0.0 - 1.0.
-    *   - y          | Float | Required | y value. 0.0 - 1.0.
-    *   - brightness | Float | Required | Brightness. 0.0 - 1.0.
-    * ---------------------------------------------------------------- */
-    xybToHsb(p: LifxLanColorXyb) {
-        return this.rgbToHsb(this.xybToRgb(p));
+    let hue = p['hue'] * 360;
+    let sat = p['saturation'] * 255;
+    let bri = p['brightness'] * 255;
+    // Determine the max and min value in HSB
+    let max = bri;
+    let min = max - ((sat / 255) * max);
+    //
+    let r = 0;
+    let g = 0;
+    let b = 0;
+    if (hue <= 60) {
+        r = max;
+        g = (hue / 60) * (max - min) + min;
+        b = min;
+    } else if (hue <= 120) {
+        r = ((120 - hue) / 60) * (max - min) + min;
+        g = max;
+        b = min;
+    } else if (hue <= 180) {
+        r = min;
+        g = max;
+        b = ((hue - 120) / 60) * (max - min) + min;
+    } else if (hue <= 240) {
+        r = min;
+        g = ((240 - hue) / 60) * (max - min) + min;
+        b = max;
+    } else if (hue <= 300) {
+        r = ((hue - 240) / 60) * (max - min) + min;
+        g = min;
+        b = max;
+    } else {
+        r = max;
+        g = min;
+        b = ((360 - hue) / 60) * (max - min) + min;
     }
+    return {
+        red: r / 255,
+        green: g / 255,
+        blue: b / 255
+    };
+};
 
-    // Second cphsb is for mergin with existing settings
-    mergeToHsb(c: LifxLanColor, color: LifxLanColorHSB) {
-        const copyhsb = (hsb: LifxLanColorHSB) => {
-            color.hue = hsb.hue;
-            color.saturation = hsb.saturation;
-            color.brightness = hsb.brightness;
-        }
-        if ('hue' in c || 'saturation' in c) {
-            const ch = <LifxLanColorHSB>c;
-            if ('hue' in ch) color.hue = ch.hue;
-            if ('saturation' in c) color.saturation = ch.saturation;
-            if ('brightness' in c) color.brightness = ch.brightness;
-        } else if ('x' in c || 'y' in c) {
-            const cx = <LifxLanColorXyb>c;
-            let xyb = this.hsbToXyb({ hue: color.hue, saturation: color.saturation, brightness: color.brightness });
-            if ('x' in c) xyb.x = cx.x;
-            if ('y' in c) xyb.y = cx.y;
-            if ('brightness' in c) xyb.brightness = cx.brightness;
-            copyhsb(this.xybToHsb(xyb));
-        } else if ('red' in c || 'green' in c || 'blue' in c) {
-            let rgb = this.hsbToRgb({ hue: color.hue, saturation: color.saturation, brightness: color.brightness });
-            const crgb = <LifxLanColorRGB>c;
-            if ('red' in c) rgb.red = crgb.red;
-            if ('green' in c) rgb.green = crgb.green;
-            if ('blue' in c) rgb.blue = crgb.blue;
-            if ('brightness' in c) rgb.brightness = crgb.brightness;
-            copyhsb(this.rgbToHsb(rgb));
-        } else if ('css' in c) {
-            copyhsb(this.cssToHsb(<LifxLanColorCSS>c));
-        }
-        if ('kelvin' in c) color.kelvin = c.kelvin;
-        return color;
-    }
-
-    anyToHsb(c: LifxLanColor) {
-        let color: LifxLanColorHSB;
-        if ('hue' in c && 'saturation' in c && 'brightness' in c) {
-            const ch = <LifxLanColorHSB>c;
-            color = { hue: ch.hue, saturation: ch.saturation, brightness: ch.brightness };
-        } else if ('x' in c && 'y' in c) {
-            const cxy = <LifxLanColorXyb>c;
-            color = this.xybToHsb({ x: cxy.x, y: cxy.y });
-        } else if ('red' in c && 'green' in c && 'blue' in c) {
-            const crgb = <LifxLanColorRGB>c;
-            color = this.rgbToHsb({ red: crgb.red, green: crgb.green, blue: crgb.blue, brightness: crgb.brightness });
-        } else if ('css' in c) {
-            color = this.cssToHsb(<LifxLanColorCSS>c);
+/* ------------------------------------------------------------------
+* Method: rgbToXyb(params)
+* - params:
+*   - red   | Float | Required | R component. 0.0 - 1.0.
+*   - green | Float | Required | G component. 0.0 - 1.0.
+*   - blue  | Float | Required | B component. 0.0 - 1.0.
+*
+* https://www.developers.meethue.com/documentation/color-conversions-rgb-xy
+* ---------------------------------------------------------------- */
+export function rgbToXyb(p: LifxLanColorRGB): LifxLanColorXyb {
+    // Check the parameters
+    let error = null;
+    ['red', 'green', 'blue'].forEach((c) => {
+        if (c in p) {
+            let v = p[c];
+            if (typeof (v) !== 'number' || v < 0 || v > 1) {
+                error = new Error('The `' + c + '` must be a float between 0.0 and 1.0.');
+            }
         } else {
-            throw new Error('The `color` is invalid.');
+            error = new Error('The `' + c + '` is required.');
         }
-        if ('kelvin' in c) color.kelvin = c.kelvin;
-        return color;
-    }
+    });
+
+    let r = p.red || 0;
+    let g = p.green || 0;
+    let b = p.blue || 0;
+    // Apply a gamma correction to the RGB values
+    r = (r > 0.04045) ? Math.pow((r + 0.055) / (1.0 + 0.055), 2.4) : (r / 12.92);
+    g = (g > 0.04045) ? Math.pow((g + 0.055) / (1.0 + 0.055), 2.4) : (g / 12.92);
+    b = (b > 0.04045) ? Math.pow((b + 0.055) / (1.0 + 0.055), 2.4) : (b / 12.92);
+    // Convert the RGB values to XYZ using the Wide RGB D65 conversion formula
+    let X = r * 0.664511 + g * 0.154324 + b * 0.162028;
+    let Y = r * 0.283881 + g * 0.668433 + b * 0.047685;
+    let Z = r * 0.000088 + g * 0.072310 + b * 0.986039;
+    // Calculate the xy values from the XYZ values
+    let x = X / (X + Y + Z);
+    let y = Y / (X + Y + Z);
+    let bri = Y;
+    return {
+        x: x,
+        y: y,
+        brightness: bri
+    };
+};
+
+/* ------------------------------------------------------------------
+* Method: xybToRgb(params)
+* - params:
+*   - x          | Float | Required | x value. 0.0 - 1.0.
+*   - y          | Float | Required | y value. 0.0 - 1.0.
+*   - brightness | Float | Required | Brightness. 0.0 - 1.0.
+*
+* https://www.developers.meethue.com/documentation/color-conversions-rgb-xy
+* ---------------------------------------------------------------- */
+export function xybToRgb(p: LifxLanColorXyb): LifxLanColorRGB {
+    // Check the parameters
+
+    let x = p['x'];
+    let y = p['y'];
+    let bri = p['brightness'];
+    // Calculate XYZ values
+    let z = 1.0 - x - y;
+    let Y = bri;
+    let X = (Y / y) * x;
+    let Z = (Y / y) * z;
+    // Convert to RGB using Wide RGB D65 conversion
+    let r = X * 1.656492 - Y * 0.354851 - Z * 0.255038;
+    let g = -X * 0.707196 + Y * 1.655397 + Z * 0.036152;
+    let b = X * 0.051713 - Y * 0.121364 + Z * 1.011530;
+    // Apply reverse gamma correction
+    let rgb: LifxLanColorRGB = {
+        red: (r <= 0.0031308) ? 12.92 * r : (1.0 + 0.055) * Math.pow(r, (1.0 / 2.4)) - 0.055,
+        green: (g <= 0.0031308) ? 12.92 * g : (1.0 + 0.055) * Math.pow(g, (1.0 / 2.4)) - 0.055,
+        blue: (b <= 0.0031308) ? 12.92 * b : (1.0 + 0.055) * Math.pow(b, (1.0 / 2.4)) - 0.055
+    };
+    Object.keys(rgb).forEach((k) => {
+        let v = rgb[k];
+        if (v < 0.0) {
+            v = 0.0;
+        }
+        if (v > 1.0) {
+            v = 1.0;
+        }
+        rgb[k] = v;
+    });
+    return rgb;
+};
+
+/* ------------------------------------------------------------------
+* Method: hsbToXyb(params)
+* - params:
+*   - hue        | Float | Required | Hue. 0.0 - 1.0.
+*   - saturation | Float | Required | Saturation. 0.0 - 1.0.
+*   - brightness | Float | Required | Brightness. 0.0 - 1.0.
+* ---------------------------------------------------------------- */
+export function hsbToXyb(p: LifxLanColorHSB): LifxLanColorXyb {
+    return rgbToXyb(hsbToRgb(p));
+};
+
+/* ------------------------------------------------------------------
+* Method: xybToHsb(params)
+* - params:
+*   - x          | Float | Required | x value. 0.0 - 1.0.
+*   - y          | Float | Required | y value. 0.0 - 1.0.
+*   - brightness | Float | Required | Brightness. 0.0 - 1.0.
+* ---------------------------------------------------------------- */
+export function xybToHsb(p: LifxLanColorXyb) {
+    return rgbToHsb(xybToRgb(p));
 }
 
+// Second cphsb is for mergin with existing settings
+export function mergeToHsb(c: LifxLanColorAny, color: LifxLanColorHSB) {
+    const copyhsb = (hsb: LifxLanColorHSB) => {
+        color.hue = hsb.hue;
+        color.saturation = hsb.saturation;
+        color.brightness = hsb.brightness;
+    }
+    if ('hue' in c || 'saturation' in c) {
+        const ch = <LifxLanColorHSB>c;
+        if ('hue' in ch) color.hue = ch.hue;
+        if ('saturation' in c) color.saturation = ch.saturation;
+        if ('brightness' in c) color.brightness = ch.brightness;
+    } else if ('x' in c || 'y' in c) {
+        const cx = <LifxLanColorXyb>c;
+        let xyb = hsbToXyb({ hue: color.hue, saturation: color.saturation, brightness: color.brightness });
+        if ('x' in c) xyb.x = cx.x;
+        if ('y' in c) xyb.y = cx.y;
+        if ('brightness' in c) xyb.brightness = cx.brightness;
+        copyhsb(xybToHsb(xyb));
+    } else if ('red' in c || 'green' in c || 'blue' in c) {
+        let rgb = hsbToRgb({ hue: color.hue, saturation: color.saturation, brightness: color.brightness });
+        const crgb = <LifxLanColorRGB>c;
+        if ('red' in c) rgb.red = crgb.red;
+        if ('green' in c) rgb.green = crgb.green;
+        if ('blue' in c) rgb.blue = crgb.blue;
+        if ('brightness' in c) rgb.brightness = crgb.brightness;
+        copyhsb(rgbToHsb(rgb));
+    } else if ('css' in c) {
+        copyhsb(cssToHsb(<LifxLanColorCSS>c));
+    }
+    if ('kelvin' in c) color.kelvin = c.kelvin;
+    return color;
+}
+
+export function anyToHsb(c: LifxLanColorAny) {
+    let color: LifxLanColorHSB;
+    if ('hue' in c && 'saturation' in c && 'brightness' in c) {
+        const ch = <LifxLanColorHSB>c;
+        color = { hue: ch.hue, saturation: ch.saturation, brightness: ch.brightness };
+    } else if ('x' in c && 'y' in c) {
+        const cxy = <LifxLanColorXyb>c;
+        color = xybToHsb({ x: cxy.x, y: cxy.y });
+    } else if ('red' in c && 'green' in c && 'blue' in c) {
+        const crgb = <LifxLanColorRGB>c;
+        color = rgbToHsb({ red: crgb.red, green: crgb.green, blue: crgb.blue, brightness: crgb.brightness });
+    } else if ('css' in c) {
+        color = cssToHsb(<LifxLanColorCSS>c);
+    } else {
+        throw new Error('The `color` is invalid.');
+    }
+    if ('kelvin' in c) color.kelvin = c.kelvin;
+    return color;
+}
+
+
 // export const LifxLanColorx = new LifxLanColors();
-export const mLifxLanColor = new _LifxLanColor();
+// export const xLifxLanColor = new _LifxLanColor();

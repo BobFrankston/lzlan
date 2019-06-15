@@ -27,17 +27,14 @@ export interface LifxLanColorCSS {
     brightness?: number;
     kelvin?: number;
 }
-export declare type LifxLanColor = LifxLanColorCSS | LifxLanColorHSB | LifxLanColorRGB | LifxLanColorXyb;
-export declare class _LifxLanColor {
-    cssToHsb(p: LifxLanColorCSS): LifxLanColorHSB;
-    rgbToHsb(p: LifxLanColorRGB): LifxLanColorHSB;
-    hsbToRgb(p: LifxLanColorHSB): LifxLanColorRGB;
-    rgbToXyb(p: LifxLanColorRGB): LifxLanColorXyb;
-    xybToRgb(p: LifxLanColorXyb): LifxLanColorRGB;
-    hsbToXyb(p: LifxLanColorHSB): LifxLanColorXyb;
-    xybToHsb(p: LifxLanColorXyb): LifxLanColorHSB;
-    mergeToHsb(c: LifxLanColor, color: LifxLanColorHSB): LifxLanColorHSB;
-    anyToHsb(c: LifxLanColor): LifxLanColorHSB;
-}
-export declare const mLifxLanColor: _LifxLanColor;
+export declare type LifxLanColorAny = LifxLanColorCSS | LifxLanColorHSB | LifxLanColorRGB | LifxLanColorXyb;
+export declare function cssToHsb(p: LifxLanColorCSS): LifxLanColorHSB;
+export declare function rgbToHsb(p: LifxLanColorRGB): LifxLanColorHSB;
+export declare function hsbToRgb(p: LifxLanColorHSB): LifxLanColorRGB;
+export declare function rgbToXyb(p: LifxLanColorRGB): LifxLanColorXyb;
+export declare function xybToRgb(p: LifxLanColorXyb): LifxLanColorRGB;
+export declare function hsbToXyb(p: LifxLanColorHSB): LifxLanColorXyb;
+export declare function xybToHsb(p: LifxLanColorXyb): LifxLanColorHSB;
+export declare function mergeToHsb(c: LifxLanColorAny, color: LifxLanColorHSB): LifxLanColorHSB;
+export declare function anyToHsb(c: LifxLanColorAny): LifxLanColorHSB;
 //# sourceMappingURL=lants-color.d.ts.map

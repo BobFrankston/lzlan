@@ -1,1 +1,1 @@
-{"version":3,"file":"lants-address.d.ts","sourceRoot":"","sources":["../src/lants-address.ts"],"names":[],"mappings":";AAYA,OAAO,KAAK,GAAG,MAAM,IAAI,CAAC;AAO1B,qBAAa,cAAc;IAK1B,oBAAoB;IAmBpB,oBAAoB,CAAC,IAAI,EAAE,GAAG,CAAC,wBAAwB;IAmBvD,kBAAkB,CAAC,OAAO,EAAE,MAAM;CAOlC;AAED,eAAO,MAAM,eAAe,gBAAuB,CAAC"}
+{"version":3,"file":"lants-address.d.ts","sourceRoot":"","sources":["../src/lants-address.ts"],"names":[],"mappings":";AAYA,OAAO,KAAK,GAAG,MAAM,IAAI,CAAC;AAW1B,wBAAgB,oBAAoB,+BAiBnC"}

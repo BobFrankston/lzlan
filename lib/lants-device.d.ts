@@ -1,5 +1,5 @@
 import { LifxTile } from "./lants-parser";
-import { LifxLanColor, LifxLanColorHSB } from "./lants-color";
+import { LifxLanColorAny, LifxLanColorHSB } from "./lants-color";
 export declare type Integer = number;
 export declare type Integer255 = number;
 export declare type Milliseconds = number;
@@ -10,7 +10,7 @@ export declare type Brightness0To1 = number;
 export declare type HexString16 = string;
 export declare function passure(params: object, defaults?: object): object;
 export declare type ColorDuration = {
-    color?: LifxLanColor;
+    color?: LifxLanColorAny;
     duration?: Duration;
 };
 export declare type HSBDuration = {
@@ -90,6 +90,10 @@ export interface LifxVersionInfo {
     };
 }
 export declare class LifxLanDevice {
+    /**
+     *
+     * @param params {ip: string, mac: string} mac is upper case : separated
+     */
     constructor(params: {
         mac: string;
         ip: string;
@@ -254,7 +258,7 @@ export declare class LifxLanDevice {
     multiZoneSetColorZones(params: {
         start: Integer255;
         end: Integer255;
-        color: LifxLanColor;
+        color: LifxLanColorAny;
         duration?: Duration;
         apply?: LifxApply;
     }): Promise<any>;

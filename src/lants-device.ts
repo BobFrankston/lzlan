@@ -2,14 +2,9 @@
 
 import { lifxMsgType, LifxTile } from "./lants-parser";
 import { LifxLanUdp, udpParsed } from "./lants-udp";
-import { mLifxLanColor, LifxLanColor, LifxLanColorHSB, LifxLanColorCSS } from "./lants-color";
+import { LifxLanColorAny, LifxLanColorHSB, LifxLanColorCSS } from "./lants-color";
+import * as LifxLanColor from './lants-color';
 import { isUndefined } from "util";
-import { ADDRGETNETWORKPARAMS } from "dns";
-import { stringify } from "querystring";
-
-// import { cpus } from "os";
-// import { resolve } from "url";
-// import { promises } from "fs";
 
 export type Integer = number;        // Should rename to named types at some point
 export type Integer255 = number;     // Integer limited to 244
@@ -34,23 +29,10 @@ export type HexString16 = string;
 export function passure(params: object, defaults?: object) {
     params = params || {};
     return defaults ? { ...defaults, ...params } : params;
-    // If we need a deep copy then use the following
-    // if (defaults) params = { ...defaults, ...params };
-    // function cloneObject(obj: any) {
-    //     let clone: any = {};
-    //     for (var i in obj) {
-    //         if (obj[i] != null && typeof (obj[i]) == "object")
-    //             clone[i] = cloneObject(obj[i]);
-    //         else
-    //             clone[i] = obj[i];
-    //     }
-    //     return clone;
-    // }
-    // return params ? cloneObject(params) : {};
 }
 
 export type ColorDuration = {
-    color?: LifxLanColor,
+    color?: LifxLanColorAny,
     duration?: Duration
 };      // Duration in milliseconds
 
@@ -143,6 +125,10 @@ interface LifxGuidLabel {
 * ---------------------------------------------------------------- */
 
 export class LifxLanDevice {
+    /**
+     * 
+     * @param params {ip: string, mac: string} mac is upper case : separated
+     */
     constructor(params: { mac: string, ip: string }) {
         this.mac = params.mac;
         this.ip = params.ip;
@@ -203,7 +189,7 @@ export class LifxLanDevice {
         params = passure(params);
         if (!params.color) return;  // Nothing to do
         const res = await this.lightGet();    // For power
-        const req: any = { color: mLifxLanColor.mergeToHsb(params.color, res.color) };
+        const req: any = { color: LifxLanColor.mergeToHsb(params.color, res.color) };
         if (res.power && !isUndefined(params.duration)) req.duration = params.duration
         return this.lightSetColor(req);
     };
@@ -249,10 +235,7 @@ export class LifxLanDevice {
             return { count: (await this.multiZoneGetColorZones({ start: 0, end: 0 })).count }
         }
     };
-
-    /* ------------------------------------------------------------------
-    * Method: getLightState()
-    * ---------------------------------------------------------------- */
+   
     async getLightState() {
         const info = await this.getDeviceInfo();
         let state: any = {};
@@ -332,9 +315,9 @@ export class LifxLanDevice {
     lightSetPower(params: { level: Integer; duration?: Duration }) { return this._request(lifxMsgType.SetPower /*117*/, params); };
     lightGetInfrared(): Promise<{ brightness: Brightness0To1 }> { return this._request(lifxMsgType.GetInfrared /*120*/); };
     lightSetInfrared(params: { brightness: Brightness0To1 }) { return this._request(lifxMsgType.SetInfrared /*122*/, params); };
-    async multiZoneSetColorZones(params: { start: Integer255, end: Integer255, color: LifxLanColor, duration?: Duration, apply?: LifxApply }) {
+    async multiZoneSetColorZones(params: { start: Integer255, end: Integer255, color: LifxLanColorAny, duration?: Duration, apply?: LifxApply }) {
         const res = await this.multiZoneGetColorZones({ start: params.start, end: params.start });
-        params.color = mLifxLanColor.mergeToHsb(params.color, res.color);
+        params.color = LifxLanColor.mergeToHsb(params.color, res.color);
         return await this._request(lifxMsgType.SetColorZones, params);
     };
     multiZoneGetColorZones(params: { start: Integer255, end: Integer255 }):

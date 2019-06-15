@@ -1,16 +1,18 @@
 import * as lantsDevice from "./lants-device";
 import { LifxLanDevice, Integer, Duration, passure } from "./lants-device";
-import { lifxMsgType } from "./lants-parser";
-import { mLifxLanColor, _LifxLanColor } from "./lants-color";
-import { UDPHandler } from './lants-udp';
+// import { lifxMsgType } from "./lants-parser";
+// import { LifxLanColorAny } from "./lants-color";
+import * as LifxLanColor from './lants-color';
+import {LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB,LifxLanColorRGB,LifxLanColorXyb} from "./lants-color";
 
 export { LifxLanDevice };
-export { UDPHandler };
+export { LifxLanColor, LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB,LifxLanColorRGB,LifxLanColorXyb };
 
 /* ------------------------------------------------------------------
  * node-lifx-lan - lifx-lan.js
  *
  * Copyright (c) 2017-2018, Futomi Hatano, All rights reserved.
+ * Copyright (c) 2018-2019, Bob Frankston - major changes in original code
  * Released under the MIT license
  * Date: 2018-08-08
  * ---------------------------------------------------------------- */
@@ -90,6 +92,7 @@ async function _discoverGetDeviceInfo(dev_list: LifxLanDevice[]) {
 /**
   * Create a new device object. This can be used in place of or in addition to discovery
   * @param {ip, MAC} params {ip IP Address, MAC Mac address}
+  * @returns LifxLanDevice object
   */
 
 export async function createDevice(params: { ip: string, mac: string }) {

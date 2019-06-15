@@ -2,6 +2,7 @@
 
 import { lifxMsgType, mParser, LifxLanHeader } from "./lants-parser";
 import { delayms } from "./lants";
+import {getNetworkInterfaces} from "./lants-address";
 
 /* ------------------------------------------------------------------
 * node-lifx-lan - lifx-lan-udp.js
@@ -13,20 +14,16 @@ import { delayms } from "./lants";
 // 'use strict';
 import * as os from 'os';
 import * as mDgram from 'dgram';
-// const mDgram = require('dgram');
-
 import * as Composer from './lants-composer';
 const mComposer = new Composer.LifxLanComposer();
 import * as la from './lants-address';
 import { LifxLanDevice, passure } from "./lants-device";
-import { promises } from "fs";
+// import { promises } from "fs";
 
 /**
  * Handle incoming message that is not otherwise handled
  */
-export type UDPHandler = (rinfo: udpRinfo, parsed: udpParsed) => void;
-
-const mAddress = new la.LifxLanAddress();
+// const mAddress = new la.LifxLanAddress();
 
 export interface udpParams {
 	address?: string,        // IP address of the destination (e.g., "192.168.10.10") (optional for broadcast)
@@ -102,7 +99,7 @@ export class LifxLanUdp {
 	private async init() {
 		this.initPromise = new Promise((resolve, reject) => {
 			this._source_id = Math.floor(Math.random() * 0xffffffff);
-			let netif_list = mAddress.getNetworkInterfaces();
+			let netif_list =  getNetworkInterfaces();
 			if (!netif_list || netif_list.length === 0) {
 				reject(new Error('No available network interface was found.'));
 				return;
@@ -221,8 +218,6 @@ export class LifxLanUdp {
 		await this._sendBroadcast(req_list);
 	};
 
-	// UDPHandlers: UDPHandler[] = [];
-
 	private _receivePacket(buf: Buffer, rinfo: udpRinfo) {
 		if (this._isNetworkInterfaceAddress(rinfo.address))
 			return;		// Ignore echoes from myself
@@ -246,11 +241,6 @@ export class LifxLanUdp {
 		// 			else
 		// 				name = parsed.address;
 		// 		}
-		// 		// if (this.UDPHandlers.length) {
-		// 		// 	this.UDPHandlers.forEach(uh => uh && uh(rinfo, parsed));	// Allow use of a null entry to suppress default
-		// 		// 	return;
-		// 		// }
-
 		// 		name = name.split(' ')[0];
 		// 		// Hack
 		// 		if (name == "My") name += ' ' + parsed.address;
