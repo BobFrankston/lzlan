@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { udpParsed } from "./lants-udp";
 import { Float, Integer } from "./lants-device";
 export declare enum lifxMsgType {

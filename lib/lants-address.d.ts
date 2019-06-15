@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import * as mOs from 'os';
 export declare class LifxLanAddress {
     getNetworkInterfaces(): mOs.NetworkInterfaceInfo[];

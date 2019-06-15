@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { lifxMsgType, LifxLanHeader } from "./lants-parser";
 import { LifxLanDevice } from "./lants-device";
 /**
