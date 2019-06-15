@@ -1,5 +1,4 @@
 import { LifxTile } from "./lants-parser";
-import { LifxLanUdp } from "./lants-udp";
 import { LifxLanColor, LifxLanColorHSB } from "./lants-color";
 export declare type Integer = number;
 export declare type Integer255 = number;
@@ -94,12 +93,10 @@ export declare class LifxLanDevice {
     constructor(params: {
         mac: string;
         ip: string;
-        udp: LifxLanUdp;
     });
     mac: string;
     ip: string;
     deviceInfo: LifxDeviceInfo;
-    private _lifxLanUdp;
     private _request;
     private _wait;
     /**

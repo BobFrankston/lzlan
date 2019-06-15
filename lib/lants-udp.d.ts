@@ -37,7 +37,7 @@ export interface udpParsed {
     address?: string;
     mac?: string;
 }
-export declare class LifxLanUdp {
+export declare class LifxLanUdp1 {
     constructor();
     static created: boolean;
     private _UDP_PORT;
@@ -55,7 +55,7 @@ export declare class LifxLanUdp {
       * Initialize instance. Should only be called once
       */
     init(): Promise<any>;
-    request(params: udpParams): Promise<void | {}>;
+    request(params: udpParams): Promise<void | udpParsed>;
     private _requestUnicast;
     private _requestBroadcast;
     UDPHandlers: UDPHandler[];
@@ -69,6 +69,36 @@ export declare class LifxLanUdp {
     }): Promise<udpParsed[]>;
     private _sendBroadcast;
 }
-export declare const mLifxUdp: LifxLanUdp;
-export default mLifxUdp;
+export declare class LifxLanUdp {
+    static GetUDP(): Promise<LifxLanUdp>;
+    private constructor();
+    private _UDP_PORT;
+    private _udp;
+    private _requests;
+    private _sequence;
+    private _timeout;
+    private _source_id;
+    private _netif_list;
+    destroy(): Promise<void>;
+    private initPromise;
+    private initialized;
+    private initializing;
+    /**
+      * Initialize instance. Should only be called once
+      */
+    private init;
+    request(params: udpParams): Promise<udpParsed | void>;
+    private _requestUnicast;
+    private _requestBroadcast;
+    UDPHandlers: UDPHandler[];
+    private _receivePacket;
+    device_list_hack: {
+        [ip: string]: LifxLanDevice;
+    };
+    private _isNetworkInterfaceAddress;
+    discover(params: {
+        wait?: number;
+    }): Promise<udpParsed[]>;
+    private _sendBroadcast;
+}
 //# sourceMappingURL=lants-udp.d.ts.map

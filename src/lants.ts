@@ -15,7 +15,7 @@ export { UDPHandler };
  * Date: 2018-08-08
  * ---------------------------------------------------------------- */
 
-import { mLifxUdp, udpParsed } from './lants-udp';
+import { LifxLanUdp, udpParsed } from './lants-udp';
 // import { LifxLanColor } from "./lants-color";
 
 // export LifxLanDevice;
@@ -45,7 +45,7 @@ export class LifxLan {
 	 * ---------------------------------------------------------------- */
 	async init() {
 		if (this._initialized) return;
-		await mLifxUdp.init();
+		// // await mLifxUdp.init();
 		this._initialized = true;
 	}
 
@@ -55,7 +55,8 @@ export class LifxLan {
 	 * @param updh Add event handler for messages (udpRinfo, udpParsed))
 	 */
 	AddUDPHandler(updh: UDPHandler) {
-		mLifxUdp.UDPHandlers.push(updh);	// For now
+		// mLifxUdp.UDPHandlers.push(updh);	// For now
+		// No generic listener until we have a new facility
 	}
 
 	// private async _request(type: lifxMsgType, payload?: {}) {
@@ -78,36 +79,42 @@ export class LifxLan {
 	async discover(params?: { wait?: Integer }) {
 		params = passure(params);
 		await this.init();
-		const found_list = await mLifxUdp.discover(params);
-		let devices: { [ipmac: string]: LifxLanDevice } = {};
-		if (this._device_list) {
-			this._device_list.forEach((dev) => {
-				let k = dev['ip'] + ' ' + dev['mac'];
-				devices[k] = dev;
-			});
-		}
-		let device_list: LifxLanDevice[] = []; // { [ipmac: string]: LifxLanDevice } = {};
-		found_list.forEach((res: udpParsed) => {
-			let ip = res.address;
-			let mac_parts = res.header.target.split(':');
-			let mac = mac_parts.slice(0, 6).join(':');
-			let k = ip + ' ' + mac;
-			if (devices[k]) {
-				device_list.push(devices[k]);
-			} else {
-				let lifxdev = new LifxLanDevice({
-					mac: mac,
-					ip: ip,
-					udp: mLifxUdp
+		const mLifxUdp = await LifxLanUdp.GetUDP();
+		try {
+			const found_list = await mLifxUdp.discover(params);
+			let devices: { [ipmac: string]: LifxLanDevice } = {};
+			if (this._device_list) {
+				this._device_list.forEach((dev) => {
+					let k = dev['ip'] + ' ' + dev['mac'];
+					devices[k] = dev;
 				});
-				device_list.push(lifxdev);
 			}
-		});
-		this._device_list = await this._discoverGetDeviceInfo(device_list);
-		// Quick hack
-		mLifxUdp.device_list_hack = {};
-		this._device_list.forEach(dev => mLifxUdp.device_list_hack[dev.ip] = dev);
-		return [...this._device_list];
+			let device_list: LifxLanDevice[] = []; // { [ipmac: string]: LifxLanDevice } = {};
+			found_list.forEach((res: udpParsed) => {
+				let ip = res.address;
+				let mac_parts = res.header.target.split(':');
+				let mac = mac_parts.slice(0, 6).join(':');
+				let k = ip + ' ' + mac;
+				if (devices[k]) {
+					device_list.push(devices[k]);
+				} else {
+					let lifxdev = new LifxLanDevice({
+						mac: mac,
+						ip: ip,
+						// udp: mLifxUdp
+					});
+					device_list.push(lifxdev);
+				}
+			});
+			this._device_list = await this._discoverGetDeviceInfo(device_list);
+			// Quick hack
+			mLifxUdp.device_list_hack = {};
+			this._device_list.forEach(dev => mLifxUdp.device_list_hack[dev.ip] = dev);
+			return [...this._device_list];
+		}
+		finally {
+			mLifxUdp.destroy();
+		}
 	};
 
 	private async _discoverGetDeviceInfo(dev_list: LifxLanDevice[]) {
@@ -125,13 +132,13 @@ export class LifxLan {
 	};
 
 	/**
-      * Create a new device object. This can be used in place of or in addition to discovery
+	  * Create a new device object. This can be used in place of or in addition to discovery
 	  * @param params {ip IP Address, MAC Mac address}
-      */
+	  */
 
 	async createDevice(params: { ip: string, mac: string }) {
 		await this.init();
-		const device = new LifxLanDevice({ ip: params.ip, mac: params.mac, udp: mLifxUdp });
+		const device = new LifxLanDevice({ ip: params.ip, mac: params.mac }); //, udp: mLifxUdp });
 		return device;
 	};
 
@@ -163,7 +170,8 @@ export class LifxLan {
 	// }
 
 	async destroy() {
-		await mLifxUdp.destroy();
+		// Clean this up later
+		// await mLifxUdp.destroy();
 		this._is_scanning = false;
 		this._initialized = false;
 		this._device_list = null;

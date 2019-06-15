@@ -3,10 +3,15 @@
 import { Lifx } from "../lib/lants";
 import * as lz from "../lib/lants";
 import * as devices from "y:/x/Home Control/Data/Devices";
+import * as ubnt from "y:/x/Home Control/Data/ubnt";
 import * as fs from 'fs';
+import * as path from 'path';
 import { lifxMsgType } from "../lib/lants-parser";
 import { getDefaultSettings } from "http2";
 import { LifxLanColorCSS } from "../lib/lants-color";
+import { ENETUNREACH } from "constants";
+import { LifxDevice } from "../lib/lants-device";
+import { homedir } from "os";
 
 var xdev: lz.LifxLanDevice;
 var wait = 250; // Ms
@@ -14,22 +19,62 @@ function msg(text: string) {
     console.log(`${new Date().toLocaleTimeString()} ${text}`)
 }
 
-const devpath = "y:\\x\\Home Control\\Data\\Devices.json";
+const homeData = "y:/x/home control/data";
+// const devpath = "y:\\x\\Home Control\\Data\\Devices.json";
 
 class laux { IP4: string; MAC: string };
-let devs: lz.LifxLanDevice[] = null;
+// let devs: lz.LifxLanDevice[] = null;
+let devsByip: { [ip: string]: lz.LifxLanDevice } = {};
+let devsByName: { [name: string]: lz.LifxLanDevice } = {}
+
+let ubntInfo: ubnt.UbntData[] = [];
+function getUBNT() {
+    try {
+        const ub = fs.readFileSync(path.join(homeData, "ubnt.json"), "utf8");
+        ubntInfo = <ubnt.UbntData[]>JSON.parse(ub);
+    }
+    catch (e) {
+        debugger;
+    }
+}
+getUBNT();
+
+function addDevs(devs: lz.LifxLanDevice[]) {
+    console.log(`Adding up to ${devs.length}`);
+    devs.forEach(dv => {
+        devsByip[dv.ip] = dv;
+        if (!dv.deviceInfo) return;  // NO name
+        if (!dv.deviceInfo.label) {
+            for (var dn in devices.devices) {
+                const dev = devices.devices[dn];
+                if (!dev || !dev.Adr || !dev.Adr.Aux) continue;
+                if ((<any>dev.Adr.Aux).IP4 != dv.ip) continue;                
+                console.log(`Found ${dv.ip} but not it's label (${dev.Name})`);
+                return;
+            }
+            console.log(`Found ${dv.ip} but no properties`);
+            return;
+        }
+        const name = dv.deviceInfo.label.split(' ')[0].toLowerCase();
+        devsByName[name] = dv;
+    });
+
+}
 
 async function GetDev(di: devices.DevInfo | string) {
     try {
         if (typeof di == "string") {
-            if (!devs)
-                devs = await Lifx.discover();   // var for debugging
-            let dname = di.toLowerCase();
-            var dev = devs.filter(d => d.deviceInfo && d.deviceInfo.label && d.deviceInfo.label.toLowerCase().startsWith(dname))[0];    // Assume success
+            const dname = di.toLowerCase();
+            let dev: LifxDevice = null;
+            for (var tri = 0; tri < 2; tri++) {
+                if (dev = devsByName[dname]) break;  // Have
+                msg(`Searching for devices try ${tri}`)
+                addDevs(await Lifx.discover());   // var for debugging
+                msg(`Searched  for devices try ${tri}`)
+            }
             if (!dev) {
-                console.error(`Did not find ${di}`);
+                msg(`Did not find ${di}`);
                 debugger;
-                return null;
             }
             return dev;
         }
@@ -83,7 +128,7 @@ async function Turner(dev: lz.LifxLanDevice, level: number) {
     }
     catch (e) {
         console.error(`Turner(${dev.ip}) ${e.message}`);
-        debugger;
+        // debugger;
         throw e;
     }
 }
@@ -91,9 +136,9 @@ async function Turner(dev: lz.LifxLanDevice, level: number) {
 async function ToggleDev(dev: lz.LifxLanDevice) {
     try {
         let name = dev.deviceInfo ? dev.deviceInfo.label : dev.ip;
-        for (let attempt = 0; attempt < 20; attempt++) {
+        for (let attempt = 0; attempt < 5; attempt++) {
             try {
-                msg(`${name} Attempt# ${attempt}`);
+                // msg(`${name} Attempt# ${attempt}`);
                 await Turner(dev, 1);
                 await lz.delayms(wait);
                 await Turner(dev, 0);
@@ -143,7 +188,7 @@ async function tests() {
         TryDev(devices.devices["tiles"]);
         // Leveler(await GetDev(devices.devices["OfficeTrack1"]));
         // await lz.delayms(250);
-        TryDev(devices.devices["testbeam"])
+        // TryDev(devices.devices["testbeam"])
     }
 
     catch (e) {

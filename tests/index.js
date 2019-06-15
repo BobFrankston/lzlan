@@ -12,27 +12,70 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const lants_1 = require("../lib/lants");
 const lz = __importStar(require("../lib/lants"));
 const devices = __importStar(require("y:/x/Home Control/Data/Devices"));
+const fs = __importStar(require("fs"));
+const path = __importStar(require("path"));
 var xdev;
 var wait = 250; // Ms
 function msg(text) {
     console.log(`${new Date().toLocaleTimeString()} ${text}`);
 }
-const devpath = "y:\\x\\Home Control\\Data\\Devices.json";
+const homeData = "y:/x/home control/data";
+// const devpath = "y:\\x\\Home Control\\Data\\Devices.json";
 class laux {
 }
 ;
-let devs = null;
+// let devs: lz.LifxLanDevice[] = null;
+let devsByip = {};
+let devsByName = {};
+let ubntInfo = [];
+function getUBNT() {
+    try {
+        const ub = fs.readFileSync(path.join(homeData, "ubnt.json"), "utf8");
+        ubntInfo = JSON.parse(ub);
+    }
+    catch (e) {
+        debugger;
+    }
+}
+getUBNT();
+function addDevs(devs) {
+    console.log(`Adding up to ${devs.length}`);
+    devs.forEach(dv => {
+        devsByip[dv.ip] = dv;
+        if (!dv.deviceInfo)
+            return; // NO name
+        if (!dv.deviceInfo.label) {
+            for (var dn in devices.devices) {
+                const dev = devices.devices[dn];
+                if (!dev || !dev.Adr || !dev.Adr.Aux)
+                    continue;
+                if (dev.Adr.Aux.IP4 != dv.ip)
+                    continue;
+                console.log(`Found ${dv.ip} but not it's label (${dev.Name})`);
+                return;
+            }
+            console.log(`Found ${dv.ip} but no properties`);
+            return;
+        }
+        const name = dv.deviceInfo.label.split(' ')[0].toLowerCase();
+        devsByName[name] = dv;
+    });
+}
 async function GetDev(di) {
     try {
         if (typeof di == "string") {
-            if (!devs)
-                devs = await lants_1.Lifx.discover(); // var for debugging
-            let dname = di.toLowerCase();
-            var dev = devs.filter(d => d.deviceInfo && d.deviceInfo.label && d.deviceInfo.label.toLowerCase().startsWith(dname))[0]; // Assume success
+            const dname = di.toLowerCase();
+            let dev = null;
+            for (var tri = 0; tri < 2; tri++) {
+                if (dev = devsByName[dname])
+                    break; // Have
+                msg(`Searching for devices try ${tri}`);
+                addDevs(await lants_1.Lifx.discover()); // var for debugging
+                msg(`Searched  for devices try ${tri}`);
+            }
             if (!dev) {
-                console.error(`Did not find ${di}`);
+                msg(`Did not find ${di}`);
                 debugger;
-                return null;
             }
             return dev;
         }
@@ -86,16 +129,16 @@ async function Turner(dev, level) {
     }
     catch (e) {
         console.error(`Turner(${dev.ip}) ${e.message}`);
-        debugger;
+        // debugger;
         throw e;
     }
 }
 async function ToggleDev(dev) {
     try {
         let name = dev.deviceInfo ? dev.deviceInfo.label : dev.ip;
-        for (let attempt = 0; attempt < 20; attempt++) {
+        for (let attempt = 0; attempt < 5; attempt++) {
             try {
-                msg(`${name} Attempt# ${attempt}`);
+                // msg(`${name} Attempt# ${attempt}`);
                 await Turner(dev, 1);
                 await lz.delayms(wait);
                 await Turner(dev, 0);
@@ -145,7 +188,7 @@ async function tests() {
         TryDev(devices.devices["tiles"]);
         // Leveler(await GetDev(devices.devices["OfficeTrack1"]));
         // await lz.delayms(250);
-        TryDev(devices.devices["testbeam"]);
+        // TryDev(devices.devices["testbeam"])
     }
     catch (e) {
         console.error(`${e.message}`);

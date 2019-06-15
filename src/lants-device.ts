@@ -1,7 +1,7 @@
 // ToDO Make deep copy of params
 
 import { lifxMsgType, LifxTile } from "./lants-parser";
-import { LifxLanUdp } from "./lants-udp";
+import { LifxLanUdp, udpParsed } from "./lants-udp";
 import { mLifxLanColor, LifxLanColor, LifxLanColorHSB, LifxLanColorCSS } from "./lants-color";
 import { isUndefined } from "util";
 import { ADDRGETNETWORKPARAMS } from "dns";
@@ -140,33 +140,40 @@ interface LifxGuidLabel {
 * - params:
 *   - mac | String     | Required | MAC address (e.g., "D0:73:D5:13:96:7E")
 *   - ip  | String     | Required | IP address (e.g., "192.168.10.25")
-*   - udp | LifxLanUdp | Required | a LifxLanUdp object
 * ---------------------------------------------------------------- */
 
 export class LifxLanDevice {
-    constructor(params: { mac: string, ip: string, udp: LifxLanUdp }) {
+    // constructor(params: { mac: string, ip: string, udp: LifxLanUdp }) {
+    constructor(params: { mac: string, ip: string }) {
         this.mac = params.mac;
         this.ip = params.ip;
 
         // Private
-        this._lifxLanUdp = params.udp;
+        // this._lifxLanUdp = params.udp;
     };
 
     mac: string;
     ip: string;
     deviceInfo: LifxDeviceInfo;
-    private _lifxLanUdp: any;   // For now
+    // private _lifxLanUdp: any;   // For now
 
     private async _request(type: lifxMsgType, payload?: any): Promise<any> {
-        const res = await this._lifxLanUdp.request({
-            address: this.ip,
-            type: type,
-            payload: payload || null,
-            ack_required: false,
-            res_required: true,
-            target: this.mac
-        });
-        return res.payload || null; // Vs. undefined?
+        // const res = await this._lifxLanUdp.request({
+        const _lifxLanUdp = await LifxLanUdp.GetUDP();
+        try {
+            const res = <udpParsed>await _lifxLanUdp.request({
+                address: this.ip,
+                type: type,
+                payload: payload || null,
+                ack_required: false,
+                res_required: true,
+                target: this.mac
+            });
+            return res.payload || null; // Vs. undefined?
+        }
+        finally {
+            _lifxLanUdp.destroy();
+        }
     };
 
     private _wait(msec?: Milliseconds) {
@@ -191,7 +198,7 @@ export class LifxLanDevice {
         if (params && params.color)
             await this.setColor(params);
     };
-    
+
     /**
       * Set color and duration
       * @param {color?: LifxLanColor, duration?: Duration}
@@ -206,7 +213,7 @@ export class LifxLanDevice {
         return this.lightSetColor(req);
     };
 
-    
+
     /**
       * Turn off
       * @param {duration?: Duration}
