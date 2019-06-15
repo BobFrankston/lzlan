@@ -5,6 +5,7 @@ import { LifxLanUdp, udpParsed } from "./lants-udp";
 import { LifxLanColorAny, LifxLanColorHSB, LifxLanColorCSS } from "./lants-color";
 import * as LifxLanColor from './lants-color';
 import { isUndefined } from "util";
+import { normalizeMac } from "./lants";
 
 export type Integer = number;        // Should rename to named types at some point
 export type Integer255 = number;     // Integer limited to 244
@@ -130,7 +131,7 @@ export class LifxLanDevice {
      * @param params {ip: string, mac: string} mac is upper case : separated
      */
     constructor(params: { mac: string, ip: string }) {
-        this.mac = params.mac;
+        this.mac = normalizeMac(params.mac);
         this.ip = params.ip;
     };
 
@@ -206,10 +207,10 @@ export class LifxLanDevice {
         await this.lightSetPower(p);
     }
 
-   /**
-    * Update device info for this device by calling querying the bulb
-    * Normally done once on creating the device
-    */
+    /**
+     * Update device info for this device by calling querying the bulb
+     * Normally done once on creating the device
+     */
     async getDeviceInfo() {
         let info: LifxDeviceInfo = <any>{};
         try {
@@ -235,7 +236,7 @@ export class LifxLanDevice {
             return { count: (await this.multiZoneGetColorZones({ start: 0, end: 0 })).count }
         }
     };
-   
+
     async getLightState() {
         const info = await this.getDeviceInfo();
         let state: any = {};

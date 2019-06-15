@@ -98,3 +98,4 @@ async function _discoverGetDeviceInfo(dev_list: LifxLanDevice[]) {
 export async function createDevice(params: { ip: string, mac: string }) {
 	return new LifxLanDevice({ ip: params.ip, mac: params.mac });;
 };
+export function normalizeMac(mac:string) { return mac.toUpperCase().replace(/-/g, ":")}

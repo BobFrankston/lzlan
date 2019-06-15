@@ -23,4 +23,5 @@ export declare function createDevice(params: {
     ip: string;
     mac: string;
 }): Promise<lantsDevice.LifxLanDevice>;
+export declare function normalizeMac(mac: string): string;
 //# sourceMappingURL=lants.d.ts.map
