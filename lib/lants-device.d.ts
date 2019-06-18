@@ -277,8 +277,7 @@ export declare class LifxLanDevice {
         total_count: Integer255;
     }>;
 }
-export declare type LifxDevice = LifxLanDevice;
 export declare type LifxDevicesIP = {
-    [ip: string]: LifxDevice;
+    [ip: string]: LifxLanDevice;
 };
 //# sourceMappingURL=lants-device.d.ts.map

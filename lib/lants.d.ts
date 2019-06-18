@@ -1,8 +1,8 @@
 import * as lantsDevice from "./lants-device";
 import { LifxLanDevice, Integer } from "./lants-device";
+export { LifxLanDevice };
 import * as LifxLanColor from './lants-color';
 import { LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb } from "./lants-color";
-export { LifxLanDevice };
 export { LifxLanColor, LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb };
 export declare const delayms: (msec?: number) => Promise<unknown>;
 /**

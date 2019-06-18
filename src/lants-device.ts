@@ -330,7 +330,7 @@ export class LifxLanDevice {
         return this._request(lifxMsgType.GetDeviceChain);
     }
 }
-export type LifxDevice = LifxLanDevice;
-export type LifxDevicesIP = { [ip: string]: LifxDevice };
+// export type LifxDevice = LifxLanDevice;
+export type LifxDevicesIP = { [ip: string]: LifxLanDevice };
 
 // export const mLifxLanDevice = LifxLanDevice;

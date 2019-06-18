@@ -1,12 +1,10 @@
 import * as lantsDevice from "./lants-device";
 import { LifxLanDevice, Integer, Duration, passure } from "./lants-device";
-// import { lifxMsgType } from "./lants-parser";
-// import { LifxLanColorAny } from "./lants-color";
-import * as LifxLanColor from './lants-color';
-import {LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB,LifxLanColorRGB,LifxLanColorXyb} from "./lants-color";
-
 export { LifxLanDevice };
-export { LifxLanColor, LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB,LifxLanColorRGB,LifxLanColorXyb };
+
+import * as LifxLanColor from './lants-color';
+import { LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb } from "./lants-color";
+export { LifxLanColor, LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb };
 
 /* ------------------------------------------------------------------
  * node-lifx-lan - lifx-lan.js
@@ -98,4 +96,4 @@ async function _discoverGetDeviceInfo(dev_list: LifxLanDevice[]) {
 export async function createDevice(params: { ip: string, mac: string }) {
 	return new LifxLanDevice({ ip: params.ip, mac: params.mac });;
 };
-export function normalizeMac(mac:string) { return mac.toUpperCase().replace(/-/g, ":")}
+export function normalizeMac(mac: string) { return mac.toUpperCase().replace(/-/g, ":") }
