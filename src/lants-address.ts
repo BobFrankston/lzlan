@@ -30,9 +30,10 @@ export function getNetworkInterfaces() {
 			if (info.family !== 'IPv4' || info.internal === true) {
 				return;
 			}
-			if (/^169\.254\./.test(info.address)) {
-				return;	// Why??
-			}
+			// if (/^169\.254\./.test(info.address)) {
+			// 	// return;	// Why??
+			// 	console.log(`Debug ${info.address}`);
+			// }
 			(<any>info)['broadcast'] = _getBroadcastAddress(info);
 			list.push(info);
 		})

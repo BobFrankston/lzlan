@@ -28,7 +28,7 @@ class laux {
 }
 ;
 // let devs: lz.LifxLanDevice[] = null;
-let devsByip = {};
+let devsByMAC = {};
 let devsByName = {};
 let ubntInfo = [];
 function getUBNT() {
@@ -44,8 +44,14 @@ getUBNT();
 function addDevs(devs) {
     msg(`Adding up to ${devs.length}`);
     devs.forEach(dv => {
-        if (devsByip[dv.ip])
-            return; // Already have it so don't worry
+        const dip = devsByMAC[dv.mac];
+        if (dip) {
+            if (dip.ip == dv.ip)
+                return; // Already have it so don't worry
+            console.log(`${dip.mac} IP changed form ${dip.ip} to ${dv.ip}`);
+        }
+        else
+            console.log(`${dv.mac} Found ${dv.ip.padEnd(16)} ${dv.deviceInfo ? dv.deviceInfo.label : "No info"}`);
         if (!dv.deviceInfo)
             return; // NO name
         if (!dv.deviceInfo.label) {
@@ -58,18 +64,35 @@ function addDevs(devs) {
                 console.log(`Found ${dv.ip} but not it's label (${dev.Name})`);
                 return;
             }
-            console.log(`Found ${dv.ip} but no properties`);
+            console.log(`Found ${dv.mac} ${dv.ip} but no properties`);
             return;
         }
         const name = dv.deviceInfo.label.split(' ')[0].toLowerCase();
         devsByName[name] = dv;
-        devsByip[dv.ip] = dv;
+        devsByMAC[dv.mac] = dv;
     });
     let count = 0;
     // devsByip.forEach(dv => count++);
     for (const dv in devsByName)
         count++;
+    fs.writeFileSync(path.join(__dirname, "lifx.json"), JSON.stringify(devsByMAC, null, 4), "utf8");
     msg(`Have ${count} devices`);
+}
+let discovering = false;
+async function discoverer() {
+    if (discovering)
+        return; // Prevent tripping over oruselves
+    try {
+        console.log("Discovering");
+        discovering = true;
+        addDevs(await Lifx.discover());
+    }
+    catch (e) {
+        console.error(`Discoverer ${e.message}`);
+    }
+    finally {
+        discovering = false;
+    }
 }
 async function GetDev(di, comment) {
     if (util_1.isUndefined(di))
@@ -196,7 +219,7 @@ async function Leveler(dev) {
 async function candy(di, comment) {
     try {
         let dev = await GetDev(di, "Candy");
-        let name = dev.deviceInfo ? dev.deviceInfo.label : "Whatever";
+        var name = dev.deviceInfo ? dev.deviceInfo.label : "Whatever";
         const tb = await GetDev(name, "Candy");
         if (!tb) {
             msg(`Didn't find ${name}`);
@@ -263,14 +286,16 @@ async function candy(di, comment) {
 }
 async function tests() {
     try {
+        discoverer();
+        setInterval(discoverer, 30 * 1000);
         // let ucount = 0;
         // lz.Lifx.AddUDPHandler((a, p) => {
         //     if (++ucount > 1) return;
         //     msg(`#${ucount} [${a.address}:${a.port}] ${JSON.stringify(p.payload)}`);
         // })
-        let testBeam = devices.devices["testbeam"];
-        candy(testBeam);
-        TryDev(testBeam, "TryDev");
+        // let testBeam = devices.devices["testbeam"];
+        // candy(testBeam);
+        // TryDev(testBeam, "TryDev");
         //TryDev(devices.devices["officeclosetlamp"]);
         // TryDev(devices.devices["tiles"]);
         // Leveler(await GetDev(devices.devices["OfficeTrack1"]));

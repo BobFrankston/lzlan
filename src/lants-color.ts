@@ -2,6 +2,12 @@ import { isUndefined } from "util";
 import { LifxLanComposer } from "./lants-composer";
 import { Brightness0To1 } from "./lants-device"
 
+// Consider https://github.com/Qix-/color-convert
+// https://www.npmjs.com/package/color-convert
+// https://www.npmjs.com/package/color-temperature
+// https://www.npmjs.com/package/color-temp
+
+
 /* ------------------------------------------------------------------
 * node-lifx-lan - lifx-lan-color.js
 *

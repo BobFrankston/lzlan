@@ -223,7 +223,7 @@ export class LifxLanDevice {
             delete info.error;
         }
         catch (e) {
-            console.error(`DeviceInfo(${info.label}) ${e}`);
+            console.error(`DeviceInfo(${this.ip.padEnd(15)} ${this.mac} ${info.label ? info.label : ""}) ${e}`);
             info.error = e.message;
         }
         this.deviceInfo = info;
