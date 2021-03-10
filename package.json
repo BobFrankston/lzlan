@@ -2,11 +2,10 @@
   "name": "@bobfrankston/lzlan",
   "version": "2.0.5",
   "description": "LIFX Lan Support for LIFX",
-  "main": "lib/lants.js",
-  "types": "lib/lants.d.ts",
+  "main": "lants.js",
+  "types": "lants.d.ts",
   "scripts": {
-    "build": "tsc",
-    "test": "node tests/test1.js"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -32,6 +31,5 @@
     "typescript": "^3.5.2"
   },
   "files": [
-    "lib/**/*"
   ]
 }
