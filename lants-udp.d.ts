@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { lifxMsgType, LifxLanHeader } from "./lants-parser";
 /**
  * Handle incoming message that is not otherwise handled

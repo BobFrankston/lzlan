@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.mParser = exports.LifxLanHeader = exports.LifxTile = exports.lifxMsgType = void 0;
 const products_1 = require("./products");
 /* ------------------------------------------------------------------
 * node-lifx-lan - lifx-lan-parser.js

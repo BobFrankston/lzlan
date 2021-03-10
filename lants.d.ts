@@ -4,7 +4,7 @@ export { LifxLanDevice };
 import * as LifxLanColor from './lants-color';
 import { LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb } from "./lants-color";
 export { LifxLanColor, LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb };
-export declare const delayms: (msec?: number) => Promise<{}>;
+export declare const delayms: (msec?: number) => Promise<unknown>;
 /**
  * Discover current devices.
  * Note that this is not reliable

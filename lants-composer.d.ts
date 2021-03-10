@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { lifxMsgType } from './lants-parser';
 import { Integer } from './lants-device';
 export interface ComposerParms {

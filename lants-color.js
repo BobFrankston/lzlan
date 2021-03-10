@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.anyToHsb = exports.mergeToHsb = exports.xybToHsb = exports.hsbToXyb = exports.xybToRgb = exports.rgbToXyb = exports.hsbToRgb = exports.rgbToHsb = exports.cssToHsb = void 0;
 const util_1 = require("util");
 // Consider https://github.com/Qix-/color-convert
 // https://www.npmjs.com/package/color-convert

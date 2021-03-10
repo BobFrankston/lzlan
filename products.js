@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.lifxProducts = void 0;
 exports.lifxProducts = [
     {
         "vid": 1,

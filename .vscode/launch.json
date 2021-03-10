@@ -5,6 +5,8 @@
 
     // This is a library - use the test app
 
+    // This can't work
+    
     "version": "0.2.1",
     "configurations": [
         {

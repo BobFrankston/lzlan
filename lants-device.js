@@ -1,13 +1,26 @@
 "use strict";
 // ToDO Make deep copy of params
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.LifxLanDevice = exports.LifxApply = exports.LifxWaveForm = exports.passure = void 0;
 const lants_parser_1 = require("./lants-parser");
 const lants_udp_1 = require("./lants-udp");
 const LifxLanColor = __importStar(require("./lants-color"));
@@ -24,7 +37,7 @@ const lants_1 = require("./lants");
 // Return a safe copy of the parametrs
 function passure(params, defaults) {
     params = params || {};
-    return defaults ? Object.assign({}, defaults, params) : params;
+    return defaults ? { ...defaults, ...params } : params;
 }
 exports.passure = passure;
 var LifxWaveForm;
@@ -134,7 +147,7 @@ class LifxLanDevice {
         let info = {};
         try {
             info.label = (await this.deviceGetLabel()).label;
-            info = Object.assign({}, info, await this.deviceGetVersion());
+            info = { ...info, ...await this.deviceGetVersion() };
             info.location = await this.deviceGetLocation();
             info.group = await this.deviceGetGroup();
             info.multizone = await this._getDeviceMultiZone(info); // need to figure this one out
@@ -147,7 +160,7 @@ class LifxLanDevice {
         }
         this.deviceInfo = info;
         // info = JSON.parse(JSON.stringify(info));    // This was in the original code... why?
-        return Object.assign({}, info); // Return a copy
+        return { ...info }; // Return a copy
     }
     ;
     async _getDeviceMultiZone(info) {
@@ -159,7 +172,7 @@ class LifxLanDevice {
     async getLightState() {
         const info = await this.getDeviceInfo();
         let state = {};
-        state = Object.assign({}, state, await this.lightGet());
+        state = { ...state, ...await this.lightGet() };
         state.infrared = await this._getLightInfraredState(info);
         state.multizone = await this.getLightMultiZoneState(info);
         return state;
