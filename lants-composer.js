@@ -291,7 +291,8 @@ class LifxLanComposer {
             color['kelvin'] = kelvin;
         }
         else {
-            throw new Error('The `color.kelvin` is required.');
+            // 2021.03.09 removed kelvin check
+            // throw new Error('The `color.kelvin` is required.');
         }
         // return { color: color };
         return color;

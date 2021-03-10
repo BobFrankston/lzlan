@@ -271,12 +271,9 @@ function rgbToHsb(p) {
         }
     }
     return { hue: hue, saturation: sat, brightness: bri };
-    // hsb: {
     //  hue: hue,
     //  saturation: sat,
     //  brightness: bri
-    // }
-    // };
 }
 exports.rgbToHsb = rgbToHsb;
 ;

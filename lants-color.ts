@@ -328,12 +328,10 @@ export function rgbToHsb(p: LifxLanColorRGB): LifxLanColorHSB {
         }
     }
     return { hue: hue, saturation: sat, brightness: bri };
-    // hsb: {
     //  hue: hue,
     //  saturation: sat,
     //  brightness: bri
-    // }
-    // };
+
 };
 
 /* ------------------------------------------------------------------
