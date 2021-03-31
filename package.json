@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/BobFrankston/lzlan#readme",
   "dependencies": {
-    "@types/node": "^10.17.55",
-    "node": "^10.16.0"
+    "@types/node": "^14.14.37",
+    "node": "^15.12.0"
   }
 }
