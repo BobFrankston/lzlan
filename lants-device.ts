@@ -1,11 +1,11 @@
 // ToDO Make deep copy of params
 
-import { lifxMsgType, LifxTile } from "./lants-parser";
-import { LifxLanUdp, udpParsed } from "./lants-udp";
-import { LifxLanColorAny, LifxLanColorHSB, LifxLanColorCSS } from "./lants-color";
-import * as LifxLanColor from './lants-color';
-import { isUndefined } from "util";
-import { normalizeMac } from "./lants";
+import { lifxMsgType, LifxTile } from "./lants-parser.js";
+import { LifxLanUdp, udpParsed } from "./lants-udp.js";
+import { LifxLanColorAny, LifxLanColorHSB, LifxLanColorCSS } from "./lants-color.js";
+import * as LifxLanColor from './lants-color.js';
+import { normalizeMac } from "./lants.js";
+import { promises } from "node:stream";
 
 export type Integer = number;        // Should rename to named types at some point
 export type Integer255 = number;     // Integer limited to 244
@@ -41,6 +41,56 @@ export type HSBDuration = {
     color?: LifxLanColorHSB,
     duration?: Duration
 };      // Duration in milliseconds
+
+export enum LifxServices {
+    UDP = 1,
+    RESERVED1 = 2,
+    RESERVED2 = 3,
+    RESERVED3 = 4,
+    RESERVED4 = 5
+}
+
+export enum LifxDirection {
+    RIGHT = 0,
+    LEFT = 1
+}
+
+export enum LifxLightLastHevCycleResult {
+    SUCCESS = 0,
+    BUSY = 1,
+    INTERRUPTED_BY_RESET = 2,
+    INTERRUPTED_BY_HOMEKIT = 3,
+    INTERRUPTED_BY_LAN = 4,
+    INTERRUPTED_BY_CLOUD = 5,
+    NONE = 255
+}
+
+export enum LifxMultiZoneApplicationRequest {
+    NO_APPLY = 0,
+    APPLY = 1,
+    APPLY_ONLY = 2
+}
+
+export enum LifxMultiZoneEffectType {
+    OFF = 0,
+    MOVE = 1,
+    RESERVED1 = 2,
+    RESERVED2 = 3
+}
+
+export enum LifxMultiZoneExtendedApplicationRequest {
+    NO_APPLY = 0,
+    APPLY = 1,
+    APPLY_ONLY = 2
+}
+
+export enum LifxTileEffectType {
+    OFF = 0,
+    RESERVED1 = 1,
+    MORPH = 2,
+    FLAME = 3,
+    RESERVED2 = 4
+}
 
 export enum LifxWaveForm {
     SAW = 0,
@@ -81,27 +131,34 @@ export interface LifxDeviceInfo {
     productId: number,
     productName: string,
     hwVersion: number,
+    signal: Float,
+    rssi: number;
     firmwareVersion: number;
     WiFiVersion: number;
-    features: {
-        [key: string]: boolean,
-        color: boolean,
-        infrared: boolean,
-        multizone: boolean,
-        chain: boolean
-    },
-    location: {
-        guid: string,
-        label: string,
-        updated: Date
-    },
-    group: {
-        guid: string,
-        label: string,
-        updated: Date,
-    },
+    features: LifxFeatureInfo;
+    location: LifxLocationInfo;
+    group: LifxGroupInfo,
     multizone: { count: number } // LifxMultiZone
     error: string;                // Report
+}
+
+/**
+ * https://lan.developer.lifx.com/docs/information-messages
+ */
+
+export interface LifxLabel {
+    label: string
+}
+
+export interface LifxHostInfo {
+    signal: Float;
+    tx: Integer;
+    rx: Integer;
+}
+
+export interface LifxHostFirmware {
+    build: Date,  // Timestamp
+    version: number;
 }
 
 export interface LifxVersionInfo {
@@ -111,6 +168,26 @@ export interface LifxVersionInfo {
     productName: string,
     hwVersion: number,
     features: { color: boolean, infrared: boolean, multizone: boolean }
+}
+
+export interface LifxGroupInfo {
+    guid: string,
+    label: string,
+    updated: Date
+}
+
+export interface LifxFeatureInfo {
+    [key: string]: boolean,
+    color: boolean,
+    infrared: boolean,
+    multizone: boolean,
+    chain: boolean
+}
+
+export interface LifxLocationInfo {
+    guid: string,
+    label: string,
+    updated: Date
 }
 
 interface LifxGuidLabel {
@@ -172,7 +249,7 @@ export class LifxLanDevice {
         await this._turnOnSetColor(params);
         await this._wait();
         const p: any = { level: 1 };
-        if (!isUndefined(params.duration)) p.duration = params.duration;    // Remove? We forced it to zero
+        if (params.duration !== undefined) p.duration = params.duration;    // Remove? We forced it to zero
         await this.lightSetPower(p);
     };
 
@@ -191,7 +268,7 @@ export class LifxLanDevice {
         if (!params.color) return;  // Nothing to do
         const res = await this.lightGet();    // For power
         const req: any = { color: LifxLanColor.mergeToHsb(params.color, res.color) };
-        if (res.power && !isUndefined(params.duration)) req.duration = params.duration
+        if (res.power && params.duration !== undefined) req.duration = params.duration
         return this.lightSetColor(req);
     };
 
@@ -207,6 +284,7 @@ export class LifxLanDevice {
         await this.lightSetPower(p);
     }
 
+    static usenew = true;
     /**
      * Update device info for this device by calling querying the bulb
      * Normally done once on creating the device
@@ -214,12 +292,40 @@ export class LifxLanDevice {
     async getDeviceInfo() {
         let info: LifxDeviceInfo = <any>{};
         try {
-            info.label = (await this.deviceGetLabel()).label;
-            info = <any>{ ...info, ...await this.deviceGetVersion() };
-            info.location = await this.deviceGetLocation();
-            info.group = await this.deviceGetGroup();
-            info.multizone = await this._getDeviceMultiZone(info); // need to figure this one out
-            info.firmwareVersion = (await this.deviceGetHostFirmware()).version;
+            if (LifxLanDevice.usenew) {
+                const me = this;
+                // console.log(`Get ${me.ip}`);
+                async function thenfo<T>(pf: () => Promise<T>, assign: (result: T) => void): Promise<void> {
+                    const result = await pf.bind(me)();
+                    // console.log(`Result ${me?.ip} ${JSON.stringify(result)}`)
+                    assign(result);
+                }
+                // await thenfo(this.deviceGetLabel, (r) => info.label = r.label);
+                // debugger;
+                await Promise.allSettled([
+                    thenfo(me.deviceGetLabel, (r) => info.label = r.label),
+                    thenfo(me.deviceGetVersion, (r) => info = { ...info, ...r } as any),
+                    thenfo(me.deviceGetLocation, (r) => info.location = r),
+                    thenfo(me.deviceGetGroup, (r) => info.group = r),
+                    thenfo(() => this._getDeviceMultiZone(info), (r) => info.multizone = r),
+                    thenfo(me.deviceGetHostFirmware, (r) => info.firmwareVersion = r.version),
+                    thenfo(me.deviceGetWifiInfo, (r) => {
+                        info.signal = r.signal;
+                        info.rssi = Math.round(10 * Math.log10(info.signal) + 0.5)
+                    })
+                ]);
+                // console.log(`Got ${me.ip} ${JSON.stringify(info)}`);
+            }
+            else {
+                info.label = (await this.deviceGetLabel()).label;
+                info = <any>{ ...info, ...await this.deviceGetVersion() };
+                info.location = await this.deviceGetLocation();
+                info.group = await this.deviceGetGroup();
+                info.multizone = await this._getDeviceMultiZone(info); // need to figure this one out
+                info.firmwareVersion = (await this.deviceGetHostFirmware()).version;
+                info.signal = (await this.deviceGetWifiInfo()).signal;
+                info.rssi = Math.round(10 * Math.log10(info.signal) + 0.5)
+            }
             delete info.error;
         }
         catch (e) {
@@ -264,13 +370,13 @@ export class LifxLanDevice {
     * ================================================================ */
 
     deviceGetService(): Promise<{ service: number }> { return this._request(lifxMsgType.GetService); };
-    deviceGetHostInfo(): Promise<{ signal: Float; tx: Integer; rx: Integer }> { return this._request(lifxMsgType.GetHostInfo); };
-    deviceGetHostFirmware(): Promise<{ build: Date, version: number }> { return this._request(lifxMsgType.GetHostFirmware); };
-    deviceGetWifiInfo(): Promise<{ signal: Float; tx: Integer; rx: Integer }> { return this._request(lifxMsgType.GetWifiInfo) };
+    deviceGetHostInfo(): Promise<LifxHostInfo> { return this._request(lifxMsgType.GetHostInfo); };
+    deviceGetHostFirmware(): Promise<LifxHostFirmware> { return this._request(lifxMsgType.GetHostFirmware); };
+    deviceGetWifiInfo(): Promise<LifxHostInfo> { return this._request(lifxMsgType.GetWifiInfo) };
     deviceGetWifiFirmware(): Promise<{ build: Date; version: Integer }> { return this._request(lifxMsgType.GetWifiFirmware); };
     deviceGetPower(): Promise<{ level: Integer }> { return this._request(lifxMsgType.GetPower); };
     deviceSetPower(params: { level: 0 | 1 }) { return this._request(lifxMsgType.SetPower, params); };
-    deviceGetLabel(): Promise<{ label: string }> { return this._request(lifxMsgType.GetLabel); };
+    deviceGetLabel(): Promise<LifxLabel> { return this._request(lifxMsgType.GetLabel); };
     deviceGetVersion(): Promise<LifxVersionInfo> { return this._request(lifxMsgType.GetVersion); }
     async deviceSetLabel(params: { label: String32 }) {
         const data = await this._request(lifxMsgType.SetLabel, params);
@@ -278,13 +384,13 @@ export class LifxLanDevice {
         return data;
     };
     async deviceGetInfo(): Promise<{ time: Date, uptime: number; downtime: number }> { return await this._request(lifxMsgType.GetInfo); };
-    deviceGetLocation(): Promise<{ guid: string, label: string, updated: Date }> { return this._request(lifxMsgType.GetLocation) };
+    deviceGetLocation(): Promise<LifxLocationInfo> { return this._request(lifxMsgType.GetLocation) };
     async deviceSetLocation(params: { location?: HexString16, label: string, updated?: Date }) {
         const data = this._request(lifxMsgType.SetLocation /*49*/, params);
         await this.getDeviceInfo();
         return data;
     };
-    deviceGetGroup(): Promise<{ guid: string, label: string, updated: Date }> { return this._request(lifxMsgType.GetGroup); };
+    deviceGetGroup(): Promise<LifxGroupInfo> { return this._request(lifxMsgType.GetGroup); };
     async deviceSetGroup(params: { group?: string, label: string, updated?: Date }) {
         const data = await this._request(lifxMsgType.SetGroup, params);
         await this.getDeviceInfo();   // Update

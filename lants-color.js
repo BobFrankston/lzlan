@@ -1,7 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.anyToHsb = exports.mergeToHsb = exports.xybToHsb = exports.hsbToXyb = exports.xybToRgb = exports.rgbToXyb = exports.hsbToRgb = exports.rgbToHsb = exports.cssToHsb = void 0;
-const util_1 = require("util");
 // Consider https://github.com/Qix-/color-convert
 // https://www.npmjs.com/package/color-convert
 // https://www.npmjs.com/package/color-temperature
@@ -171,7 +167,7 @@ const _CSS_COLOR_KEYWORDS = {
 *   - brightness | Float | Optional | Brightness. 0.0 - 1.0
 * ---------------------------------------------------------------- */
 // export class _LifxLanColor {
-function cssToHsb(p) {
+export function cssToHsb(p) {
     // Check the parameters
     if (typeof p.css != "string")
         throw new Error('The `css` is required.');
@@ -212,7 +208,6 @@ function cssToHsb(p) {
     }
     return rgbToHsb(rgb);
 }
-exports.cssToHsb = cssToHsb;
 ;
 /* ------------------------------------------------------------------
 * Method: rgbToHsb(params)
@@ -222,11 +217,11 @@ exports.cssToHsb = cssToHsb;
 *   - blue       | Float | Required | B component. 0.0 - 1.0.
 *   - brightness | Float | Optional | Brightness. 0.0 - 1.0
 * ---------------------------------------------------------------- */
-function rgbToHsb(p) {
+export function rgbToHsb(p) {
     // Check the parameters
     let error = null;
     ['red', 'green', 'blue'].forEach((c) => {
-        if (util_1.isUndefined(p[c]))
+        if (p[c] === undefined)
             p[c] = 0;
         let v = p[c];
         if (typeof (v) !== 'number' || v < 0 || v > 1) {
@@ -275,7 +270,6 @@ function rgbToHsb(p) {
     //  saturation: sat,
     //  brightness: bri
 }
-exports.rgbToHsb = rgbToHsb;
 ;
 /* ------------------------------------------------------------------
 * Method: hsbToRgb(params)
@@ -284,7 +278,7 @@ exports.rgbToHsb = rgbToHsb;
 *   - saturation | Float | Required | Saturation. 0.0 - 1.0.
 *   - brightness | Float | Required | Brightness. 0.0 - 1.0.
 * ---------------------------------------------------------------- */
-function hsbToRgb(p) {
+export function hsbToRgb(p) {
     // Check the parameters
     ['hue', 'saturation', 'brightness'].forEach((c) => {
         if (c in p) {
@@ -342,7 +336,6 @@ function hsbToRgb(p) {
         blue: b / 255
     };
 }
-exports.hsbToRgb = hsbToRgb;
 ;
 /* ------------------------------------------------------------------
 * Method: rgbToXyb(params)
@@ -353,7 +346,7 @@ exports.hsbToRgb = hsbToRgb;
 *
 * https://www.developers.meethue.com/documentation/color-conversions-rgb-xy
 * ---------------------------------------------------------------- */
-function rgbToXyb(p) {
+export function rgbToXyb(p) {
     // Check the parameters
     let error = null;
     ['red', 'green', 'blue'].forEach((c) => {
@@ -388,7 +381,6 @@ function rgbToXyb(p) {
         brightness: bri
     };
 }
-exports.rgbToXyb = rgbToXyb;
 ;
 /* ------------------------------------------------------------------
 * Method: xybToRgb(params)
@@ -399,7 +391,7 @@ exports.rgbToXyb = rgbToXyb;
 *
 * https://www.developers.meethue.com/documentation/color-conversions-rgb-xy
 * ---------------------------------------------------------------- */
-function xybToRgb(p) {
+export function xybToRgb(p) {
     // Check the parameters
     let x = p['x'];
     let y = p['y'];
@@ -431,7 +423,6 @@ function xybToRgb(p) {
     });
     return rgb;
 }
-exports.xybToRgb = xybToRgb;
 ;
 /* ------------------------------------------------------------------
 * Method: hsbToXyb(params)
@@ -440,10 +431,9 @@ exports.xybToRgb = xybToRgb;
 *   - saturation | Float | Required | Saturation. 0.0 - 1.0.
 *   - brightness | Float | Required | Brightness. 0.0 - 1.0.
 * ---------------------------------------------------------------- */
-function hsbToXyb(p) {
+export function hsbToXyb(p) {
     return rgbToXyb(hsbToRgb(p));
 }
-exports.hsbToXyb = hsbToXyb;
 ;
 /* ------------------------------------------------------------------
 * Method: xybToHsb(params)
@@ -452,12 +442,11 @@ exports.hsbToXyb = hsbToXyb;
 *   - y          | Float | Required | y value. 0.0 - 1.0.
 *   - brightness | Float | Required | Brightness. 0.0 - 1.0.
 * ---------------------------------------------------------------- */
-function xybToHsb(p) {
+export function xybToHsb(p) {
     return rgbToHsb(xybToRgb(p));
 }
-exports.xybToHsb = xybToHsb;
 // Second cphsb is for mergin with existing settings
-function mergeToHsb(c, color) {
+export function mergeToHsb(c, color) {
     const copyhsb = (hsb) => {
         color.hue = hsb.hue;
         color.saturation = hsb.saturation;
@@ -503,8 +492,7 @@ function mergeToHsb(c, color) {
         color.kelvin = c.kelvin;
     return color;
 }
-exports.mergeToHsb = mergeToHsb;
-function anyToHsb(c) {
+export function anyToHsb(c) {
     let color;
     if ('hue' in c && 'saturation' in c && 'brightness' in c) {
         const ch = c;
@@ -531,7 +519,4 @@ function anyToHsb(c) {
         color.kelvin = c.kelvin;
     return color;
 }
-exports.anyToHsb = anyToHsb;
-// export const LifxLanColorx = new LifxLanColors();
-// export const xLifxLanColor = new _LifxLanColor();
 //# sourceMappingURL=lants-color.js.map

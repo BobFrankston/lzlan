@@ -1,8 +1,8 @@
 // Note -- bug fixed for CIDR       "cidr":"172.29.239.177/28",      "broadcast":"172.29.239.191"
 
-import { lifxMsgType, mParser, LifxLanHeader } from "./lants-parser";
-import { delayms } from "./lants";
-import {getNetworkInterfaces} from "./lants-address";
+import { lifxMsgType, mParser, LifxLanHeader } from "./lants-parser.js";
+import { delayms } from "./lants.js";
+import {getNetworkInterfaces} from "./lants-address.js";
 
 /* ------------------------------------------------------------------
 * node-lifx-lan - lifx-lan-udp.js
@@ -14,10 +14,10 @@ import {getNetworkInterfaces} from "./lants-address";
 // 'use strict';
 import * as os from 'os';
 import * as mDgram from 'dgram';
-import * as Composer from './lants-composer';
+import * as Composer from './lants-composer.js';
 const mComposer = new Composer.LifxLanComposer();
-import * as la from './lants-address';
-import { LifxLanDevice, passure } from "./lants-device";
+import * as la from './lants-address.js';
+import { LifxLanDevice, passure } from "./lants-device.js";
 // import { promises } from "fs";
 
 /**
@@ -112,7 +112,7 @@ export class LifxLanUdp {
 				reject(error);
 			});
 			this._udp.once('listening', () => {
-				resolve();
+				resolve(null);
 			});
 			this._udp.on('message', (buf: Buffer, rinfo: udpRinfo) => { this._receivePacket(buf, rinfo); });
 			// this._udp.bind({ port: this._UDP_PORT });
@@ -189,7 +189,7 @@ export class LifxLanUdp {
 					reject(error);
 				} else {
 					if (!p.ack_required && !p.res_required) {
-						resolve();
+						resolve(null);
 					}
 				}
 			});

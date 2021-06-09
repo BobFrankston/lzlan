@@ -1,8 +1,8 @@
-import * as lantsDevice from "./lants-device";
-import { LifxLanDevice, Integer } from "./lants-device";
+import * as lantsDevice from "./lants-device.js";
+import { LifxLanDevice, Integer } from "./lants-device.js";
 export { LifxLanDevice };
-import * as LifxLanColor from './lants-color';
-import { LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb } from "./lants-color";
+import * as LifxLanColor from './lants-color.js';
+import { LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb } from "./lants-color.js";
 export { LifxLanColor, LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb };
 export declare const delayms: (msec?: number) => Promise<unknown>;
 /**

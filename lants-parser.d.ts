@@ -1,6 +1,6 @@
 /// <reference types="node" />
-import { udpParsed } from "./lants-udp";
-import { Float, Integer } from "./lants-device";
+import { udpParsed } from "./lants-udp.js";
+import { Float, Integer } from "./lants-device.js";
 export declare enum lifxMsgType {
     GetService = 2,
     StateService = 3,

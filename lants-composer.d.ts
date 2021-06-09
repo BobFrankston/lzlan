@@ -1,6 +1,6 @@
 /// <reference types="node" />
-import { lifxMsgType } from './lants-parser';
-import { Integer } from './lants-device';
+import { lifxMsgType } from './lants-parser.js';
+import { Integer } from './lants-device.js';
 export interface ComposerParms {
     type: lifxMsgType;
     sequence: Integer;

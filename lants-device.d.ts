@@ -1,5 +1,5 @@
-import { LifxTile } from "./lants-parser";
-import { LifxLanColorAny, LifxLanColorHSB } from "./lants-color";
+import { LifxTile } from "./lants-parser.js";
+import { LifxLanColorAny, LifxLanColorHSB } from "./lants-color.js";
 export declare type Integer = number;
 export declare type Integer255 = number;
 export declare type Milliseconds = number;
@@ -17,6 +17,49 @@ export declare type HSBDuration = {
     color?: LifxLanColorHSB;
     duration?: Duration;
 };
+export declare enum LifxServices {
+    UDP = 1,
+    RESERVED1 = 2,
+    RESERVED2 = 3,
+    RESERVED3 = 4,
+    RESERVED4 = 5
+}
+export declare enum LifxDirection {
+    RIGHT = 0,
+    LEFT = 1
+}
+export declare enum LifxLightLastHevCycleResult {
+    SUCCESS = 0,
+    BUSY = 1,
+    INTERRUPTED_BY_RESET = 2,
+    INTERRUPTED_BY_HOMEKIT = 3,
+    INTERRUPTED_BY_LAN = 4,
+    INTERRUPTED_BY_CLOUD = 5,
+    NONE = 255
+}
+export declare enum LifxMultiZoneApplicationRequest {
+    NO_APPLY = 0,
+    APPLY = 1,
+    APPLY_ONLY = 2
+}
+export declare enum LifxMultiZoneEffectType {
+    OFF = 0,
+    MOVE = 1,
+    RESERVED1 = 2,
+    RESERVED2 = 3
+}
+export declare enum LifxMultiZoneExtendedApplicationRequest {
+    NO_APPLY = 0,
+    APPLY = 1,
+    APPLY_ONLY = 2
+}
+export declare enum LifxTileEffectType {
+    OFF = 0,
+    RESERVED1 = 1,
+    MORPH = 2,
+    FLAME = 3,
+    RESERVED2 = 4
+}
 export declare enum LifxWaveForm {
     SAW = 0,
     SINE = 1,
@@ -53,29 +96,32 @@ export interface LifxDeviceInfo {
     productId: number;
     productName: string;
     hwVersion: number;
+    signal: Float;
+    rssi: number;
     firmwareVersion: number;
     WiFiVersion: number;
-    features: {
-        [key: string]: boolean;
-        color: boolean;
-        infrared: boolean;
-        multizone: boolean;
-        chain: boolean;
-    };
-    location: {
-        guid: string;
-        label: string;
-        updated: Date;
-    };
-    group: {
-        guid: string;
-        label: string;
-        updated: Date;
-    };
+    features: LifxFeatureInfo;
+    location: LifxLocationInfo;
+    group: LifxGroupInfo;
     multizone: {
         count: number;
     };
     error: string;
+}
+/**
+ * https://lan.developer.lifx.com/docs/information-messages
+ */
+export interface LifxLabel {
+    label: string;
+}
+export interface LifxHostInfo {
+    signal: Float;
+    tx: Integer;
+    rx: Integer;
+}
+export interface LifxHostFirmware {
+    build: Date;
+    version: number;
 }
 export interface LifxVersionInfo {
     vendorId: number;
@@ -88,6 +134,23 @@ export interface LifxVersionInfo {
         infrared: boolean;
         multizone: boolean;
     };
+}
+export interface LifxGroupInfo {
+    guid: string;
+    label: string;
+    updated: Date;
+}
+export interface LifxFeatureInfo {
+    [key: string]: boolean;
+    color: boolean;
+    infrared: boolean;
+    multizone: boolean;
+    chain: boolean;
+}
+export interface LifxLocationInfo {
+    guid: string;
+    label: string;
+    updated: Date;
 }
 export declare class LifxLanDevice {
     /**
@@ -121,6 +184,7 @@ export declare class LifxLanDevice {
     turnOff(params?: {
         duration?: Duration;
     }): Promise<void>;
+    static usenew: boolean;
     /**
      * Update device info for this device by calling querying the bulb
      * Normally done once on creating the device
@@ -132,25 +196,13 @@ export declare class LifxLanDevice {
         productId: number;
         productName: string;
         hwVersion: number;
+        signal: number;
+        rssi: number;
         firmwareVersion: number;
         WiFiVersion: number;
-        features: {
-            [key: string]: boolean;
-            color: boolean;
-            infrared: boolean;
-            multizone: boolean;
-            chain: boolean;
-        };
-        location: {
-            guid: string;
-            label: string;
-            updated: Date;
-        };
-        group: {
-            guid: string;
-            label: string;
-            updated: Date;
-        };
+        features: LifxFeatureInfo;
+        location: LifxLocationInfo;
+        group: LifxGroupInfo;
         multizone: {
             count: number;
         };
@@ -166,20 +218,9 @@ export declare class LifxLanDevice {
     deviceGetService(): Promise<{
         service: number;
     }>;
-    deviceGetHostInfo(): Promise<{
-        signal: Float;
-        tx: Integer;
-        rx: Integer;
-    }>;
-    deviceGetHostFirmware(): Promise<{
-        build: Date;
-        version: number;
-    }>;
-    deviceGetWifiInfo(): Promise<{
-        signal: Float;
-        tx: Integer;
-        rx: Integer;
-    }>;
+    deviceGetHostInfo(): Promise<LifxHostInfo>;
+    deviceGetHostFirmware(): Promise<LifxHostFirmware>;
+    deviceGetWifiInfo(): Promise<LifxHostInfo>;
     deviceGetWifiFirmware(): Promise<{
         build: Date;
         version: Integer;
@@ -190,9 +231,7 @@ export declare class LifxLanDevice {
     deviceSetPower(params: {
         level: 0 | 1;
     }): Promise<any>;
-    deviceGetLabel(): Promise<{
-        label: string;
-    }>;
+    deviceGetLabel(): Promise<LifxLabel>;
     deviceGetVersion(): Promise<LifxVersionInfo>;
     deviceSetLabel(params: {
         label: String32;
@@ -202,21 +241,13 @@ export declare class LifxLanDevice {
         uptime: number;
         downtime: number;
     }>;
-    deviceGetLocation(): Promise<{
-        guid: string;
-        label: string;
-        updated: Date;
-    }>;
+    deviceGetLocation(): Promise<LifxLocationInfo>;
     deviceSetLocation(params: {
         location?: HexString16;
         label: string;
         updated?: Date;
     }): Promise<any>;
-    deviceGetGroup(): Promise<{
-        guid: string;
-        label: string;
-        updated: Date;
-    }>;
+    deviceGetGroup(): Promise<LifxGroupInfo>;
     deviceSetGroup(params: {
         group?: string;
         label: string;

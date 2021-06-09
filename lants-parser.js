@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.mParser = exports.LifxLanHeader = exports.LifxTile = exports.lifxMsgType = void 0;
-const products_1 = require("./products");
+import { lifxProducts } from "./products.js";
 /* ------------------------------------------------------------------
 * node-lifx-lan - lifx-lan-parser.js
 *
@@ -13,7 +10,7 @@ const products_1 = require("./products");
 /* ------------------------------------------------------------------
 * Constructor: LifxLanParser()
 * ---------------------------------------------------------------- */
-var lifxMsgType;
+export var lifxMsgType;
 (function (lifxMsgType) {
     lifxMsgType[lifxMsgType["GetService"] = 2] = "GetService";
     lifxMsgType[lifxMsgType["StateService"] = 3] = "StateService";
@@ -67,14 +64,12 @@ var lifxMsgType;
     lifxMsgType[lifxMsgType["GetTileState64"] = 707] = "GetTileState64";
     lifxMsgType[lifxMsgType["StateTileState64"] = 711] = "StateTileState64";
     lifxMsgType[lifxMsgType["SetTileState64"] = 715] = "SetTileState64";
-})(lifxMsgType = exports.lifxMsgType || (exports.lifxMsgType = {}));
-class LifxTile {
+})(lifxMsgType || (lifxMsgType = {}));
+export class LifxTile {
 }
-exports.LifxTile = LifxTile;
 // https://lan.developer.lifx.com/docs/tile-messages
-class LifxLanHeader {
+export class LifxLanHeader {
 }
-exports.LifxLanHeader = LifxLanHeader;
 const headerSize = 36;
 class LifxLanParser {
     // constructor() { super(); }
@@ -186,7 +181,7 @@ class LifxLanParser {
                     const vid = pbuf.readUInt32LE(0);
                     const pid = pbuf.readUInt32LE(4);
                     const hwv = pbuf.readUInt32LE(8);
-                    const byvendors = products_1.lifxProducts.filter(vp => vp.vid == vid);
+                    const byvendors = lifxProducts.filter(vp => vp.vid == vid);
                     if (byvendors.length != 1)
                         return null;
                     const byvendor = byvendors[0];
@@ -361,8 +356,9 @@ class LifxLanParser {
             firmware_build: buf.slice(offset + 28, offset + 28 + 8).toString('hex'),
             // Skip 8 36
             firmware_version: buf.readUInt32LE(offset + 44),
+            // 4
         };
     }
 }
-exports.mParser = new LifxLanParser();
+export const mParser = new LifxLanParser();
 //# sourceMappingURL=lants-parser.js.map

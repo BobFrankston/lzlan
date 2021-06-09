@@ -1,4 +1,4 @@
-import { Brightness0To1 } from "./lants-device";
+import { Brightness0To1 } from "./lants-device.js";
 export interface LifxLanColorHSB {
     [key: string]: number;
     hue?: number;

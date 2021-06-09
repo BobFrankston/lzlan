@@ -1,9 +1,9 @@
-import * as lantsDevice from "./lants-device";
-import { LifxLanDevice, Integer, Duration, passure } from "./lants-device";
+import * as lantsDevice from "./lants-device.js";
+import { LifxLanDevice, Integer, Duration, passure } from "./lants-device.js";
 export { LifxLanDevice };
 
-import * as LifxLanColor from './lants-color';
-import { LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb } from "./lants-color";
+import * as LifxLanColor from './lants-color.js';
+import { LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb } from "./lants-color.js";
 export { LifxLanColor, LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb };
 
 /* ------------------------------------------------------------------
@@ -15,7 +15,7 @@ export { LifxLanColor, LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLa
  * Date: 2018-08-08
  * ---------------------------------------------------------------- */
 
-import { LifxLanUdp, udpParsed } from './lants-udp';
+import { LifxLanUdp, udpParsed } from './lants-udp.js';
 // import { LifxLanColor } from "./lants-color";
 
 // export LifxLanDevice;
@@ -73,13 +73,13 @@ export async function discover(params?: { wait?: Integer }) {
 
 async function _discoverGetDeviceInfo(dev_list: LifxLanDevice[]) {
 	try {
-		await Promise.all(dev_list.map(dev => dev.getDeviceInfo()));
+		await Promise.allSettled(dev_list.map(dev => dev.getDeviceInfo()));
 	}
 	catch (e) {
 		const full = dev_list.length;
 		dev_list = dev_list.filter(dev => dev.deviceInfo);	// Keep only those that succeeded
 		const count = dev_list.reduce((prev, cur) => prev += cur.deviceInfo ? 1 : 0, 0);
-		console.error(`_discoverGetDeviceInfo Found ${count} of ${full} devices\n${e}`);
+		console.error(`_discoverGetDeviceInfo Found ${count} of ${full} devices\n$   Error: ${e.message}`);
 		throw e;
 	}
 	return [...dev_list];	// Why a copy?

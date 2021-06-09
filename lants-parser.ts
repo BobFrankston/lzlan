@@ -1,6 +1,6 @@
-import { lifxProducts } from "./products"
-import { udpParams, udpParsed } from "./lants-udp";
-import { Float, Integer } from "./lants-device";
+import { lifxProducts } from "./products.js"
+import { udpParams, udpParsed } from "./lants-udp.js";
+import { Float, Integer, LifxHostFirmware, LifxHostInfo } from "./lants-device.js";
 
 /* ------------------------------------------------------------------
 * node-lifx-lan - lifx-lan-parser.js
@@ -176,13 +176,13 @@ class LifxLanParser {
                         signal: pbuf.readFloatLE(0),
                         tx: pbuf.readUInt32LE(4),
                         rx: pbuf.readUInt32LE(8)
-                    };
+                    } as LifxHostInfo;
                 case lifxMsgType.StateHostFirmware: //15
                     if (psize != 20) return null;
                     return {
                         build: this._64BitToDate(pbuf, 0),
                         version: pbuf.readUInt32LE(16)
-                    };
+                    } as LifxHostFirmware;
                 case lifxMsgType.StateWifiInfo: //17
                     if (psize != 14) return null;
                     return {

@@ -7,12 +7,10 @@
 * ---------------------------------------------------------------- */
 
 import * as mCrypto from 'crypto';
-import { udpParams } from './lants-udp';
-import { lifxMsgType } from './lants-parser';
-import { Integer, ColorDuration, Float, Duration, lifxWaveForm, LifxWaveForm, LifxApply, Integer255, String32, HexString16 } from './lants-device';
-import { anyToHsb, LifxLanColorHSB, } from './lants-color';
-import { isUndefined } from 'util';
-import { LifxLanColorAny } from './lants';
+import { lifxMsgType } from './lants-parser.js';
+import { Integer, ColorDuration, Float, Duration, lifxWaveForm, LifxWaveForm, LifxApply, Integer255, String32, HexString16 } from './lants-device.js';
+import { anyToHsb, LifxLanColorHSB, } from './lants-color.js';
+import { LifxLanColorAny } from './lants.js';
 
 /* ------------------------------------------------------------------
 * Constructor: LifxLanParser()

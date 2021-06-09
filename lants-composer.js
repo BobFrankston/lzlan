@@ -1,4 +1,3 @@
-"use strict";
 /* ------------------------------------------------------------------
 * node-lifx-lan - lifx-lan-composer.js
 *
@@ -6,31 +5,10 @@
 * Released under the MIT license
 * Date: 2018-07-01
 * ---------------------------------------------------------------- */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.LifxLanComposer = void 0;
-const mCrypto = __importStar(require("crypto"));
-const lants_parser_1 = require("./lants-parser");
-const lants_device_1 = require("./lants-device");
-const lants_color_1 = require("./lants-color");
+import * as mCrypto from 'crypto';
+import { lifxMsgType } from './lants-parser.js';
+import { LifxApply } from './lants-device.js';
+import { anyToHsb, } from './lants-color.js';
 ;
 var bx;
 (function (bx) {
@@ -119,7 +97,7 @@ class bufx {
         this.cursor += 4;
     }
 }
-class LifxLanComposer {
+export class LifxLanComposer {
     compose(cp) {
         const type = cp.type;
         const payload = cp.payload;
@@ -163,19 +141,19 @@ class LifxLanComposer {
     ;
     _composePayload(type, payload) {
         switch (type) {
-            case lants_parser_1.lifxMsgType.SetPower: return this._composePayloadSetPower(payload);
-            case lants_parser_1.lifxMsgType.SetLabel: return this._composePayloadSetLabel(payload);
-            case lants_parser_1.lifxMsgType.SetLocation: return this._composePayloadSetLocation(payload);
-            case lants_parser_1.lifxMsgType.SetGroup: return this._composePayloadSetGroup(payload);
-            case lants_parser_1.lifxMsgType.EchoRequest: return this._composePayloadEchoRequest(payload);
-            case lants_parser_1.lifxMsgType.SetColor: return this._composePayloadSetColor(payload);
-            case lants_parser_1.lifxMsgType.SetWaveform: return this._composePayloadSetWaveForm(payload);
-            case lants_parser_1.lifxMsgType.SetLightPower: return this._composePayloadSetLightPower(payload);
-            case lants_parser_1.lifxMsgType.SetInfrared: return this._composePayloadSetInfrared(payload);
-            case lants_parser_1.lifxMsgType.SetColorZones: return this._composePayloadSetColorZones(payload);
-            case lants_parser_1.lifxMsgType.GetColorZones: return this._composePayloadGetColorZones(payload);
-            case lants_parser_1.lifxMsgType.EchoRequest: return this._composePayloadEchoRequest(payload);
-            case lants_parser_1.lifxMsgType.GetTileState64: return this._composePayLoadGetTileState64(payload);
+            case lifxMsgType.SetPower: return this._composePayloadSetPower(payload);
+            case lifxMsgType.SetLabel: return this._composePayloadSetLabel(payload);
+            case lifxMsgType.SetLocation: return this._composePayloadSetLocation(payload);
+            case lifxMsgType.SetGroup: return this._composePayloadSetGroup(payload);
+            case lifxMsgType.EchoRequest: return this._composePayloadEchoRequest(payload);
+            case lifxMsgType.SetColor: return this._composePayloadSetColor(payload);
+            case lifxMsgType.SetWaveform: return this._composePayloadSetWaveForm(payload);
+            case lifxMsgType.SetLightPower: return this._composePayloadSetLightPower(payload);
+            case lifxMsgType.SetInfrared: return this._composePayloadSetInfrared(payload);
+            case lifxMsgType.SetColorZones: return this._composePayloadSetColorZones(payload);
+            case lifxMsgType.GetColorZones: return this._composePayloadGetColorZones(payload);
+            case lifxMsgType.EchoRequest: return this._composePayloadEchoRequest(payload);
+            case lifxMsgType.GetTileState64: return this._composePayLoadGetTileState64(payload);
             default: return null;
         }
     }
@@ -256,7 +234,7 @@ class LifxLanComposer {
         // 	return hsb;
         // }
         // private _convertHSBToPacket(data: LifxLanColorHSB): LifxLanColorHSB {
-        const data = lants_color_1.anyToHsb(dataAny);
+        const data = anyToHsb(dataAny);
         const test = {
             hue: Math.round(data.hue * 0xffff),
             saturation: Math.round(data.saturation * 0xffff),
@@ -408,7 +386,7 @@ class LifxLanComposer {
             ({ start, end } = { end, start });
         const hsb = this._convertAnytoPacket(payload.color); // hack conversion!
         let duration = payload.duration || 0;
-        let apply = payload.apply || lants_device_1.LifxApply.APPLY;
+        let apply = payload.apply || LifxApply.APPLY;
         let buf = Buffer.alloc(15);
         buf.writeUInt8(start, 0);
         buf.writeUInt8(end, 1);
@@ -440,5 +418,4 @@ class LifxLanComposer {
         return buf;
     }
 }
-exports.LifxLanComposer = LifxLanComposer;
 //# sourceMappingURL=lants-composer.js.map

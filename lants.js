@@ -1,29 +1,7 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.normalizeMac = exports.createDevice = exports.discover = exports.delayms = exports.LifxLanColor = exports.LifxLanDevice = void 0;
-const lants_device_1 = require("./lants-device");
-Object.defineProperty(exports, "LifxLanDevice", { enumerable: true, get: function () { return lants_device_1.LifxLanDevice; } });
-const LifxLanColor = __importStar(require("./lants-color"));
-exports.LifxLanColor = LifxLanColor;
+import { LifxLanDevice, passure } from "./lants-device.js";
+export { LifxLanDevice };
+import * as LifxLanColor from './lants-color.js';
+export { LifxLanColor };
 /* ------------------------------------------------------------------
  * node-lifx-lan - lifx-lan.js
  *
@@ -32,21 +10,21 @@ exports.LifxLanColor = LifxLanColor;
  * Released under the MIT license
  * Date: 2018-08-08
  * ---------------------------------------------------------------- */
-const lants_udp_1 = require("./lants-udp");
+import { LifxLanUdp } from './lants-udp.js';
 // import { LifxLanColor } from "./lants-color";
 // export LifxLanDevice;
 // export const delayms = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-exports.delayms = (msec) => { return new Promise(resolve => setTimeout(resolve, msec || 50)); };
+export const delayms = (msec) => { return new Promise(resolve => setTimeout(resolve, msec || 50)); };
 /**
  * Discover current devices.
  * Note that this is not reliable
  * @param [optional]  params {wait: Millseconds}
  * @returns {LifxLanDevice[]} Table of devices
  */
-async function discover(params) {
-    params = lants_device_1.passure(params);
+export async function discover(params) {
+    params = passure(params);
     // await this.init();
-    const UDP = await lants_udp_1.LifxLanUdp.GetUDP();
+    const UDP = await LifxLanUdp.GetUDP();
     try {
         const found_list = await UDP.discover(params);
         let devices = {};
@@ -66,9 +44,10 @@ async function discover(params) {
                 device_list.push(devices[k]);
             }
             else {
-                let lifxdev = new lants_device_1.LifxLanDevice({
+                let lifxdev = new LifxLanDevice({
                     mac: mac,
                     ip: ip,
+                    // udp: mLifxUdp
                 });
                 device_list.push(lifxdev);
             }
@@ -83,17 +62,16 @@ async function discover(params) {
         UDP.destroy();
     }
 }
-exports.discover = discover;
 ;
 async function _discoverGetDeviceInfo(dev_list) {
     try {
-        await Promise.all(dev_list.map(dev => dev.getDeviceInfo()));
+        await Promise.allSettled(dev_list.map(dev => dev.getDeviceInfo()));
     }
     catch (e) {
         const full = dev_list.length;
         dev_list = dev_list.filter(dev => dev.deviceInfo); // Keep only those that succeeded
         const count = dev_list.reduce((prev, cur) => prev += cur.deviceInfo ? 1 : 0, 0);
-        console.error(`_discoverGetDeviceInfo Found ${count} of ${full} devices\n${e}`);
+        console.error(`_discoverGetDeviceInfo Found ${count} of ${full} devices\n$   Error: ${e.message}`);
         throw e;
     }
     return [...dev_list]; // Why a copy?
@@ -105,12 +83,10 @@ async function _discoverGetDeviceInfo(dev_list) {
   * @param {ip, MAC} params {ip IP Address, MAC Mac address}
   * @returns LifxLanDevice object
   */
-async function createDevice(params) {
-    return new lants_device_1.LifxLanDevice({ ip: params.ip, mac: params.mac });
+export async function createDevice(params) {
+    return new LifxLanDevice({ ip: params.ip, mac: params.mac });
     ;
 }
-exports.createDevice = createDevice;
 ;
-function normalizeMac(mac) { return mac.toUpperCase().replace(/-/g, ":"); }
-exports.normalizeMac = normalizeMac;
+export function normalizeMac(mac) { return mac.toUpperCase().replace(/-/g, ":"); }
 //# sourceMappingURL=lants.js.map

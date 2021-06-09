@@ -1,6 +1,5 @@
-import { isUndefined } from "util";
-import { LifxLanComposer } from "./lants-composer";
-import { Brightness0To1 } from "./lants-device"
+import { LifxLanComposer } from "./lants-composer.js";
+import { Brightness0To1 } from "./lants-device.js"
 
 // Consider https://github.com/Qix-/color-convert
 // https://www.npmjs.com/package/color-convert
@@ -287,7 +286,7 @@ export function rgbToHsb(p: LifxLanColorRGB): LifxLanColorHSB {
     // Check the parameters
     let error = null;
     ['red', 'green', 'blue'].forEach((c) => {
-        if (isUndefined(p[c])) p[c] = 0;
+        if (p[c] === undefined) p[c] = 0;
         let v = p[c];
         if (typeof (v) !== 'number' || v < 0 || v > 1) {
             throw new Error('The `' + c + '` must be a float between 0.0 and 1.0.');

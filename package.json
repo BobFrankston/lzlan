@@ -1,6 +1,6 @@
 {
   "name": "@bobfrankston/lzlan",
-  "version": "2.0.10",
+  "version": "2.0.12",
   "description": "LIFX Lan Support for LIFX",
   "main": "lants.js",
   "types": "lants.d.ts",
@@ -20,8 +20,8 @@
     "url": "https://github.com/BobFrankston/lzlan/issues"
   },
   "homepage": "https://github.com/BobFrankston/lzlan#readme",
-  "dependencies": {
-    "@types/node": "^14.14.37",
-    "node": "^15.12.0"
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^15.0.1"
   }
 }

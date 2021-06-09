@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.lifxProducts = void 0;
-exports.lifxProducts = [
+export const lifxProducts = [
     {
         "vid": 1,
         "name": "LIFX",

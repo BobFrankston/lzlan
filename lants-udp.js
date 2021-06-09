@@ -1,35 +1,13 @@
-"use strict";
 // Note -- bug fixed for CIDR       "cidr":"172.29.239.177/28",      "broadcast":"172.29.239.191"
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.LifxLanUdp = void 0;
-const lants_parser_1 = require("./lants-parser");
-const lants_1 = require("./lants");
-const lants_address_1 = require("./lants-address");
-const mDgram = __importStar(require("dgram"));
-const Composer = __importStar(require("./lants-composer"));
+import { lifxMsgType, mParser } from "./lants-parser.js";
+import { delayms } from "./lants.js";
+import { getNetworkInterfaces } from "./lants-address.js";
+import * as mDgram from 'dgram';
+import * as Composer from './lants-composer.js';
 const mComposer = new Composer.LifxLanComposer();
-const lants_device_1 = require("./lants-device");
+import { passure } from "./lants-device.js";
 ;
-class LifxLanUdp {
+export class LifxLanUdp {
     constructor() {
         // Private
         this._UDP_PORT = 56700;
@@ -63,7 +41,7 @@ class LifxLanUdp {
     async init() {
         this.initPromise = new Promise((resolve, reject) => {
             this._source_id = Math.floor(Math.random() * 0xffffffff);
-            let netif_list = lants_address_1.getNetworkInterfaces();
+            let netif_list = getNetworkInterfaces();
             if (!netif_list || netif_list.length === 0) {
                 reject(new Error('No available network interface was found.'));
                 return;
@@ -76,7 +54,7 @@ class LifxLanUdp {
                 reject(error);
             });
             this._udp.once('listening', () => {
-                resolve();
+                resolve(null);
             });
             this._udp.on('message', (buf, rinfo) => { this._receivePacket(buf, rinfo); });
             // this._udp.bind({ port: this._UDP_PORT });
@@ -154,7 +132,7 @@ class LifxLanUdp {
                 }
                 else {
                     if (!p.ack_required && !p.res_required) {
-                        resolve();
+                        resolve(null);
                     }
                 }
             });
@@ -186,7 +164,7 @@ class LifxLanUdp {
     _receivePacket(buf, rinfo) {
         if (this._isNetworkInterfaceAddress(rinfo.address))
             return; // Ignore echoes from myself
-        let parsed = lants_parser_1.mParser.parse(buf);
+        let parsed = mParser.parse(buf);
         if (!parsed)
             return;
         parsed.address = rinfo.address;
@@ -226,7 +204,7 @@ class LifxLanUdp {
     }
     ;
     async discover(params) {
-        params = lants_device_1.passure(params);
+        params = passure(params);
         const wait = params.wait || 3000;
         const req_list = [];
         const devices = {};
@@ -235,7 +213,7 @@ class LifxLanUdp {
             this._sequence = seq;
             // Create a request packet
             const packet = mComposer.compose({
-                type: lants_parser_1.lifxMsgType.GetService,
+                type: lifxMsgType.GetService,
                 payload: null,
                 sequence: seq,
                 ack_required: false,
@@ -255,7 +233,7 @@ class LifxLanUdp {
             // this._sendBroadcast(req);
         });
         await this._sendBroadcast(req_list);
-        await lants_1.delayms(wait * 4); // Wait to see that the cats drag in?
+        await delayms(wait * 4); // Wait to see that the cats drag in?
         const deviceArray = [];
         for (let ip in devices)
             deviceArray.push(devices[ip]);
@@ -266,10 +244,9 @@ class LifxLanUdp {
         this._udp.setBroadcast(true);
         req_list.forEach(req => {
             this._udp.send(req.buffer, 0, req.buffer.length, this._UDP_PORT, req.address);
-            lants_1.delayms(10); // Why delays?
+            delayms(10); // Why delays?
         });
     }
     ;
 }
-exports.LifxLanUdp = LifxLanUdp;
 //# sourceMappingURL=lants-udp.js.map

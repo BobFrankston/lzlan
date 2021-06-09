@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { lifxMsgType, LifxLanHeader } from "./lants-parser";
+import { lifxMsgType, LifxLanHeader } from "./lants-parser.js";
 /**
  * Handle incoming message that is not otherwise handled
  */
