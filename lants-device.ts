@@ -5,7 +5,6 @@ import { LifxLanUdp, udpParsed } from "./lants-udp.js";
 import { LifxLanColorAny, LifxLanColorHSB, LifxLanColorCSS } from "./lants-color.js";
 import * as LifxLanColor from './lants-color.js';
 import { normalizeMac } from "./lants.js";
-import { promises } from "node:stream";
 
 export type Integer = number;        // Should rename to named types at some point
 export type Integer255 = number;     // Integer limited to 244
@@ -302,7 +301,7 @@ export class LifxLanDevice {
                 }
                 // await thenfo(this.deviceGetLabel, (r) => info.label = r.label);
                 // debugger;
-                await Promise.allSettled([
+                await (Promise as any).allSettled([
                     thenfo(me.deviceGetLabel, (r) => info.label = r.label),
                     thenfo(me.deviceGetVersion, (r) => info = { ...info, ...r } as any),
                     thenfo(me.deviceGetLocation, (r) => info.location = r),
@@ -328,7 +327,7 @@ export class LifxLanDevice {
             }
             delete info.error;
         }
-        catch (e) {
+        catch (e: any) {
             console.error(`DeviceInfo(${this.ip.padEnd(15)} ${this.mac} ${info.label ? info.label : ""}) ${e}`);
             info.error = e.message;
         }

@@ -73,9 +73,9 @@ export async function discover(params?: { wait?: Integer }) {
 
 async function _discoverGetDeviceInfo(dev_list: LifxLanDevice[]) {
 	try {
-		await Promise.allSettled(dev_list.map(dev => dev.getDeviceInfo()));
+		await (Promise as any).allSettled(dev_list.map(dev => dev.getDeviceInfo()));
 	}
-	catch (e) {
+	catch (e: any) {
 		const full = dev_list.length;
 		dev_list = dev_list.filter(dev => dev.deviceInfo);	// Keep only those that succeeded
 		const count = dev_list.reduce((prev, cur) => prev += cur.deviceInfo ? 1 : 0, 0);

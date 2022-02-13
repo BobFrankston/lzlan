@@ -2,7 +2,7 @@
 
 import { lifxMsgType, mParser, LifxLanHeader } from "./lants-parser.js";
 import { delayms } from "./lants.js";
-import {getNetworkInterfaces} from "./lants-address.js";
+import { getNetworkInterfaces } from "./lants-address.js";
 
 /* ------------------------------------------------------------------
 * node-lifx-lan - lifx-lan-udp.js
@@ -93,13 +93,13 @@ export class LifxLanUdp {
 	private initializing: boolean = false;	// Attempt to deal with an edge case
 
 	/**
-      * Initialize instance. Should only be called once
-      */
+	  * Initialize instance. Should only be called once
+	  */
 
 	private async init() {
 		this.initPromise = new Promise((resolve, reject) => {
 			this._source_id = Math.floor(Math.random() * 0xffffffff);
-			let netif_list =  getNetworkInterfaces();
+			let netif_list = getNetworkInterfaces();
 			if (!netif_list || netif_list.length === 0) {
 				reject(new Error('No available network interface was found.'));
 				return;
@@ -107,7 +107,7 @@ export class LifxLanUdp {
 			this._netif_list = netif_list;
 			// Set up a UDP tranceiver
 			// this._udp = mDgram.createSocket({ type: 'udp4', reuseAddr: true });
-			this._udp = mDgram.createSocket({ type: 'udp4'}); // , reuseAddr: true });	// Not sure about reuse
+			this._udp = mDgram.createSocket({ type: 'udp4' }); // , reuseAddr: true });	// Not sure about reuse
 			this._udp.on('error', (error: Error) => {
 				reject(error);
 			});
@@ -246,6 +246,7 @@ export class LifxLanUdp {
 		// 		if (name == "My") name += ' ' + parsed.address;
 		// 		const type = lifxMsgType[parsed.header.type] || parsed.header.type.toString();
 		// 		const id = parsed.header.target.split(':').slice(3, 3 + 3).join('');
+		// 		console.log(`${new Date().toLocaleTimeString()} ${id} ${name.padEnd(18)} ${type} ${JSON.stringify(parsed.payload)}`);
 		// 		console.log(`${new Date().toLocaleTimeString()} ${id} ${name.padEnd(18)} ${type} ${JSON.stringify(parsed.payload)}`);
 		// 		// https://community.lifx.com/t/why-are-some-bulbs-chatty/4777/3
 		// 	}

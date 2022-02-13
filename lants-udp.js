@@ -8,24 +8,21 @@ const mComposer = new Composer.LifxLanComposer();
 import { passure } from "./lants-device.js";
 ;
 export class LifxLanUdp {
-    constructor() {
-        // Private
-        this._UDP_PORT = 56700;
-        this._udp = null;
-        this._requests = {};
-        this._sequence = 0;
-        this._timeout = 3000; // msec
-        this._source_id = 0;
-        this._netif_list = null;
-        this.initPromise = null;
-        this.initialized = false;
-        this.initializing = false; // Attempt to deal with an edge case
-    }
     static async GetUDP() {
         const llu = new LifxLanUdp();
         await llu.init();
         return llu;
     }
+    constructor() {
+    }
+    // Private
+    _UDP_PORT = 56700;
+    _udp = null;
+    _requests = {};
+    _sequence = 0;
+    _timeout = 3000; // msec
+    _source_id = 0;
+    _netif_list = null;
     /* ------------------------------------------------------------------
     * Method: destroy()
     * ---------------------------------------------------------------- */
@@ -35,6 +32,9 @@ export class LifxLanUdp {
         this._udp = null;
     }
     ;
+    initPromise = null;
+    initialized = false;
+    initializing = false; // Attempt to deal with an edge case
     /**
       * Initialize instance. Should only be called once
       */
@@ -189,6 +189,7 @@ export class LifxLanUdp {
         // 		if (name == "My") name += ' ' + parsed.address;
         // 		const type = lifxMsgType[parsed.header.type] || parsed.header.type.toString();
         // 		const id = parsed.header.target.split(':').slice(3, 3 + 3).join('');
+        // 		console.log(`${new Date().toLocaleTimeString()} ${id} ${name.padEnd(18)} ${type} ${JSON.stringify(parsed.payload)}`);
         // 		console.log(`${new Date().toLocaleTimeString()} ${id} ${name.padEnd(18)} ${type} ${JSON.stringify(parsed.payload)}`);
         // 		// https://community.lifx.com/t/why-are-some-bulbs-chatty/4777/3
         // 	}

@@ -66,9 +66,32 @@ export var lifxMsgType;
     lifxMsgType[lifxMsgType["SetTileState64"] = 715] = "SetTileState64";
 })(lifxMsgType || (lifxMsgType = {}));
 export class LifxTile {
+    user_x;
+    user_y;
+    width; // 255
+    height;
+    device_version_Vendor; // 32 bit
+    device_version_product;
+    device_version_version;
+    firmware_build; // 64 bit integer as hex
+    firmware_version;
 }
 // https://lan.developer.lifx.com/docs/tile-messages
 export class LifxLanHeader {
+    // Frame
+    size;
+    origin;
+    tagged;
+    addressable;
+    protocol;
+    source;
+    // Address
+    target;
+    ack; // ack_required
+    res; // res_required
+    sequence;
+    // Protocol
+    type;
 }
 const headerSize = 36;
 class LifxLanParser {

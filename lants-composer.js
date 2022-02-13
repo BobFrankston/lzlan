@@ -96,6 +96,8 @@ class bufx {
         this.buf.writeUInt32LE(val, this.cursor);
         this.cursor += 4;
     }
+    buf;
+    cursor; // Write position
 }
 export class LifxLanComposer {
     compose(cp) {

@@ -97,6 +97,9 @@ export class LifxLanDevice {
         this.ip = params.ip;
     }
     ;
+    mac;
+    ip;
+    deviceInfo;
     async _request(type, payload) {
         // const res = await this._lifxLanUdp.request({
         const UDP = await LifxLanUdp.GetUDP();
@@ -165,6 +168,7 @@ export class LifxLanDevice {
             p.duration = params.duration;
         await this.lightSetPower(p);
     }
+    static usenew = true;
     /**
      * Update device info for this device by calling querying the bulb
      * Normally done once on creating the device
@@ -339,6 +343,5 @@ export class LifxLanDevice {
         return this._request(lifxMsgType.GetDeviceChain);
     }
 }
-LifxLanDevice.usenew = true;
 // export const mLifxLanDevice = LifxLanDevice;
 //# sourceMappingURL=lants-device.js.map
