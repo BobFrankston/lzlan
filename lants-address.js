@@ -22,14 +22,18 @@ export function getNetworkInterfaces() {
     const netifs = mOs.networkInterfaces();
     for (const dev in netifs) {
         netifs[dev].forEach((info) => {
-            if (info.family !== 'IPv4' || info.internal === true) {
+            let family = info.family;
+            if (typeof family == "number")
+                family = `IPv${family}`; // Strange change work-around
+            if (family !== 'IPv4' || info.internal === true) {
                 return;
             }
+            let info4 = info;
             // if (/^169\.254\./.test(info.address)) {
             // 	// return;	// Why??
             // 	console.log(`Debug ${info.address}`);
             // }
-            info['broadcast'] = _getBroadcastAddress(info);
+            info['broadcast'] = _getBroadcastAddress(info4);
             list.push(info);
         });
     }
