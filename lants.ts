@@ -89,11 +89,22 @@ async function _discoverGetDeviceInfo(dev_list: LifxLanDevice[]) {
 
 /**
   * Create a new device object. This can be used in place of or in addition to discovery
-  * @param {ip, MAC} params {ip IP Address, MAC Mac address}
+  * @params {ip, MAC} params {ip IP Address, MAC Mac address}
   * @returns LifxLanDevice object
   */
 
 export async function createDevice(params: { ip: string, mac: string }) {
 	return new LifxLanDevice({ ip: params.ip, mac: params.mac });;
 };
-export function normalizeMac(mac: string) { return mac.toUpperCase().replace(/-/g, ":") }
+
+/**
+ * Normalize MAC to AA:99 ...
+ * @param mac Address to be normalize.
+ * @returns Address in upper case with only hex characters separated by :
+ */
+
+export function normalizeMac(mac: string) {
+	mac = mac.toUpperCase()?.replace(/[^A-Z\d]/g, "");
+	return mac.match(/(..?)/g).join(":");     // COmpatability till we fix
+	// return mac.toUpperCase().replace(/-/g, ":")
+}

@@ -16,12 +16,17 @@ export declare function discover(params?: {
 }): Promise<lantsDevice.LifxLanDevice[]>;
 /**
   * Create a new device object. This can be used in place of or in addition to discovery
-  * @param {ip, MAC} params {ip IP Address, MAC Mac address}
+  * @params {ip, MAC} params {ip IP Address, MAC Mac address}
   * @returns LifxLanDevice object
   */
 export declare function createDevice(params: {
     ip: string;
     mac: string;
 }): Promise<lantsDevice.LifxLanDevice>;
+/**
+ * Normalize MAC to AA:99 ...
+ * @param mac Address to be normalize.
+ * @returns Address in upper case with only hex characters separated by :
+ */
 export declare function normalizeMac(mac: string): string;
 //# sourceMappingURL=lants.d.ts.map
