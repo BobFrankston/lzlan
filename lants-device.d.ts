@@ -82,12 +82,7 @@ export declare enum LifxApply {
 }
 export interface LifxMultiZone {
     count: number;
-    colors: {
-        hue: number;
-        saturation: number;
-        brightness: Brightness0To1;
-        kelvin: number;
-    }[];
+    colors: LifxColor[];
 }
 export interface LifxDeviceInfo {
     label: string;
@@ -152,6 +147,22 @@ export interface LifxLocationInfo {
     label: string;
     updated: Date;
 }
+export interface LifxLightState {
+    color: LifxColor;
+    power: number;
+    label: string;
+    infrared: LifxInfrared;
+    multizone: null;
+}
+export interface LifxColor {
+    hue: number;
+    saturation: number;
+    brightness: number;
+    kelvin: number;
+}
+export interface LifxInfrared {
+    brightness: number;
+}
 export declare class LifxLanDevice {
     /**
      *
@@ -209,7 +220,7 @@ export declare class LifxLanDevice {
         error: string;
     }>;
     private _getDeviceMultiZone;
-    getLightState(): Promise<any>;
+    getLightState(): Promise<LifxLightState>;
     private _getLightInfraredState;
     getLightMultiZoneState(info: LifxDeviceInfo): Promise<{
         count: number;
