@@ -302,6 +302,8 @@ export class LifxLanDevice {
      * Update device info for this device by calling querying the bulb
      * Normally done once on creating the device
      */
+
+    reportedError = false;  // Only report once for each device
     async getDeviceInfo() {
         let info: LifxDeviceInfo = <any>{};
         try {
@@ -315,8 +317,10 @@ export class LifxLanDevice {
                         assign(result);
                     }
                     catch (e: any) {
-                        if (LZVerbose)
-                            console.error(`Getting info for ${me.ip} ${me.mac}`);
+                        if (LZVerbose  && !me.reportedError) {
+                            console.error(`${e.code} ${e.message} Getting info for ${me.ip} ${me.mac}`);
+                            me.reportedError = true;
+                        }
                     }
                 }
                 // await thenfo(this.deviceGetLabel, (r) => info.label = r.label);
