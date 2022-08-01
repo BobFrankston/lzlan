@@ -5,6 +5,12 @@ import * as LifxLanColor from './lants-color.js';
 import { LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb } from "./lants-color.js";
 export { LifxLanColor, LifxLanColorAny, LifxLanColorCSS, LifxLanColorHSB, LifxLanColorRGB, LifxLanColorXyb };
 export declare const delayms: (msec?: number) => Promise<unknown>;
+export declare let LZVerbose: boolean;
+/**
+ *
+ * @param vb Set Verbaose mode
+ */
+export declare function setVerbose(vb: boolean): void;
 /**
  * Discover current devices.
  * Note that this is not reliable

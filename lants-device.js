@@ -2,7 +2,7 @@
 import { lifxMsgType } from "./lants-parser.js";
 import { LifxLanUdp } from "./lants-udp.js";
 import * as LifxLanColor from './lants-color.js';
-import { normalizeMac } from "./lants.js";
+import { LZVerbose, normalizeMac } from "./lants.js";
 /* ------------------------------------------------------------------
 * node-lifx-lan - lifx-lan-device.js
 *
@@ -180,9 +180,15 @@ export class LifxLanDevice {
                 const me = this;
                 // console.log(`Get ${me.ip}`);
                 async function thenfo(pf, assign) {
-                    const result = await pf.bind(me)();
-                    // console.log(`Result ${me?.ip} ${JSON.stringify(result)}`)
-                    assign(result);
+                    try {
+                        const result = await pf.bind(me)();
+                        // console.log(`Result ${me?.ip} ${JSON.stringify(result)}`)
+                        assign(result);
+                    }
+                    catch (e) {
+                        if (LZVerbose)
+                            console.error(`Getting info for ${me.ip} ${me.mac}`);
+                    }
                 }
                 // await thenfo(this.deviceGetLabel, (r) => info.label = r.label);
                 // debugger;
@@ -213,7 +219,8 @@ export class LifxLanDevice {
             delete info.error;
         }
         catch (e) {
-            console.error(`DeviceInfo(${this.ip.padEnd(15)} ${this.mac} ${info.label ? info.label : ""}) ${e}`);
+            if (LZVerbose)
+                console.error(`DeviceInfo(${this.ip.padEnd(15)} ${this.mac} ${info.label ? info.label : ""}) ${e}`);
             info.error = e.message;
         }
         this.deviceInfo = info;

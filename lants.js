@@ -5,16 +5,21 @@ export { LifxLanColor };
 /* ------------------------------------------------------------------
  * node-lifx-lan - lifx-lan.js
  *
- * Copyright (c) 2017-2018, Futomi Hatano, All rights reserved.
+ * Inspired by version from Futomi Hatano
  * Copyright (c) 2018-2019, Bob Frankston - major changes in original code
  * Released under the MIT license
  * Date: 2018-08-08
  * ---------------------------------------------------------------- */
 import { LifxLanUdp } from './lants-udp.js';
-// import { LifxLanColor } from "./lants-color";
-// export LifxLanDevice;
-// export const delayms = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export const delayms = (msec) => { return new Promise(resolve => setTimeout(resolve, msec || 50)); };
+export let LZVerbose = true;
+/**
+ *
+ * @param vb Set Verbaose mode
+ */
+export function setVerbose(vb) {
+    LZVerbose = vb;
+}
 /**
  * Discover current devices.
  * Note that this is not reliable
@@ -71,7 +76,8 @@ async function _discoverGetDeviceInfo(dev_list) {
         const full = dev_list.length;
         dev_list = dev_list.filter(dev => dev.deviceInfo); // Keep only those that succeeded
         const count = dev_list.reduce((prev, cur) => prev += cur.deviceInfo ? 1 : 0, 0);
-        console.error(`_discoverGetDeviceInfo Found ${count} of ${full} devices\n$   Error: ${e.message}`);
+        if (LZVerbose)
+            console.error(`_discoverGetDeviceInfo Found ${count} of ${full} devices\n$   Error: ${e.message}`);
         throw e;
     }
     return [...dev_list]; // Why a copy?
