@@ -4,7 +4,7 @@ import { lifxMsgType, LifxTile } from "./lants-parser.js";
 import { LifxLanUdp, udpParsed } from "./lants-udp.js";
 import { LifxLanColorAny, LifxLanColorHSB, LifxLanColorCSS } from "./lants-color.js";
 import * as LifxLanColor from './lants-color.js';
-import { normalizeMac } from "./lants.js";
+import { LZVerbose, normalizeMac } from "./lants.js";
 
 export type Integer = number;        // Should rename to named types at some point
 export type Integer255 = number;     // Integer limited to 244
@@ -115,7 +115,7 @@ export enum LifxApply {
 }
 export interface LifxMultiZone {
     count: number,                  // Number of zones.
-    colors:  LifxColor[];           // Normally 8 entries
+    colors: LifxColor[];           // Normally 8 entries
 }
 
 export interface LifxDeviceInfo {
@@ -190,18 +190,18 @@ interface LifxGuidLabel {
 }
 
 export interface LifxLightState {
-    color:     LifxColor;
-    power:     number;
-    label:     string;
-    infrared:  LifxInfrared;
+    color: LifxColor;
+    power: number;
+    label: string;
+    infrared: LifxInfrared;
     multizone: null;
 }
 
 export interface LifxColor {
-    hue:        number; //   Hue in the range of 0.0 to 1.0.
+    hue: number; //   Hue in the range of 0.0 to 1.0.
     saturation: number; //   Saturation in the range of 0.0 to 1.0.
     brightness: number; //   Brightness in the range of 0.0 to 1.0.
-    kelvin:     number; // Color temperature (°) in the range of 1500 to 9000.
+    kelvin: number; // Color temperature (°) in the range of 1500 to 9000.
 }
 
 export interface LifxInfrared {
@@ -309,9 +309,15 @@ export class LifxLanDevice {
                 const me = this;
                 // console.log(`Get ${me.ip}`);
                 async function thenfo<T>(pf: () => Promise<T>, assign: (result: T) => void): Promise<void> {
-                    const result = await pf.bind(me)();
-                    // console.log(`Result ${me?.ip} ${JSON.stringify(result)}`)
-                    assign(result);
+                    try {
+                        const result = await pf.bind(me)();
+                        // console.log(`Result ${me?.ip} ${JSON.stringify(result)}`)
+                        assign(result);
+                    }
+                    catch (e: any) {
+                        if (LZVerbose)
+                            console.error(`Getting info for ${me.ip} ${me.mac}`);
+                    }
                 }
                 // await thenfo(this.deviceGetLabel, (r) => info.label = r.label);
                 // debugger;
@@ -342,7 +348,8 @@ export class LifxLanDevice {
             delete info.error;
         }
         catch (e: any) {
-            console.error(`DeviceInfo(${this.ip.padEnd(15)} ${this.mac} ${info.label ? info.label : ""}) ${e}`);
+            if (LZVerbose)
+                console.error(`DeviceInfo(${this.ip.padEnd(15)} ${this.mac} ${info.label ? info.label : ""}) ${e}`);
             info.error = e.message;
         }
         this.deviceInfo = info;

@@ -1,6 +1,7 @@
 import { lifxProducts } from "./products.js"
 import { udpParams, udpParsed } from "./lants-udp.js";
 import { Float, Integer, LifxHostFirmware, LifxHostInfo } from "./lants-device.js";
+import { LZVerbose } from "./lants.js";
 
 /* ------------------------------------------------------------------
 * node-lifx-lan - lifx-lan-parser.js
@@ -320,7 +321,8 @@ class LifxLanParser {
             return null;
         }
         catch (e) {
-            console.error(`Error parsing payload ${e}\n${pbuf.toString('hex')}`);
+            if (LZVerbose)
+                console.error(`Error parsing payload ${e}\n${pbuf.toString('hex')}`);
             return null;
         }
     };
