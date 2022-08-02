@@ -139,7 +139,7 @@ export class LifxLanUdp {
 			else
 				return await this._requestUnicast(p);
 		}
-		catch (e) {
+		catch (e: any) {
 			throw e;
 		}
 	};
@@ -230,30 +230,29 @@ export class LifxLanUdp {
 		if (callback) {
 			callback(parsed);
 		}
-		// We now ignore unsolicited packets
-		// else {
-		// 	try {
-		// 		const pay: any = parsed.payload;	 // QUick hack
-		// 		let name = pay && pay.label;
-		// 		if (!name) {
-		// 			if (this.device_list_hack && this.device_list_hack[parsed.address])
-		// 				name = this.device_list_hack[parsed.address].deviceInfo.label;
-		// 			else
-		// 				name = parsed.address;
-		// 		}
-		// 		name = name.split(' ')[0];
-		// 		// Hack
-		// 		if (name == "My") name += ' ' + parsed.address;
-		// 		const type = lifxMsgType[parsed.header.type] || parsed.header.type.toString();
-		// 		const id = parsed.header.target.split(':').slice(3, 3 + 3).join('');
-		// 		console.log(`${new Date().toLocaleTimeString()} ${id} ${name.padEnd(18)} ${type} ${JSON.stringify(parsed.payload)}`);
-		// 		console.log(`${new Date().toLocaleTimeString()} ${id} ${name.padEnd(18)} ${type} ${JSON.stringify(parsed.payload)}`);
-		// 		// https://community.lifx.com/t/why-are-some-bulbs-chatty/4777/3
-		// 	}
-		// 	catch (e) {
-		// 		console.error(`_receivePacket ${e}`);
-		// 	}
-		// }
+		// // We now ignore unsolicited packets
+		// // else {
+		// // 	try {
+		// // 		const pay: any = parsed.payload;	 // QUick hack
+		// // 		let name = pay && pay.label;
+		// // 		if (!name) {
+		// // 			if (this.device_list_hack && this.device_list_hack[parsed.address])
+		// // 				name = this.device_list_hack[parsed.address].deviceInfo.label;
+		// // 			else
+		// // 				name = parsed.address;
+		// // 		}
+		// // 		name = name.split(' ')[0];
+		// // 		// Hack
+		// // 		if (name == "My") name += ' ' + parsed.address;
+		// // 		const type = lifxMsgType[parsed.header.type] || parsed.header.type.toString();
+		// // 		const id = parsed.header.target.split(':').slice(3, 3 + 3).join('');
+		// // 		console.log(`${new Date().toLocaleTimeString()} ${id} ${name.padEnd(18)} ${type} ${JSON.stringify(parsed.payload)}`);
+		// // 		// https://community.lifx.com/t/why-are-some-bulbs-chatty/4777/3
+		// // 	}
+		// // 	catch (e) {
+		// // 		console.error(`_receivePacket ${e}`);
+		// // 	}
+		// // }
 	};
 
 	// device_list_hack: { [ip: string]: LifxLanDevice };	// So we can report heard

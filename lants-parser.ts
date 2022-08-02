@@ -320,7 +320,7 @@ class LifxLanParser {
             }
             return null;
         }
-        catch (e) {
+        catch (e:any) {
             if (LZVerbose)
                 console.error(`Error parsing payload ${e}\n${pbuf.toString('hex')}`);
             return null;

@@ -303,7 +303,8 @@ export class LifxLanDevice {
      * Normally done once on creating the device
      */
 
-    reportedError = false;  // Only report once for each device
+    // reportedError = false;  // Only report once for each device
+    static reportedError = new Set<string>();   // So we don't repeat ourselves
     async getDeviceInfo() {
         let info: LifxDeviceInfo = <any>{};
         try {
@@ -317,9 +318,10 @@ export class LifxLanDevice {
                         assign(result);
                     }
                     catch (e: any) {
-                        if (LZVerbose  && !me.reportedError) {
-                            console.error(`${e.code} ${e.message} Getting info for ${me.ip} ${me.mac}`);
-                            me.reportedError = true;
+                        const nmac = normalizeMac(me.mac);
+                        if (LZVerbose && !LifxLanDevice.reportedError.has(nmac)) {                            
+                            console.error(`${e.message} Getting info for ${me.ip} ${me.mac}`);
+                            LifxLanDevice.reportedError.add(nmac);
                         }
                     }
                 }

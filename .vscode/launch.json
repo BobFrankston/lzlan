@@ -13,7 +13,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/lib\\test\\index.js",
+            "program": "${workspaceFolder}/lib\\index.js",
             "outFiles": [
                 "${workspaceFolder}/**/lib/*.js"
             ]

@@ -200,7 +200,7 @@ export declare class LifxLanDevice {
      * Update device info for this device by calling querying the bulb
      * Normally done once on creating the device
      */
-    reportedError: boolean;
+    static reportedError: Set<string>;
     getDeviceInfo(): Promise<{
         label: string;
         vendorId: number;
