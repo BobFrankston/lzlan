@@ -190,7 +190,7 @@ export class LifxLanDevice {
                     catch (e) {
                         const nmac = normalizeMac(me.mac);
                         if (LZVerbose && !LifxLanDevice.reportedError.has(nmac)) {
-                            console.error(`${e.message} Getting info for ${me.ip} ${me.mac}`);
+                            console.error(`Lifx: ${e.message} Getting info for ${me.ip} ${me.mac}`);
                             LifxLanDevice.reportedError.add(nmac);
                         }
                     }
@@ -225,7 +225,7 @@ export class LifxLanDevice {
         }
         catch (e) {
             if (LZVerbose)
-                console.error(`DeviceInfo(${this.ip.padEnd(15)} ${this.mac} ${info.label ? info.label : ""}) ${e}`);
+                console.error(`Lifx: DeviceInfo(${this.ip.padEnd(15)} ${this.mac} ${info.label ? info.label : ""}) ${e}`);
             info.error = e.message;
         }
         this.deviceInfo = info;
