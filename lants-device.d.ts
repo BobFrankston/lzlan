@@ -1,19 +1,19 @@
 import { LifxTile } from "./lants-parser.js";
 import { LifxLanColorAny, LifxLanColorHSB } from "./lants-color.js";
-export declare type Integer = number;
-export declare type Integer255 = number;
-export declare type Milliseconds = number;
-export declare type Duration = number;
-export declare type Float = number;
-export declare type String32 = string;
-export declare type Brightness0To1 = number;
-export declare type HexString16 = string;
+export type Integer = number;
+export type Integer255 = number;
+export type Milliseconds = number;
+export type Duration = number;
+export type Float = number;
+export type String32 = string;
+export type Brightness0To1 = number;
+export type HexString16 = string;
 export declare function passure(params: object, defaults?: object): object;
-export declare type ColorDuration = {
+export type ColorDuration = {
     color?: LifxLanColorAny;
     duration?: Duration;
 };
-export declare type HSBDuration = {
+export type HSBDuration = {
     color?: LifxLanColorHSB;
     duration?: Duration;
 };
@@ -320,7 +320,7 @@ export declare class LifxLanDevice {
         total_count: Integer255;
     }>;
 }
-export declare type LifxDevicesIP = {
+export type LifxDevicesIP = {
     [ip: string]: LifxLanDevice;
 };
 //# sourceMappingURL=lants-device.d.ts.map

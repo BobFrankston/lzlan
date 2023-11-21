@@ -173,7 +173,7 @@ export class LifxLanUdp {
 			if (p.ack_required || p.res_required) {
 				this._requests[seq] = (res: udpParsed) => {
 					delete this._requests[seq];
-					if (timer) clearTimeout(timer);
+					if (timer) clearTimeout(timer as any);	// Accommodate future changes
 					resolve(res);
 				};
 			}
@@ -184,7 +184,7 @@ export class LifxLanUdp {
 				if (error) {
 					delete this._requests[seq];
 					if (timer) {
-						clearTimeout(timer);
+						clearTimeout(timer as any);	// Accommodate future changes
 					}
 					reject(error);
 				} else {

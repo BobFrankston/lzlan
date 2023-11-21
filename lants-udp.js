@@ -115,7 +115,7 @@ export class LifxLanUdp {
                 this._requests[seq] = (res) => {
                     delete this._requests[seq];
                     if (timer)
-                        clearTimeout(timer);
+                        clearTimeout(timer); // Accommodate future changes
                     resolve(res);
                 };
             }
@@ -126,7 +126,7 @@ export class LifxLanUdp {
                 if (error) {
                     delete this._requests[seq];
                     if (timer) {
-                        clearTimeout(timer);
+                        clearTimeout(timer); // Accommodate future changes
                     }
                     reject(error);
                 }

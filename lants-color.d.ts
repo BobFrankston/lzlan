@@ -27,7 +27,7 @@ export interface LifxLanColorCSS {
     brightness?: number;
     kelvin?: number;
 }
-export declare type LifxLanColorAny = LifxLanColorCSS | LifxLanColorHSB | LifxLanColorRGB | LifxLanColorXyb;
+export type LifxLanColorAny = LifxLanColorCSS | LifxLanColorHSB | LifxLanColorRGB | LifxLanColorXyb;
 export declare function cssToHsb(p: LifxLanColorCSS): LifxLanColorHSB;
 export declare function rgbToHsb(p: LifxLanColorRGB): LifxLanColorHSB;
 export declare function hsbToRgb(p: LifxLanColorHSB): LifxLanColorRGB;
