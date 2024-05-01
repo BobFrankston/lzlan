@@ -151,7 +151,7 @@ export class LifxLanUdp {
 			let seq = (this._sequence + 1) % 255;
 			this._sequence = seq;
 			// Timer
-			let timer: NodeJS.Timer = null;
+			let timer: NodeJS.Timeout = null;
 			if (p.ack_required || p.res_required) {
 				timer = setTimeout(() => {
 					delete this._requests[seq];
@@ -173,7 +173,7 @@ export class LifxLanUdp {
 			if (p.ack_required || p.res_required) {
 				this._requests[seq] = (res: udpParsed) => {
 					delete this._requests[seq];
-					if (timer) clearTimeout(timer as any);	// Accommodate future changes
+					if (timer) clearTimeout(timer);	// Accommodate future changes
 					resolve(res);
 				};
 			}
@@ -184,7 +184,7 @@ export class LifxLanUdp {
 				if (error) {
 					delete this._requests[seq];
 					if (timer) {
-						clearTimeout(timer as any);	// Accommodate future changes
+						clearTimeout(timer);	// Accommodate future changes
 					}
 					reject(error);
 				} else {
