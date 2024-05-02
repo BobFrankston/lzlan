@@ -1,13 +1,14 @@
 import { Brightness0To1 } from "./lants-device.js";
 export interface LifxLanColorHSB {
-    [key: string]: number;
     hue?: number;
     saturation?: number;
     brightness?: Brightness0To1;
     kelvin?: number;
 }
-export interface LifxLanColorRGB {
-    [key: string]: number;
+type ColorComponents = {
+    [key in 'red' | 'green' | 'blue']?: number;
+};
+export interface LifxLanColorRGB extends ColorComponents {
     red?: number;
     green?: number;
     blue?: number;
@@ -15,14 +16,12 @@ export interface LifxLanColorRGB {
     kelvin?: number;
 }
 export interface LifxLanColorXyb {
-    [key: string]: number;
     x: number;
     y: number;
     brightness?: number;
     kelvin?: number;
 }
 export interface LifxLanColorCSS {
-    [key: string]: number | string;
     css: string;
     brightness?: number;
     kelvin?: number;
@@ -37,4 +36,5 @@ export declare function hsbToXyb(p: LifxLanColorHSB): LifxLanColorXyb;
 export declare function xybToHsb(p: LifxLanColorXyb): LifxLanColorHSB;
 export declare function mergeToHsb(c: LifxLanColorAny, color: LifxLanColorHSB): LifxLanColorHSB;
 export declare function anyToHsb(c: LifxLanColorAny): LifxLanColorHSB;
+export {};
 //# sourceMappingURL=lants-color.d.ts.map

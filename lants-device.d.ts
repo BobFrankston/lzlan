@@ -269,12 +269,12 @@ export declare class LifxLanDevice {
         text: string;
     }): Promise<string>;
     lightGet(): Promise<{
-        color: LifxLanColorHSB;
+        color: LifxLanColorAny;
         power: 0 | 1;
         label: string;
     }>;
     lightSetColor(params: {
-        color: LifxLanColorHSB;
+        color: LifxLanColorAny;
         duration?: Duration;
     }): Promise<any>;
     lightSetWaveform(params: {

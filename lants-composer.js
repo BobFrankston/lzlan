@@ -22,7 +22,7 @@ var bx;
 })(bx || (bx = {}));
 class bufx {
     constructor(size) {
-        this.buf = Buffer.alloc(size);
+        this.buf = Buffer.alloc(size ?? 0);
         this.cursor = 0;
     }
     static make(...vals) {
@@ -111,9 +111,9 @@ export class LifxLanComposer {
         const source = cp.source;
         const payload_buf = this._composePayload(type, payload); // .buffer;
         const target_parts = target.match(/[0-9A-F]{2}:?/g);
-        if (target_parts.length !== 6)
+        if (target_parts?.length !== 6)
             throw new Error('The value of the parameter `target` is invalid as a MAC address.');
-        const target_bytes = target_parts.map(t => parseInt(t.replace(":", ""), 16));
+        const target_bytes = target_parts?.map(t => parseInt(t.replace(":", ""), 16));
         // Frame
         const origin = 0;
         let addressable = 1;
@@ -252,11 +252,11 @@ export class LifxLanComposer {
         for (let i = 0; i < color_key_list.length; i++) {
             let k = color_key_list[i];
             if (k in data) {
-                let v = data[k];
+                let v = data[k]; // Fuck you typescript
                 if (typeof (v) !== 'number' || v < 0 || v > 1) {
                     throw new Error('The `color.' + k + '` must be a float between 0.0 and 1.0.');
                 }
-                color[k] = Math.round(v * 65535);
+                color[k] = Math.round(v * 65535); // Fuck you typescript
             }
             else {
                 throw new Error('The `color.' + k + '` is required.');

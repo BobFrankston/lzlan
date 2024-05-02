@@ -425,8 +425,10 @@ export class LifxLanDevice {
         return data;
     };
     deviceEchoRequest(params: { text: string }): Promise<string> { return this._request(lifxMsgType.EchoRequest, params); };
-    lightGet(): Promise<{ color: LifxLanColorHSB, power: 0 | 1, label: string }> { return this._request(lifxMsgType.LightGet); };
-    lightSetColor(params: { color: LifxLanColorHSB, duration?: Duration }) { return this._request(lifxMsgType.SetColor /*102*/, params); };
+    // lightGet(): Promise<{ color: LifxLanColorHSB, power: 0 | 1, label: string }> { return this._request(lifxMsgType.LightGet); };
+    // lightSetColor(params: { color: LifxLanColorHSB, duration?: Duration }) { return this._request(lifxMsgType.SetColor /*102*/, params); };
+    lightGet(): Promise<{ color: LifxLanColorAny, power: 0 | 1, label: string }> { return this._request(lifxMsgType.LightGet); };
+    lightSetColor(params: { color: LifxLanColorAny, duration?: Duration }) { return this._request(lifxMsgType.SetColor /*102*/, params); };
 
     /* ------------------------------------------------------------------
     * Method: lightSetWaveform(params)

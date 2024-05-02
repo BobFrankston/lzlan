@@ -40,7 +40,7 @@ enum bx {
 
 class bufx {		// Wrapper for buffers
 	constructor(size?: number) {
-		this.buf = Buffer.alloc(size);
+		this.buf = Buffer.alloc(size ?? 0);
 		this.cursor = 0;
 	}
 
@@ -130,8 +130,8 @@ export class LifxLanComposer {
 
 		const payload_buf = this._composePayload(type, payload); // .buffer;
 		const target_parts = target.match(/[0-9A-F]{2}:?/g);
-		if (target_parts.length !== 6) throw new Error('The value of the parameter `target` is invalid as a MAC address.');
-		const target_bytes = target_parts.map(t => parseInt(t.replace(":", ""), 16));
+		if (target_parts?.length !== 6) throw new Error('The value of the parameter `target` is invalid as a MAC address.');
+		const target_bytes = target_parts?.map(t => parseInt(t.replace(":", ""), 16));
 
 		// Frame
 		const origin = 0;
@@ -168,7 +168,7 @@ export class LifxLanComposer {
 		return buf;
 	};
 
-	_composePayload(type: lifxMsgType, payload?: any): Buffer {
+	_composePayload(type: lifxMsgType, payload?: any): Buffer | null {
 		switch (type) {
 			case lifxMsgType.SetPower: return this._composePayloadSetPower(payload);
 			case lifxMsgType.SetLabel: return this._composePayloadSetLabel(payload);
@@ -197,7 +197,7 @@ export class LifxLanComposer {
 		return this.composeLabel(payload.label)
 	};
 
-	private composeLocation(location: HexString16) {
+	private composeLocation(location: HexString16 | null | undefined) {
 		return location ? Buffer.from(location.padEnd(32, '0').substr(0, 32), 'hex') : mCrypto.randomBytes(16);
 	}
 
@@ -219,7 +219,7 @@ export class LifxLanComposer {
 		return ub;
 	}
 
-	private _composePayloadSetLocation(payload: { location?: HexString16, label: String32, updated: Date }): Buffer {
+	private _composePayloadSetLocation(payload: { location?: HexString16 | null, label: String32, updated: Date }): Buffer {
 		const location_buf = this.composeLocation(payload.location);
 		const label_buf = this.composeLabel(payload.label);
 		const updated_buf = this.composeUpdated(payload.updated);
@@ -285,11 +285,11 @@ export class LifxLanComposer {
 		for (let i = 0; i < color_key_list.length; i++) {
 			let k = color_key_list[i];
 			if (k in data) {
-				let v = data[k];
+				let v = (data as any)[k] as number;	// Fuck you typescript
 				if (typeof (v) !== 'number' || v < 0 || v > 1) {
 					throw new Error('The `color.' + k + '` must be a float between 0.0 and 1.0.')
 				}
-				color[k] = Math.round(v * 65535);
+				(color as any)[k] = Math.round(v * 65535);	// Fuck you typescript
 			} else {
 				throw new Error('The `color.' + k + '` is required.');
 			}

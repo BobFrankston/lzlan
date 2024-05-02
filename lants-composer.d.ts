@@ -13,7 +13,7 @@ export interface ComposerParms {
 }
 export declare class LifxLanComposer {
     compose(cp: ComposerParms): Buffer;
-    _composePayload(type: lifxMsgType, payload?: any): Buffer;
+    _composePayload(type: lifxMsgType, payload?: any): Buffer | null;
     private _composePayloadSetPower;
     private _composePayloadSetLabel;
     private composeLocation;

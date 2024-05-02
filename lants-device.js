@@ -310,6 +310,8 @@ export class LifxLanDevice {
     ;
     deviceEchoRequest(params) { return this._request(lifxMsgType.EchoRequest, params); }
     ;
+    // lightGet(): Promise<{ color: LifxLanColorHSB, power: 0 | 1, label: string }> { return this._request(lifxMsgType.LightGet); };
+    // lightSetColor(params: { color: LifxLanColorHSB, duration?: Duration }) { return this._request(lifxMsgType.SetColor /*102*/, params); };
     lightGet() { return this._request(lifxMsgType.LightGet); }
     ;
     lightSetColor(params) { return this._request(lifxMsgType.SetColor /*102*/, params); }

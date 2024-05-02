@@ -26,7 +26,7 @@ export function getNetworkInterfaces() {
 	// const list: NetworkInterfaceInfoWithBroadcast[] = [];	// Need to fix this signature
 	const netifs = mOs.networkInterfaces();
 	for (const dev in netifs) {
-		netifs[dev].forEach((info) => {
+		netifs[dev]?.forEach((info) => {		// The ? is here because tsc has gone fuckin' loco on null
 			let family = info.family;
 			if (typeof family == "number")
 				family = `IPv${family}`;	// Strange change work-around

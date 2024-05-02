@@ -42,16 +42,21 @@ import { Brightness0To1 } from "./lants-device.js"
 *     - kelvin     | Integer | Optional | 1500 - 9000
 * ---------------------------------------------------------------- */
 
+
 export interface LifxLanColorHSB {
-    [key: string]: number,
+    // [key: string]: number,
     hue?: number,            // Hue in the range of 0.0 to 1.0.
     saturation?: number,     // Saturation in the range of 0.0 to 1.0.
     brightness?: Brightness0To1,     // Brightness in the range of 0.0 to 1.0.
     kelvin?: number,         // Color temperature (°) in the range of 1500 to 9000.
 }
 
-export interface LifxLanColorRGB {
-    [key: string]: number,
+type ColorComponents = {
+    [key in 'red' | 'green' | 'blue']?: number;
+};
+
+export interface LifxLanColorRGB extends ColorComponents {
+    // [key: string]: number,
     red?: number;           // Conditional  Red component in the range of 0.0 to 1.0.
     green?: number;         // Conditional  Green component in the range of 0.0 to 1.0.
     blue?: number;          // Conditional  Blue component in the range of 0.0 to 1.0.
@@ -60,7 +65,7 @@ export interface LifxLanColorRGB {
 }
 
 export interface LifxLanColorXyb {
-    [key: string]: number,
+    // [key: string]: number,
     x: number,                // Conditional X value in the range of 0.0 to 1.0.
     y: number,                // Conditional Y value in the range of 0.0 to 1.0.
     brightness?: number,      // Conditional Brightness in the range of 0.0 to 1.0.
@@ -68,7 +73,7 @@ export interface LifxLanColorXyb {
 }
 
 export interface LifxLanColorCSS {
-    [key: string]: number | string,
+    // [key: string]: number | string,
     css: string,             // Conditional CSS color ("red", "#ff0000", or "rgb(255, 0, 0)")
     brightness?: number,      // Optional Brightness in the range of 0.0 to 1.0.
     kelvin?: number,          // Color temperature (°) in the range of 1500 to 9000.
@@ -286,15 +291,15 @@ export function rgbToHsb(p: LifxLanColorRGB): LifxLanColorHSB {
     // Check the parameters
     let error = null;
     ['red', 'green', 'blue'].forEach((c) => {
-        if (p[c] === undefined) p[c] = 0;
-        let v = p[c];
+        // if (p[c] === undefined) p[c] = 0;
+        let v = (p as any)[c] ?? 0; // Fuck you typescript
         if (typeof (v) !== 'number' || v < 0 || v > 1) {
             throw new Error('The `' + c + '` must be a float between 0.0 and 1.0.');
         }
     });
-    let r = p.red * 255;
-    let g = p.green * 255;
-    let b = p.blue * 255;
+    let r = (p.red ?? 0) * 255;
+    let g = (p.green ?? 0) * 255;
+    let b = (p.blue ?? 0) * 255;
     // Determine the max and min value in RGB
     let max = Math.max(r, g, b);
     let min = Math.min(r, g, b);
@@ -344,7 +349,7 @@ export function hsbToRgb(p: LifxLanColorHSB): LifxLanColorRGB {
     // Check the parameters
     ['hue', 'saturation', 'brightness'].forEach((c) => {
         if (c in p) {
-            let v = p[c];
+            let v = (p as any)[c];  // Fuck you typescript
             if (typeof (v) !== 'number' || v < 0 || v > 1) {
                 throw new Error('The `' + c + '` must be a float between 0.0 and 1.0.');
             }
@@ -352,9 +357,9 @@ export function hsbToRgb(p: LifxLanColorHSB): LifxLanColorRGB {
             throw new Error(`'The ${c} is required.`);
     });
 
-    let hue = p['hue'] * 360;
-    let sat = p['saturation'] * 255;
-    let bri = p['brightness'] * 255;
+    let hue = (p.hue ?? 0) * 360;
+    let sat = (p.saturation ?? 0) * 255;
+    let bri = (p.brightness ?? 0) * 255;
     // Determine the max and min value in HSB
     let max = bri;
     let min = max - ((sat / 255) * max);
@@ -408,7 +413,7 @@ export function rgbToXyb(p: LifxLanColorRGB): LifxLanColorXyb {
     let error = null;
     ['red', 'green', 'blue'].forEach((c) => {
         if (c in p) {
-            let v = p[c];
+            let v = (p as any)[c];  // Fuck you typescript
             if (typeof (v) !== 'number' || v < 0 || v > 1) {
                 error = new Error('The `' + c + '` must be a float between 0.0 and 1.0.');
             }
@@ -456,7 +461,7 @@ export function xybToRgb(p: LifxLanColorXyb): LifxLanColorRGB {
     let bri = p['brightness'];
     // Calculate XYZ values
     let z = 1.0 - x - y;
-    let Y = bri;
+    let Y = bri ?? 0;
     let X = (Y / y) * x;
     let Z = (Y / y) * z;
     // Convert to RGB using Wide RGB D65 conversion
@@ -470,14 +475,14 @@ export function xybToRgb(p: LifxLanColorXyb): LifxLanColorRGB {
         blue: (b <= 0.0031308) ? 12.92 * b : (1.0 + 0.055) * Math.pow(b, (1.0 / 2.4)) - 0.055
     };
     Object.keys(rgb).forEach((k) => {
-        let v = rgb[k];
+        let v = (rgb as any)[k];
         if (v < 0.0) {
             v = 0.0;
         }
         if (v > 1.0) {
             v = 1.0;
         }
-        rgb[k] = v;
+        (rgb as any)[k] = v;
     });
     return rgb;
 };

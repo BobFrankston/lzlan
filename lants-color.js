@@ -221,16 +221,15 @@ export function rgbToHsb(p) {
     // Check the parameters
     let error = null;
     ['red', 'green', 'blue'].forEach((c) => {
-        if (p[c] === undefined)
-            p[c] = 0;
-        let v = p[c];
+        // if (p[c] === undefined) p[c] = 0;
+        let v = p[c] ?? 0; // Fuck you typescript
         if (typeof (v) !== 'number' || v < 0 || v > 1) {
             throw new Error('The `' + c + '` must be a float between 0.0 and 1.0.');
         }
     });
-    let r = p.red * 255;
-    let g = p.green * 255;
-    let b = p.blue * 255;
+    let r = (p.red ?? 0) * 255;
+    let g = (p.green ?? 0) * 255;
+    let b = (p.blue ?? 0) * 255;
     // Determine the max and min value in RGB
     let max = Math.max(r, g, b);
     let min = Math.min(r, g, b);
@@ -282,7 +281,7 @@ export function hsbToRgb(p) {
     // Check the parameters
     ['hue', 'saturation', 'brightness'].forEach((c) => {
         if (c in p) {
-            let v = p[c];
+            let v = p[c]; // Fuck you typescript
             if (typeof (v) !== 'number' || v < 0 || v > 1) {
                 throw new Error('The `' + c + '` must be a float between 0.0 and 1.0.');
             }
@@ -290,9 +289,9 @@ export function hsbToRgb(p) {
         else
             throw new Error(`'The ${c} is required.`);
     });
-    let hue = p['hue'] * 360;
-    let sat = p['saturation'] * 255;
-    let bri = p['brightness'] * 255;
+    let hue = (p.hue ?? 0) * 360;
+    let sat = (p.saturation ?? 0) * 255;
+    let bri = (p.brightness ?? 0) * 255;
     // Determine the max and min value in HSB
     let max = bri;
     let min = max - ((sat / 255) * max);
@@ -351,7 +350,7 @@ export function rgbToXyb(p) {
     let error = null;
     ['red', 'green', 'blue'].forEach((c) => {
         if (c in p) {
-            let v = p[c];
+            let v = p[c]; // Fuck you typescript
             if (typeof (v) !== 'number' || v < 0 || v > 1) {
                 error = new Error('The `' + c + '` must be a float between 0.0 and 1.0.');
             }
@@ -398,7 +397,7 @@ export function xybToRgb(p) {
     let bri = p['brightness'];
     // Calculate XYZ values
     let z = 1.0 - x - y;
-    let Y = bri;
+    let Y = bri ?? 0;
     let X = (Y / y) * x;
     let Z = (Y / y) * z;
     // Convert to RGB using Wide RGB D65 conversion
