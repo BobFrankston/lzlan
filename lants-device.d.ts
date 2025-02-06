@@ -17,63 +17,64 @@ export type HSBDuration = {
     color?: LifxLanColorHSB;
     duration?: Duration;
 };
-export declare enum LifxServices {
-    UDP = 1,
-    RESERVED1 = 2,
-    RESERVED2 = 3,
-    RESERVED3 = 4,
-    RESERVED4 = 5
-}
-export declare enum LifxDirection {
-    RIGHT = 0,
-    LEFT = 1
-}
-export declare enum LifxLightLastHevCycleResult {
-    SUCCESS = 0,
-    BUSY = 1,
-    INTERRUPTED_BY_RESET = 2,
-    INTERRUPTED_BY_HOMEKIT = 3,
-    INTERRUPTED_BY_LAN = 4,
-    INTERRUPTED_BY_CLOUD = 5,
-    NONE = 255
-}
-export declare enum LifxMultiZoneApplicationRequest {
-    NO_APPLY = 0,
-    APPLY = 1,
-    APPLY_ONLY = 2
-}
-export declare enum LifxMultiZoneEffectType {
-    OFF = 0,
-    MOVE = 1,
-    RESERVED1 = 2,
-    RESERVED2 = 3
-}
-export declare enum LifxMultiZoneExtendedApplicationRequest {
-    NO_APPLY = 0,
-    APPLY = 1,
-    APPLY_ONLY = 2
-}
-export declare enum LifxTileEffectType {
-    OFF = 0,
-    RESERVED1 = 1,
-    MORPH = 2,
-    FLAME = 3,
-    RESERVED2 = 4
-}
-export declare enum LifxWaveForm {
-    SAW = 0,
-    SINE = 1,
-    HALF_SINE = 2,
-    TRIANGLE = 3,
-    PULSE = 4
-}
+export declare const LifxDirection: {
+    readonly RIGHT: 0;
+    readonly LEFT: 1;
+};
+export declare const LifxLightLastHevCycleResult: {
+    readonly SUCCESS: 0;
+    readonly BUSY: 1;
+    readonly INTERRUPTED_BY_RESET: 2;
+    readonly INTERRUPTED_BY_HOMEKIT: 3;
+    readonly INTERRUPTED_BY_LAN: 4;
+    readonly INTERRUPTED_BY_CLOUD: 5;
+    readonly NONE: 255;
+};
+export declare const LifxMultiZoneApplicationRequest: {
+    readonly NO_APPLY: 0;
+    readonly APPLY: 1;
+    readonly APPLY_ONLY: 2;
+};
+export declare const LifxMultiZoneEffectType: {
+    readonly OFF: 0;
+    readonly MOVE: 1;
+    readonly RESERVED1: 2;
+    readonly RESERVED2: 3;
+};
+export declare const LifxMultiZoneExtendedApplicationRequest: {
+    readonly NO_APPLY: 0;
+    readonly APPLY: 1;
+    readonly APPLY_ONLY: 2;
+};
+export declare const LifxTileEffectType: {
+    readonly OFF: 0;
+    readonly RESERVED1: 1;
+    readonly MORPH: 2;
+    readonly FLAME: 3;
+    readonly RESERVED2: 4;
+};
+export type LifxWaveFormType = typeof LifxWaveForm[keyof typeof LifxWaveForm];
+export declare const LifxWaveForm: {
+    readonly SAW: 0;
+    readonly SINE: 1;
+    readonly HALF_SINE: 2;
+    readonly TRIANGLE: 3;
+    readonly PULSE: 4;
+};
+export declare const LifxServices: {
+    readonly UDP: 1;
+    readonly RESERVED1: 2;
+    readonly RESERVED2: 3;
+    readonly RESERVED3: 4;
+    readonly RESERVED4: 5;
+};
 export interface lifxWaveForm {
     transient: 0 | 1;
     color: LifxLanColorHSB;
     period: number;
     cycles: number;
     skew_ratio?: number;
-    waveform: LifxWaveForm;
+    waveform: LifxWaveFormType;
 }
 export declare enum LifxApply {
     NO_APPLY = 0,

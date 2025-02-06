@@ -68,10 +68,15 @@ class bufx {
     }
     get buffer() { return this.buf.slice(0, this.cursor); }
     append(b) {
-        if (b instanceof Buffer)
-            this.buf = Buffer.concat([this.buf, b]);
-        else
-            this.buf = Buffer.concat([this.buf, b.buf]);
+        const u8 = new Uint8Array(this.buf);
+        if (b instanceof Buffer) {
+            const u8b = new Uint8Array(b);
+            this.buf = Buffer.concat([u8b]);
+        }
+        else {
+            const u8c = new Uint8Array(b.buf);
+            this.buf = Buffer.concat([u8, u8c]);
+        }
     }
     assure(len) {
         const need = this.cursor + len - this.buf.length;
@@ -132,9 +137,9 @@ export class LifxLanComposer {
         // Protocol Header
         let buf3 = Buffer.alloc(12);
         buf3.writeUInt16LE(type, 8);
-        let buf_list = [buf1, buf2, buf3];
+        let buf_list = [buf1, buf2, buf3].map(b => new Uint8Array(b));
         if (payload_buf)
-            buf_list.push(payload_buf);
+            buf_list.push(new Uint8Array(payload_buf));
         let buf = Buffer.concat(buf_list);
         let size = buf.length;
         buf.writeUInt16LE(size, 0);
@@ -179,8 +184,8 @@ export class LifxLanComposer {
     composeLabel(label) {
         // UTF8 may not be one byte per char
         // return Buffer.from(label.padEnd(32, '\x00').substr(0, 32), 'utf8');
-        const label_buf = Buffer.from(label, 'utf8');
-        const padding_buf = Buffer.alloc(32 - label_buf.length);
+        const label_buf = new Uint8Array(Buffer.from(label, 'utf8'));
+        const padding_buf = new Uint8Array(Buffer.alloc(32 - label_buf.length));
         return Buffer.concat([label_buf, padding_buf]).slice(0, 32); // Assure not too long
     }
     composeUpdated(updated) {
@@ -189,17 +194,17 @@ export class LifxLanComposer {
         return ub;
     }
     _composePayloadSetLocation(payload) {
-        const location_buf = this.composeLocation(payload.location);
-        const label_buf = this.composeLabel(payload.label);
-        const updated_buf = this.composeUpdated(payload.updated);
+        const location_buf = new Uint8Array(this.composeLocation(payload.location));
+        const label_buf = new Uint8Array(this.composeLabel(payload.label));
+        const updated_buf = new Uint8Array(this.composeUpdated(payload.updated));
         const buf = Buffer.concat([location_buf, label_buf, updated_buf]);
         return buf;
     }
     ;
     _composePayloadSetGroup(payload) {
-        const group_buf = this.composeGroup(payload.group);
-        const label_buf = this.composeLabel(payload.label);
-        const updated_buf = this.composeUpdated(payload.updated);
+        const group_buf = new Uint8Array(this.composeGroup(payload.group));
+        const label_buf = new Uint8Array(this.composeLabel(payload.label));
+        const updated_buf = new Uint8Array(this.composeUpdated(payload.updated));
         const buf = Buffer.concat([group_buf, label_buf, updated_buf]);
         return buf;
     }
@@ -211,8 +216,8 @@ export class LifxLanComposer {
     * ---------------------------------------------------------------- */
     _composePayloadEchoRequest(payload) {
         let text = payload.text;
-        let text_buf = Buffer.from(text, 'utf8');
-        let padding_buf = Buffer.alloc(64 - text_buf.length);
+        let text_buf = new Uint8Array(Buffer.from(text, 'utf8'));
+        let padding_buf = new Uint8Array(Buffer.alloc(64 - text_buf.length));
         let buf = Buffer.concat([text_buf, padding_buf]);
         return buf;
     }

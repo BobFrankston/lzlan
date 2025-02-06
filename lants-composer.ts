@@ -8,7 +8,7 @@
 
 import * as mCrypto from 'crypto';
 import { lifxMsgType } from './lants-parser.js';
-import { Integer, ColorDuration, Float, Duration, lifxWaveForm, LifxWaveForm, LifxApply, Integer255, String32, HexString16 } from './lants-device.js';
+import { Integer, ColorDuration, Float, Duration, lifxWaveForm, LifxWaveForm, LifxApply, Integer255, String32, HexString16, LifxWaveFormType } from './lants-device.js';
 import { anyToHsb, LifxLanColorHSB, } from './lants-color.js';
 import { LifxLanColorAny } from './lants.js';
 
@@ -80,10 +80,15 @@ class bufx {		// Wrapper for buffers
 	get buffer() { return this.buf.slice(0, this.cursor) }
 
 	append(b: Buffer | bufx) {
-		if (b instanceof Buffer)
-			this.buf = Buffer.concat([this.buf, b]);
-		else
-			this.buf = Buffer.concat([this.buf, b.buf]);
+		const u8 = new Uint8Array(this.buf);
+		if (b instanceof Buffer) {
+			const u8b = new Uint8Array(b)
+			this.buf = Buffer.concat([u8b]);
+		}
+		else {
+			const u8c = new Uint8Array(b.buf);
+			this.buf = Buffer.concat([u8, u8c]);
+		}
 	}
 
 	private assure(len: number) {
@@ -157,8 +162,8 @@ export class LifxLanComposer {
 		let buf3 = Buffer.alloc(12);
 		buf3.writeUInt16LE(type, 8);
 
-		let buf_list = [buf1, buf2, buf3];
-		if (payload_buf) buf_list.push(payload_buf);
+		let buf_list = [buf1, buf2, buf3].map(b => new Uint8Array(b));
+		if (payload_buf) buf_list.push(new Uint8Array(payload_buf));
 
 		let buf = Buffer.concat(buf_list);
 
@@ -208,8 +213,8 @@ export class LifxLanComposer {
 	private composeLabel(label: String32) {
 		// UTF8 may not be one byte per char
 		// return Buffer.from(label.padEnd(32, '\x00').substr(0, 32), 'utf8');
-		const label_buf = Buffer.from(label, 'utf8');
-		const padding_buf = Buffer.alloc(32 - label_buf.length);
+		const label_buf = new Uint8Array(Buffer.from(label, 'utf8'));
+		const padding_buf = new Uint8Array(Buffer.alloc(32 - label_buf.length));
 		return Buffer.concat([label_buf, padding_buf]).slice(0, 32);	// Assure not too long
 	}
 
@@ -220,17 +225,17 @@ export class LifxLanComposer {
 	}
 
 	private _composePayloadSetLocation(payload: { location?: HexString16 | null, label: String32, updated: Date }): Buffer {
-		const location_buf = this.composeLocation(payload.location);
-		const label_buf = this.composeLabel(payload.label);
-		const updated_buf = this.composeUpdated(payload.updated);
+		const location_buf = new Uint8Array(this.composeLocation(payload.location));
+		const label_buf = new Uint8Array(this.composeLabel(payload.label));
+		const updated_buf = new Uint8Array(this.composeUpdated(payload.updated));
 		const buf = Buffer.concat([location_buf, label_buf, updated_buf]);
 		return buf;
 	};
 
 	private _composePayloadSetGroup(payload: { group?: HexString16, label: String32, updated?: Date }): Buffer {
-		const group_buf = this.composeGroup(payload.group);
-		const label_buf = this.composeLabel(payload.label);
-		const updated_buf = this.composeUpdated(payload.updated);
+		const group_buf = new Uint8Array(this.composeGroup(payload.group));
+		const label_buf = new Uint8Array(this.composeLabel(payload.label));
+		const updated_buf = new Uint8Array(this.composeUpdated(payload.updated));
 		const buf = Buffer.concat([group_buf, label_buf, updated_buf]);
 		return buf;
 	};
@@ -242,8 +247,8 @@ export class LifxLanComposer {
 	* ---------------------------------------------------------------- */
 	private _composePayloadEchoRequest(payload: { text: string }): Buffer {
 		let text = payload.text;
-		let text_buf = Buffer.from(text, 'utf8');
-		let padding_buf = Buffer.alloc(64 - text_buf.length);
+		let text_buf = new Uint8Array(Buffer.from(text, 'utf8'));
+		let padding_buf = new Uint8Array(Buffer.alloc(64 - text_buf.length))
 		let buf = Buffer.concat([text_buf, padding_buf]);
 		return buf;
 	};
@@ -315,7 +320,7 @@ export class LifxLanComposer {
 		period: Integer,
 		cycles: Float,
 		skew_ratio: Float,
-		waveform: LifxWaveForm,
+		waveform: LifxWaveFormType,
 	}): Buffer {
 		// Check the payload
 		// Check the `transient`

@@ -41,63 +41,115 @@ export type HSBDuration = {
     duration?: Duration
 };      // Duration in milliseconds
 
-export enum LifxServices {
-    UDP = 1,
-    RESERVED1 = 2,
-    RESERVED2 = 3,
-    RESERVED3 = 4,
-    RESERVED4 = 5
-}
+export const LifxDirection = {
+    RIGHT: 0,
+    LEFT: 1
+} as const;
 
-export enum LifxDirection {
-    RIGHT = 0,
-    LEFT = 1
-}
+export const LifxLightLastHevCycleResult = {
+    SUCCESS: 0,
+    BUSY: 1,
+    INTERRUPTED_BY_RESET: 2,
+    INTERRUPTED_BY_HOMEKIT: 3,
+    INTERRUPTED_BY_LAN: 4,
+    INTERRUPTED_BY_CLOUD: 5,
+    NONE: 255
+} as const;
 
-export enum LifxLightLastHevCycleResult {
-    SUCCESS = 0,
-    BUSY = 1,
-    INTERRUPTED_BY_RESET = 2,
-    INTERRUPTED_BY_HOMEKIT = 3,
-    INTERRUPTED_BY_LAN = 4,
-    INTERRUPTED_BY_CLOUD = 5,
-    NONE = 255
-}
+export const LifxMultiZoneApplicationRequest = {
+    NO_APPLY: 0,
+    APPLY: 1,
+    APPLY_ONLY: 2
+} as const;
 
-export enum LifxMultiZoneApplicationRequest {
-    NO_APPLY = 0,
-    APPLY = 1,
-    APPLY_ONLY = 2
-}
+export const LifxMultiZoneEffectType = {
+    OFF: 0,
+    MOVE: 1,
+    RESERVED1: 2,
+    RESERVED2: 3
+} as const;
 
-export enum LifxMultiZoneEffectType {
-    OFF = 0,
-    MOVE = 1,
-    RESERVED1 = 2,
-    RESERVED2 = 3
-}
+export const LifxMultiZoneExtendedApplicationRequest = {
+    NO_APPLY: 0,
+    APPLY: 1,
+    APPLY_ONLY: 2
+} as const;
 
-export enum LifxMultiZoneExtendedApplicationRequest {
-    NO_APPLY = 0,
-    APPLY = 1,
-    APPLY_ONLY = 2
-}
+export const LifxTileEffectType = {
+    OFF: 0,
+    RESERVED1: 1,
+    MORPH: 2,
+    FLAME: 3,
+    RESERVED2: 4
+} as const;
 
-export enum LifxTileEffectType {
-    OFF = 0,
-    RESERVED1 = 1,
-    MORPH = 2,
-    FLAME = 3,
-    RESERVED2 = 4
-}
+export type LifxWaveFormType = typeof LifxWaveForm[keyof typeof LifxWaveForm];
 
-export enum LifxWaveForm {
-    SAW = 0,
-    SINE = 1,
-    HALF_SINE = 2,
-    TRIANGLE = 3,
-    PULSE = 4
-}
+export const LifxWaveForm = {
+    SAW: 0,
+    SINE: 1,
+    HALF_SINE: 2,
+    TRIANGLE: 3,
+    PULSE: 4
+} as const;
+
+export const LifxServices = {
+    UDP: 1,
+    RESERVED1: 2,
+    RESERVED2: 3,
+    RESERVED3: 4,
+    RESERVED4: 5
+} as const;
+
+// export enum LifxDirection {
+//     RIGHT = 0,
+//     LEFT = 1
+// }
+
+// export enum LifxLightLastHevCycleResult {
+//     SUCCESS = 0,
+//     BUSY = 1,
+//     INTERRUPTED_BY_RESET = 2,
+//     INTERRUPTED_BY_HOMEKIT = 3,
+//     INTERRUPTED_BY_LAN = 4,
+//     INTERRUPTED_BY_CLOUD = 5,
+//     NONE = 255
+// }
+
+// export enum LifxMultiZoneApplicationRequest {
+//     NO_APPLY = 0,
+//     APPLY = 1,
+//     APPLY_ONLY = 2
+// }
+
+// export enum LifxMultiZoneEffectType {
+//     OFF = 0,
+//     MOVE = 1,
+//     RESERVED1 = 2,
+//     RESERVED2 = 3
+// }
+
+// export enum LifxMultiZoneExtendedApplicationRequest {
+//     NO_APPLY = 0,
+//     APPLY = 1,
+//     APPLY_ONLY = 2
+// }
+
+// export enum LifxTileEffectType {
+//     OFF = 0,
+//     RESERVED1 = 1,
+//     MORPH = 2,
+//     FLAME = 3,
+//     RESERVED2 = 4
+// }
+
+// export enum LifxWaveForm {
+//     SAW = 0,
+//     SINE = 1,
+//     HALF_SINE = 2,
+//     TRIANGLE = 3,
+//     PULSE = 4
+// }
 
 export interface lifxWaveForm {
     transient: 0 | 1,           // 0 or 1. If the value is 0, the color will stay as the new color after the effect is performed. If the value is 1, the color will return to the original color after the effect.
@@ -105,7 +157,7 @@ export interface lifxWaveForm {
     period: number,             // Milliseconds
     cycles: number,
     skew_ratio?: number,        // 0.0 - 1.0. Required only when the waveform is 4 (PLUSE).
-    waveform: LifxWaveForm
+    waveform: LifxWaveFormType
 };
 
 export enum LifxApply {
@@ -319,7 +371,7 @@ export class LifxLanDevice {
                     }
                     catch (e: any) {
                         const nmac = normalizeMac(me.mac);
-                        if (LZVerbose && !LifxLanDevice.reportedError.has(nmac)) {                            
+                        if (LZVerbose && !LifxLanDevice.reportedError.has(nmac)) {
                             console.error(`Lifx: ${e.message} Getting info for ${me.ip} ${me.mac}`);
                             LifxLanDevice.reportedError.add(nmac);
                         }

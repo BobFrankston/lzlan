@@ -16,64 +16,56 @@ export function passure(params, defaults) {
     params = params || {};
     return defaults ? { ...defaults, ...params } : params;
 }
-export var LifxServices;
-(function (LifxServices) {
-    LifxServices[LifxServices["UDP"] = 1] = "UDP";
-    LifxServices[LifxServices["RESERVED1"] = 2] = "RESERVED1";
-    LifxServices[LifxServices["RESERVED2"] = 3] = "RESERVED2";
-    LifxServices[LifxServices["RESERVED3"] = 4] = "RESERVED3";
-    LifxServices[LifxServices["RESERVED4"] = 5] = "RESERVED4";
-})(LifxServices || (LifxServices = {}));
-export var LifxDirection;
-(function (LifxDirection) {
-    LifxDirection[LifxDirection["RIGHT"] = 0] = "RIGHT";
-    LifxDirection[LifxDirection["LEFT"] = 1] = "LEFT";
-})(LifxDirection || (LifxDirection = {}));
-export var LifxLightLastHevCycleResult;
-(function (LifxLightLastHevCycleResult) {
-    LifxLightLastHevCycleResult[LifxLightLastHevCycleResult["SUCCESS"] = 0] = "SUCCESS";
-    LifxLightLastHevCycleResult[LifxLightLastHevCycleResult["BUSY"] = 1] = "BUSY";
-    LifxLightLastHevCycleResult[LifxLightLastHevCycleResult["INTERRUPTED_BY_RESET"] = 2] = "INTERRUPTED_BY_RESET";
-    LifxLightLastHevCycleResult[LifxLightLastHevCycleResult["INTERRUPTED_BY_HOMEKIT"] = 3] = "INTERRUPTED_BY_HOMEKIT";
-    LifxLightLastHevCycleResult[LifxLightLastHevCycleResult["INTERRUPTED_BY_LAN"] = 4] = "INTERRUPTED_BY_LAN";
-    LifxLightLastHevCycleResult[LifxLightLastHevCycleResult["INTERRUPTED_BY_CLOUD"] = 5] = "INTERRUPTED_BY_CLOUD";
-    LifxLightLastHevCycleResult[LifxLightLastHevCycleResult["NONE"] = 255] = "NONE";
-})(LifxLightLastHevCycleResult || (LifxLightLastHevCycleResult = {}));
-export var LifxMultiZoneApplicationRequest;
-(function (LifxMultiZoneApplicationRequest) {
-    LifxMultiZoneApplicationRequest[LifxMultiZoneApplicationRequest["NO_APPLY"] = 0] = "NO_APPLY";
-    LifxMultiZoneApplicationRequest[LifxMultiZoneApplicationRequest["APPLY"] = 1] = "APPLY";
-    LifxMultiZoneApplicationRequest[LifxMultiZoneApplicationRequest["APPLY_ONLY"] = 2] = "APPLY_ONLY";
-})(LifxMultiZoneApplicationRequest || (LifxMultiZoneApplicationRequest = {}));
-export var LifxMultiZoneEffectType;
-(function (LifxMultiZoneEffectType) {
-    LifxMultiZoneEffectType[LifxMultiZoneEffectType["OFF"] = 0] = "OFF";
-    LifxMultiZoneEffectType[LifxMultiZoneEffectType["MOVE"] = 1] = "MOVE";
-    LifxMultiZoneEffectType[LifxMultiZoneEffectType["RESERVED1"] = 2] = "RESERVED1";
-    LifxMultiZoneEffectType[LifxMultiZoneEffectType["RESERVED2"] = 3] = "RESERVED2";
-})(LifxMultiZoneEffectType || (LifxMultiZoneEffectType = {}));
-export var LifxMultiZoneExtendedApplicationRequest;
-(function (LifxMultiZoneExtendedApplicationRequest) {
-    LifxMultiZoneExtendedApplicationRequest[LifxMultiZoneExtendedApplicationRequest["NO_APPLY"] = 0] = "NO_APPLY";
-    LifxMultiZoneExtendedApplicationRequest[LifxMultiZoneExtendedApplicationRequest["APPLY"] = 1] = "APPLY";
-    LifxMultiZoneExtendedApplicationRequest[LifxMultiZoneExtendedApplicationRequest["APPLY_ONLY"] = 2] = "APPLY_ONLY";
-})(LifxMultiZoneExtendedApplicationRequest || (LifxMultiZoneExtendedApplicationRequest = {}));
-export var LifxTileEffectType;
-(function (LifxTileEffectType) {
-    LifxTileEffectType[LifxTileEffectType["OFF"] = 0] = "OFF";
-    LifxTileEffectType[LifxTileEffectType["RESERVED1"] = 1] = "RESERVED1";
-    LifxTileEffectType[LifxTileEffectType["MORPH"] = 2] = "MORPH";
-    LifxTileEffectType[LifxTileEffectType["FLAME"] = 3] = "FLAME";
-    LifxTileEffectType[LifxTileEffectType["RESERVED2"] = 4] = "RESERVED2";
-})(LifxTileEffectType || (LifxTileEffectType = {}));
-export var LifxWaveForm;
-(function (LifxWaveForm) {
-    LifxWaveForm[LifxWaveForm["SAW"] = 0] = "SAW";
-    LifxWaveForm[LifxWaveForm["SINE"] = 1] = "SINE";
-    LifxWaveForm[LifxWaveForm["HALF_SINE"] = 2] = "HALF_SINE";
-    LifxWaveForm[LifxWaveForm["TRIANGLE"] = 3] = "TRIANGLE";
-    LifxWaveForm[LifxWaveForm["PULSE"] = 4] = "PULSE";
-})(LifxWaveForm || (LifxWaveForm = {}));
+export const LifxDirection = {
+    RIGHT: 0,
+    LEFT: 1
+};
+export const LifxLightLastHevCycleResult = {
+    SUCCESS: 0,
+    BUSY: 1,
+    INTERRUPTED_BY_RESET: 2,
+    INTERRUPTED_BY_HOMEKIT: 3,
+    INTERRUPTED_BY_LAN: 4,
+    INTERRUPTED_BY_CLOUD: 5,
+    NONE: 255
+};
+export const LifxMultiZoneApplicationRequest = {
+    NO_APPLY: 0,
+    APPLY: 1,
+    APPLY_ONLY: 2
+};
+export const LifxMultiZoneEffectType = {
+    OFF: 0,
+    MOVE: 1,
+    RESERVED1: 2,
+    RESERVED2: 3
+};
+export const LifxMultiZoneExtendedApplicationRequest = {
+    NO_APPLY: 0,
+    APPLY: 1,
+    APPLY_ONLY: 2
+};
+export const LifxTileEffectType = {
+    OFF: 0,
+    RESERVED1: 1,
+    MORPH: 2,
+    FLAME: 3,
+    RESERVED2: 4
+};
+export const LifxWaveForm = {
+    SAW: 0,
+    SINE: 1,
+    HALF_SINE: 2,
+    TRIANGLE: 3,
+    PULSE: 4
+};
+export const LifxServices = {
+    UDP: 1,
+    RESERVED1: 2,
+    RESERVED2: 3,
+    RESERVED3: 4,
+    RESERVED4: 5
+};
 ;
 export var LifxApply;
 (function (LifxApply) {
