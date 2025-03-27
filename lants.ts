@@ -26,7 +26,9 @@ export let LZVerbose = true;
  */
 
 export function setVerbose(vb: boolean) {
+	const prev = LZVerbose;
 	LZVerbose = vb;
+	return prev;
 }
 
 /**

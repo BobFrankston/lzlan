@@ -18,7 +18,9 @@ export let LZVerbose = true;
  * @param vb Set Verbaose mode
  */
 export function setVerbose(vb) {
+    const prev = LZVerbose;
     LZVerbose = vb;
+    return prev;
 }
 /**
  * Discover current devices.

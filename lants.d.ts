@@ -10,7 +10,7 @@ export declare let LZVerbose: boolean;
  *
  * @param vb Set Verbaose mode
  */
-export declare function setVerbose(vb: boolean): void;
+export declare function setVerbose(vb: boolean): boolean;
 /**
  * Discover current devices.
  * Note that this is not reliable
