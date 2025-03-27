@@ -121,7 +121,8 @@ export class LifxLanUdp {
             }
             // Send a packet
             this._udp.setBroadcast(false);
-            let buf = packet; // .buffer;
+            // let buf = packet; // .buffer;
+            let buf = Uint8Array.from(packet);
             this._udp.send(buf, 0, buf.length, this._UDP_PORT, p.address, (error) => {
                 if (error) {
                     delete this._requests[seq];
@@ -243,7 +244,8 @@ export class LifxLanUdp {
     async _sendBroadcast(req_list) {
         this._udp.setBroadcast(true);
         req_list.forEach(req => {
-            this._udp.send(req.buffer, 0, req.buffer.length, this._UDP_PORT, req.address);
+            let buf = Uint8Array.from(req.buffer);
+            this._udp.send(buf, 0, req.buffer.length, this._UDP_PORT, req.address);
             delayms(10); // Why delays?
         });
     }
