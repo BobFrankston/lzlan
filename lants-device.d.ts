@@ -209,7 +209,7 @@ export declare class LifxLanDevice {
         productId: number;
         productName: string;
         hwVersion: number;
-        signal: number;
+        signal: Float;
         rssi: number;
         firmwareVersion: number;
         WiFiVersion: number;

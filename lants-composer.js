@@ -71,7 +71,7 @@ class bufx {
         const u8 = new Uint8Array(this.buf);
         if (b instanceof Buffer) {
             const u8b = new Uint8Array(b);
-            this.buf = Buffer.concat([u8b]);
+            this.buf = Buffer.concat([u8, u8b]);
         }
         else {
             const u8c = new Uint8Array(b.buf);

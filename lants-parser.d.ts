@@ -1,8 +1,7 @@
-/// <reference types="node" />
 import { udpParsed } from "./lants-udp.js";
 import { Float, Integer } from "./lants-device.js";
 export declare enum lifxMsgType {
-    GetService = 2,
+    GetService = 2,// Can be broadcast to get a StateService
     StateService = 3,
     GetHostInfo = 12,
     StateHostInfo = 13,

@@ -151,9 +151,9 @@ export class LifxLanUdp {
                 type: p.type,
                 payload: p.payload,
                 sequence: seq,
-                ack_required: p.ack_required,
-                res_required: p.res_required,
-                target: p.target,
+                ack_required: p.ack_required, // false
+                res_required: p.res_required, // false
+                target: p.target, // 00:00:00:00:00:00
                 source: this._source_id,
                 tagged: false
             });

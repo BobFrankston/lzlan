@@ -229,7 +229,7 @@ class LifxLanParser {
                         return null;
                     return {
                         time: this._64BitToDate(pbuf, 0),
-                        uptime: this._conv64BitTimeStampToMsec(pbuf, 8),
+                        uptime: this._conv64BitTimeStampToMsec(pbuf, 8), // msec 
                         downtime: this._conv64BitTimeStampToMsec(pbuf, 16) // msec
                     };
                 case lifxMsgType.StateLocation: //50

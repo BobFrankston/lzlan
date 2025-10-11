@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { lifxMsgType } from './lants-parser.js';
 import { Integer } from './lants-device.js';
 export interface ComposerParms {
@@ -12,7 +11,7 @@ export interface ComposerParms {
     payload?: object;
 }
 export declare class LifxLanComposer {
-    compose(cp: ComposerParms): Buffer;
+    compose(cp: ComposerParms): Buffer<ArrayBuffer>;
     _composePayload(type: lifxMsgType, payload?: any): Buffer | null;
     private _composePayloadSetPower;
     private _composePayloadSetLabel;
