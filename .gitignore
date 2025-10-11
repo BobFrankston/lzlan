@@ -89,11 +89,20 @@ logs
 *.log
 
 # Editor directories and files
-.vscode/
 .idea/
 *.swp
 *.swo
 *~
+
+# IDE backup files
+*.back
+*.bak
+*.tmp
+
+# Personal notes and batch files
+notes.txt
+*.bat
+*.url
 
 # OS generated files
 .DS_Store
