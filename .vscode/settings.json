@@ -20,5 +20,16 @@
         "commandCenter.border": "#e7e7e799"
     },
     "peacock.color": "#6f822a",
-    "workbench.colorTheme": "Visual Studio 2019 Dark"
+    "workbench.colorTheme": "Visual Studio 2019 Dark",
+    "cSpell.words": [
+        "colorlib",
+        "dgram",
+        "HSBK",
+        "LIFX",
+        "lxlan",
+        "lzlan",
+        "rmfudp",
+        "rmfudph",
+        "netsupport"
+    ]
 }

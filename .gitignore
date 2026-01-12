@@ -1,3 +1,10 @@
+# CRITICAL: NEVER commit certificates or private keys!
+# Excludes all directories/junctions with 'cert' in the name
+cert*/
+*cert*/
+**/cert*/
+**/*cert*/
+
 # Dependencies
 node_modules/
 npm-debug.log*
